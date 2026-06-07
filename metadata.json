@@ -1,0 +1,6 @@
+{
+  "name": "Pacific Smoke Wholesale",
+  "description": "A luxury, modern wholesale distributor storefront featuring password access, verified business registration, and premium smoke product collections.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
