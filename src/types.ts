@@ -26,6 +26,7 @@ export interface BusinessAccount {
   licenseNumber: string; // Business/State stamp
   isVerified: boolean;
   registeredAt: string;
+  password?: string;
 }
 
 export interface CartItem {

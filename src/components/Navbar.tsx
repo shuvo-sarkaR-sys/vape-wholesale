@@ -13,6 +13,7 @@ interface NavbarProps {
   cartCount: number;
   onOpenCart: () => void;
   onOpenRegister: () => void;
+  onOpenLogin: () => void;
   onLogout: () => void;
   isAdminMode: boolean;
   onToggleAdminMode: () => void;
@@ -30,6 +31,7 @@ export default function Navbar({
   cartCount,
   onOpenCart,
   onOpenRegister,
+  onOpenLogin,
   onLogout,
   isAdminMode,
   onToggleAdminMode,
@@ -148,13 +150,21 @@ export default function Navbar({
                   </div>
                 </button>
               ) : (
-                <button
-                  onClick={onOpenRegister}
-                  className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-850 text-amber-400 hover:text-amber-300 border border-amber-500/15 hover:border-amber-500/30 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all cursor-pointer"
-                >
-                  <UserCheck size={12} />
-                  <span>Verify Business</span>
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={onOpenLogin}
+                    className="flex items-center gap-1.5 bg-neutral-900 border hover:border-neutral-700/65 border-neutral-800 hover:bg-neutral-850 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all text-neutral-200 hover:text-white cursor-pointer"
+                  >
+                    <span>Sign In</span>
+                  </button>
+                  <button
+                    onClick={onOpenRegister}
+                    className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-850 text-amber-400 hover:text-amber-300 border border-amber-500/15 hover:border-amber-500/30 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all cursor-pointer"
+                  >
+                    <UserCheck size={12} />
+                    <span>Verify Business</span>
+                  </button>
+                </div>
               )}
 
               {/* B2B Administration Toggle Control */}
@@ -354,16 +364,27 @@ export default function Navbar({
                   </button>
                 </div>
               ) : (
-                <button
-                  onClick={() => {
-                    setIsMobileMenuOpen(false);
-                    onOpenRegister();
-                  }}
-                  className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 py-3 px-4 rounded-xl font-sans text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg cursor-pointer"
-                >
-                  <UserCheck size={14} />
-                  <span>Register Wholesale Business</span>
-                </button>
+                <div className="space-y-2">
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpenLogin();
+                    }}
+                    className="w-full bg-neutral-900 border border-neutral-800 text-neutral-200 py-3 px-4 rounded-xl font-sans text-xs font-semibold tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-colors hover:bg-neutral-850"
+                  >
+                    <span>Merchant Sign In</span>
+                  </button>
+                  <button
+                    onClick={() => {
+                      setIsMobileMenuOpen(false);
+                      onOpenRegister();
+                    }}
+                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 py-3 px-4 rounded-xl font-sans text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                  >
+                    <UserCheck size={14} />
+                    <span>Register Wholesale Business</span>
+                  </button>
+                </div>
               )}
 
               {/* Main Sub Navigation Stack */}

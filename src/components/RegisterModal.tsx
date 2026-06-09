@@ -10,6 +10,7 @@ interface RegisterModalProps {
   isOpen: boolean;
   onClose: () => void;
   onRegisterSuccess: (account: BusinessAccount) => void;
+  onOpenLogin?: () => void;
 }
 
 const VERIFICATION_STEPS = [
@@ -19,7 +20,7 @@ const VERIFICATION_STEPS = [
   { id: 'approve', label: 'Preparing instant API approval keys...' }
 ];
 
-export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: RegisterModalProps) {
+export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOpenLogin }: RegisterModalProps) {
   // Navigation workflow state: 'form' | 'email-verification' | 'db-validation'
   const [registerStep, setRegisterStep] = useState<'form' | 'email-verification' | 'db-validation'>('form');
   
@@ -28,7 +29,8 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
     email: '',
     address: '',
     phone: '',
-    licenseNumber: ''
+    licenseNumber: '',
+    password: ''
   });
 
   const [verificationCode, setVerificationCode] = useState('');
@@ -36,6 +38,8 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
   const [timer, setTimer] = useState(0);
 
   const [isVerifying, setIsVerifying] = useState(false);
+  const [isSendingEmail, setIsSendingEmail] = useState(false);
+  const [previewEmailUrl, setPreviewEmailUrl] = useState<string | null>(null);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [errorText, setErrorText] = useState('');
 
@@ -59,6 +63,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
     setUserInputCode('');
     setTimer(0);
     setErrorText('');
+    setPreviewEmailUrl(null);
     onClose();
   };
 
@@ -66,7 +71,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.businessName || !form.email || !form.address || !form.phone || !form.licenseNumber) {
+    if (!form.businessName || !form.email || !form.address || !form.phone || !form.licenseNumber || !form.password) {
       setErrorText('Please furnish complete regulatory disclosures above.');
       return;
     }
@@ -76,14 +81,63 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
       return;
     }
 
+    if (form.password.length < 8) {
+      setErrorText('Security key/password must contain at least 8 characters.');
+      return;
+    }
+    if (!/[A-Z]/.test(form.password)) {
+      setErrorText('Security key/password must contain at least one uppercase letter (A-Z).');
+      return;
+    }
+    if (!/[a-z]/.test(form.password)) {
+      setErrorText('Security key/password must contain at least one lowercase letter (a-z).');
+      return;
+    }
+    if (!/[0-9]/.test(form.password)) {
+      setErrorText('Security key/password must contain at least one numeric digit (0-9).');
+      return;
+    }
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(form.password)) {
+      setErrorText('Security key/password must contain at least one special character (e.g. !, @, #, $, %, etc.).');
+      return;
+    }
+
     setErrorText('');
+    setIsSendingEmail(true);
     
     // Generate secure 6-digit OTP code
     const securePin = Math.floor(100000 + Math.random() * 900000).toString();
     setVerificationCode(securePin);
     setUserInputCode('');
-    setTimer(30); // 30 seconds resend cooldown
-    setRegisterStep('email-verification');
+
+    // Trigger full-stack OTP email delivery
+    fetch('/api/otp/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email,
+        code: securePin,
+        businessName: form.businessName
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setIsSendingEmail(false);
+      if (data.success) {
+        setPreviewEmailUrl(data.previewUrl);
+        setTimer(30); // 30 seconds resend cooldown
+        setRegisterStep('email-verification');
+      } else {
+        setErrorText(data.error || 'Failed to dispatch verification code email. Please retry.');
+      }
+    })
+    .catch(err => {
+      console.error('Email dispatch error:', err);
+      setIsSendingEmail(false);
+      // Fallback: Continue with simulated flow on absolute networks blocks
+      setTimer(30);
+      setRegisterStep('email-verification');
+    });
   };
 
   // Resend OTP code trigger
@@ -91,9 +145,34 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
     if (timer > 0) return;
     const securePin = Math.floor(100000 + Math.random() * 900000).toString();
     setVerificationCode(securePin);
-    setTimer(45); // Raise countdown limit for spam prevention
     setUserInputCode('');
     setErrorText('');
+    setIsSendingEmail(true);
+
+    fetch('/api/otp/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: form.email,
+        code: securePin,
+        businessName: form.businessName
+      })
+    })
+    .then(res => res.json())
+    .then(data => {
+      setIsSendingEmail(false);
+      if (data.success) {
+        setPreviewEmailUrl(data.previewUrl);
+        setTimer(45); // Raise countdown limit for spam prevention
+      } else {
+        setErrorText(data.error || 'Failed to resend verification code. Please retry.');
+      }
+    })
+    .catch(err => {
+      console.error('Resend email error:', err);
+      setIsSendingEmail(false);
+      setTimer(45);
+    });
   };
 
   // Submit step 2: Verify OTP matching
@@ -133,7 +212,8 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
                 year: 'numeric',
                 month: 'long',
                 day: 'numeric'
-              })
+              }),
+              password: form.password
             };
             onRegisterSuccess(verifiedAccount);
             setIsVerifying(false);
@@ -294,6 +374,45 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
                 </div>
               </div>
 
+              {/* Security Access Key / Password */}
+              <div>
+                <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
+                  Security Access Key / Password <span className="text-amber-500 text-xs font-bold font-sans">*</span> <span className="text-[9px] text-neutral-550 lowercase">(Requires hardened strength)</span>
+                </label>
+                <div className="relative">
+                  <input
+                    type="password"
+                    required
+                    name="password"
+                    value={form.password}
+                    onChange={handleInputChange}
+                    placeholder="Create a password (8+ chars, upper, lower, numbers, symbols)"
+                    className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                  />
+                  <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
+                </div>
+                
+                {/* Dynamic Strength Indicators */}
+                <div className="grid grid-cols-2 gap-2 mt-2.5 text-[9px] font-mono text-neutral-400 bg-neutral-950/40 p-2.5 rounded-lg border border-neutral-855">
+                  <div className="flex items-center gap-1.5">
+                    <span className={form.password.length >= 8 ? "text-emerald-400" : "text-neutral-600"}>●</span>
+                    <span className={form.password.length >= 8 ? "text-neutral-200" : "text-neutral-500"}>8+ Characters</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className={/[A-Z]/.test(form.password) ? "text-emerald-400" : "text-neutral-600"}>●</span>
+                    <span className={/[A-Z]/.test(form.password) ? "text-neutral-200" : "text-neutral-500"}>Uppercase (A-Z)</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className={/[a-z]/.test(form.password) ? "text-emerald-400" : "text-neutral-600"}>●</span>
+                    <span className={/[a-z]/.test(form.password) ? "text-neutral-200" : "text-neutral-500"}>Lowercase (a-z)</span>
+                  </div>
+                  <div className="flex items-center gap-1.5">
+                    <span className={/[0-9]/.test(form.password) && /[!@#$%^&*(),.?":{}|<>]/.test(form.password) ? "text-emerald-400" : "text-neutral-600"}>●</span>
+                    <span className={/[0-9]/.test(form.password) && /[!@#$%^&*(),.?":{}|<>]/.test(form.password) ? "text-neutral-200" : "text-neutral-500"}>Numbers & Symbols</span>
+                  </div>
+                </div>
+              </div>
+
               {errorText && (
                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs font-mono text-red-400 flex items-center gap-2">
                   <ShieldAlert size={14} />
@@ -303,11 +422,36 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
 
               <button
                 type="submit"
-                className="w-full mt-4 bg-white text-neutral-950 hover:bg-neutral-100 font-sans tracking-widest uppercase text-xs font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg hover:shadow-xl hover:translate-y-[-1px] active:translate-y-[0px]"
+                disabled={isSendingEmail}
+                className="w-full mt-4 bg-white text-neutral-950 hover:bg-neutral-100 disabled:opacity-75 disabled:cursor-not-allowed font-sans tracking-widest uppercase text-xs font-semibold py-3 px-4 rounded-lg flex items-center justify-center gap-2 transition-all cursor-pointer shadow-lg hover:shadow-xl hover:translate-y-[-1px] active:translate-y-[0px]"
               >
-                <span>TRANSMIT REQ DISCLOSURES</span>
-                <Sparkles size={13} className="text-amber-505" />
+                {isSendingEmail ? (
+                  <>
+                    <Loader2 size={13} className="animate-spin text-amber-500" />
+                    <span>DISPATCHING SECURITY TOKEN...</span>
+                  </>
+                ) : (
+                  <>
+                    <span>TRANSMIT REQ DISCLOSURES</span>
+                    <Sparkles size={13} className="text-amber-505" />
+                  </>
+                )}
               </button>
+
+              {onOpenLogin && (
+                <div className="pt-3 border-t border-neutral-850 text-center text-xs mt-3">
+                  <span className="text-neutral-500">Already registered or have demo keys? </span>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      onOpenLogin();
+                    }}
+                    className="text-amber-500 hover:text-amber-400 font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+                  >
+                    Buyer Sign In
+                  </button>
+                </div>
+              )}
             </form>
           </motion.div>
         )}
@@ -359,7 +503,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
               </p>
             </div>
 
-            {/* Development Mode Helper Box with OTP code for easy user access */}
+             {/* Development Mode Helper Box with OTP code for easy user access */}
             <div className="bg-amber-500/5 border border-dashed border-amber-500/25 rounded-xl p-4 text-left mb-6 relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-amber-500/10 text-[8px] font-mono font-bold text-amber-400 uppercase px-2 py-0.5 rounded-bl">
                 SIMULATOR CONTROLLER
@@ -375,6 +519,20 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess }: Re
                   {verificationCode}
                 </span>
               </div>
+              
+              {previewEmailUrl && (
+                <div className="mt-3 pt-2.5 border-t border-neutral-800/60 flex justify-center">
+                  <a 
+                    href={previewEmailUrl} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-neutral-950 text-[10px] font-mono tracking-wider uppercase font-bold rounded hover:bg-amber-400 transition-colors"
+                  >
+                    <Mail size={11} />
+                    <span>Open Sandbox Inbox</span>
+                  </a>
+                </div>
+              )}
             </div>
 
             <form onSubmit={handleVerifyCode} className="space-y-4">

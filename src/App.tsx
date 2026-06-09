@@ -28,6 +28,7 @@ import SmokeEffect from './components/SmokeEffect';
 import AdminDashboard from './components/AdminDashboard';
 import BuyerProfile from './components/BuyerProfile';
 import AdminLoginModal from './components/AdminLoginModal';
+import BuyerLoginModal from './components/BuyerLoginModal';
 
 export default function App() {
   // Authentication & Session state
@@ -50,6 +51,72 @@ export default function App() {
     return saved ? JSON.parse(saved) : [];
   });
 
+  // Dynamic products and database connection telemetry
+  const [productsList, setProductsList] = useState<Product[]>(PRODUCTS);
+  const [isDbConnected, setIsDbConnected] = useState(false);
+  const [dbType, setDbType] = useState('In-Memory Fallback');
+
+  const fetchProducts = () => {
+    fetch('/api/products')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          setProductsList(data);
+        }
+      })
+      .catch(err => {
+        console.error('Failed to load products from full-stack API:', err);
+      });
+  };
+
+  const fetchSystemStatus = () => {
+    fetch('/api/system/status')
+      .then(res => res.json())
+      .then(data => {
+        setIsDbConnected(data.clientConnected);
+        setDbType(data.dbType);
+      })
+      .catch(() => {});
+  };
+
+  const fetchOrders = () => {
+    fetch('/api/orders')
+      .then(res => res.json())
+      .then(data => {
+        if (Array.isArray(data)) {
+          // Map backend orders back to standard UI structures
+          const mapped: Order[] = data.map((o: any) => ({
+            id: o.id,
+            total: o.totalAmount,
+            orderDate: o.createdAt,
+            trackingNumber: `LTL-FREIGHT-${o.id.replace(/\D/g, '') || '9188'}`,
+            status: o.status === 'Pending' ? 'Pending Verification' : o.status === 'Approved' ? 'Processing' : 'Shipped',
+            businessAccount: {
+              businessName: o.businessName,
+              email: o.buyerEmail,
+              address: '',
+              phone: '',
+              licenseNumber: o.licenseNumber,
+              isVerified: true,
+              registeredAt: o.createdAt
+            },
+            items: o.items
+          }));
+          setOrders(mapped);
+        }
+      })
+      .catch(err => console.error("Failed to sync orders ledger with API:", err));
+  };
+
+  // Synchronize state updates and fetch backend loads
+  useEffect(() => {
+    if (isPasswordUnlocked) {
+      fetchProducts();
+      fetchOrders();
+      fetchSystemStatus();
+    }
+  }, [isPasswordUnlocked]);
+
   // UI state managers
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -58,6 +125,7 @@ export default function App() {
 
   // Modals visibility toggles
   const [isRegisterOpen, setIsRegisterOpen] = useState(false);
+  const [isBuyerLoginOpen, setIsBuyerLoginOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isInspectOpen, setIsInspectOpen] = useState(false);
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
@@ -153,6 +221,19 @@ export default function App() {
       trackingNumber: `LTL-FREIGHT-${Math.floor(50000 + Math.random() * 50000)}`
     };
 
+    // Save order securely via the express server backend (which handles MongoDB)
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newOrder)
+    })
+    .then(res => res.json())
+    .then(() => {
+      fetchOrders();
+      fetchProducts();
+    })
+    .catch(err => console.error("Wholesale checkout backend post failed:", err));
+
     setOrders(prev => [newOrder, ...prev]);
     setCurrentSuccessOrder(newOrder);
     setCart([]); // Reset the active cart
@@ -176,6 +257,18 @@ export default function App() {
 
   // Administrative Operations
   const handleUpdateOrderStatus = (orderId: string, status: Order['status']) => {
+    const dbStatus = status === 'Pending Verification' ? 'Pending' : status === 'Processing' ? 'Approved' : 'Dispatched';
+    fetch(`/api/orders/${orderId}/status`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ status: dbStatus })
+    })
+    .then(res => res.json())
+    .then(() => {
+      fetchOrders();
+    })
+    .catch(err => console.error("Wholesale status dispatch sync failed:", err));
+
     setOrders(prev => prev.map(ord => ord.id === orderId ? { ...ord, status } : ord));
   };
 
@@ -184,11 +277,23 @@ export default function App() {
   };
 
   const handleSimulateOrder = (order: Order) => {
+    fetch('/api/orders', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(order)
+    })
+    .then(res => res.json())
+    .then(() => {
+      fetchOrders();
+      fetchProducts();
+    })
+    .catch(err => console.error("Simulated order sync failed:", err));
+
     setOrders(prev => [order, ...prev]);
   };
 
   // Filter products catalog
-  const filteredProducts = PRODUCTS.filter(product => {
+  const filteredProducts = productsList.filter(product => {
     const matchesCategory = activeCategory === 'All' || product.category === activeCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
                           product.brand.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -212,6 +317,7 @@ export default function App() {
         cartCount={cart.reduce((acc, item) => acc + item.quantity, 0)}
         onOpenCart={() => setIsCartOpen(true)}
         onOpenRegister={() => setIsRegisterOpen(true)}
+        onOpenLogin={() => setIsBuyerLoginOpen(true)}
         onLogout={handleLockCatalog}
         isAdminMode={isAdminMode}
         onToggleAdminMode={() => {
@@ -229,7 +335,7 @@ export default function App() {
         isProfileMode={isProfileMode}
         onToggleProfileMode={() => {
           if (!businessAccount) {
-            setIsRegisterOpen(true);
+            setIsBuyerLoginOpen(true);
           } else {
             setIsAdminMode(false);
             setIsProfileMode(prev => !prev);
@@ -268,6 +374,8 @@ export default function App() {
             onDeleteOrder={handleDeleteOrder}
             onSimulateOrder={handleSimulateOrder}
             onClose={() => setIsAdminMode(false)}
+            products={productsList}
+            onRefreshProducts={fetchProducts}
           />
         </div>
       ) : isProfileMode && businessAccount ? (
@@ -582,7 +690,14 @@ export default function App() {
           </div>
 
           <div className="pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono tracking-widest uppercase">
-            <span>© 2026 PACIFIC SMOKE INC. LUXURY SECURE PORTALS • ALL RIGHTS RESERVED.</span>
+            <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-center sm:text-left">
+              <span>© 2026 PACIFIC SMOKE INC. LUXURY SECURE PORTALS • ALL RIGHTS RESERVED.</span>
+              <span className="hidden sm:inline text-neutral-850">|</span>
+              <span className={`inline-flex items-center gap-1.5 ${isDbConnected ? 'text-emerald-400' : 'text-neutral-500'}`}>
+                <span className={`h-1.5 w-1.5 rounded-full ${isDbConnected ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-600'}`} />
+                DATABASE SECURE LOG: {dbType.toUpperCase()}
+              </span>
+            </div>
             <div className="flex gap-4">
               <a href="#compliance" className="hover:text-amber-500">TERMS OF SALE</a>
               <span>•</span>
@@ -600,10 +715,52 @@ export default function App() {
           <RegisterModal
             isOpen={isRegisterOpen}
             onClose={() => setIsRegisterOpen(false)}
+            onOpenLogin={() => {
+              setIsRegisterOpen(false);
+              setIsBuyerLoginOpen(true);
+            }}
             onRegisterSuccess={(account) => {
               setBusinessAccount(account);
+
+              // Post registration details to backend API for MongoDB storage
+              fetch('/api/buyers/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(account)
+              })
+              .then(res => res.json())
+              .then(() => {
+                fetchSystemStatus();
+                // Refresh local buyers list key if any prefilled views
+              })
+              .catch(err => console.error("Wholesale registration sync failed:", err));
+
+              // Save custom registered buyer locally
+              const saved = localStorage.getItem('pacific_registered_buyers');
+              const buyers = saved ? JSON.parse(saved) : [];
+              if (!buyers.some((b: any) => b.email.toLowerCase() === account.email.toLowerCase())) {
+                buyers.push(account);
+                localStorage.setItem('pacific_registered_buyers', JSON.stringify(buyers));
+              }
               setIsRegisterOpen(false);
               setIsProfileMode(true);
+            }}
+          />
+        )}
+
+        {/* Business Login modal overlay */}
+        {isBuyerLoginOpen && (
+          <BuyerLoginModal
+            isOpen={isBuyerLoginOpen}
+            onClose={() => setIsBuyerLoginOpen(false)}
+            onLoginSuccess={(account) => {
+              setBusinessAccount(account);
+              setIsBuyerLoginOpen(false);
+              setIsProfileMode(true);
+            }}
+            onOpenRegister={() => {
+              setIsBuyerLoginOpen(false);
+              setIsRegisterOpen(true);
             }}
           />
         )}
