@@ -45,13 +45,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
         </div>
-        <button 
-          onClick={() => setShowHint(!showHint)} 
-          className="text-neutral-500 hover:text-amber-400 transition-colors flex items-center gap-1.5 text-xs font-mono tracking-wider cursor-pointer"
-        >
-          <HelpCircle size={14} />
-          <span>Access Assistance</span>
-        </button>
+       
       </div>
 
       {/* Main Entry Shield Center Screen */}
@@ -142,25 +136,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
             </button>
           </form>
 
-          {/* Access Help Warning */}
-          <AnimatePresence>
-            {showHint && (
-              <motion.div
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: 'auto' }}
-                exit={{ opacity: 0, height: 0 }}
-                className="mt-4 pt-4 border-t border-neutral-800/60 overflow-hidden"
-              >
-                <div className="p-3 bg-amber-500/10 border border-amber-500/20 rounded-lg text-xs leading-relaxed text-amber-300 font-mono flex gap-2.5">
-                  <ShieldCheck size={18} className="flex-shrink-0 text-amber-500" />
-                  <div>
-                    <span className="font-semibold block uppercase tracking-wider mb-1">Developer Credentials Hint:</span>
-                    Enter <code className="bg-neutral-950 px-1.5 py-0.5 rounded text-white font-bold select-all">PACIFIC2026</code> into the password field above to gain fast verification clearance.
-                  </div>
-                </div>
-              </motion.div>
-            )}
-          </AnimatePresence>
+         
         </motion.div>
 
         {/* Brand Authenticity Notice */}
