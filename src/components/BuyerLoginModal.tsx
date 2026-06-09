@@ -10,6 +10,8 @@ interface BuyerLoginModalProps {
   onOpenRegister: () => void;
 }
 
+type BuyerAuthView = 'login' | 'request-reset' | 'reset-password';
+
 // Default seeded B2B wholesale buyer accounts
 export const DEFAULT_BUYER_ACCOUNTS: BusinessAccount[] = [
   {
@@ -45,7 +47,13 @@ export default function BuyerLoginModal({
   const [showPassword, setShowPassword] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [isAuthenticating, setIsAuthenticating] = useState(false);
+  const [isResettingPassword, setIsResettingPassword] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [view, setView] = useState<BuyerAuthView>('login');
+  const [resetEmail, setResetEmail] = useState('');
+  const [resetCode, setResetCode] = useState('');
+  const [newPassword, setNewPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
 
   // Clear inputs when opening/closing
   useEffect(() => {
@@ -55,6 +63,12 @@ export default function BuyerLoginModal({
       setErrorText('');
       setIsSuccess(false);
       setIsAuthenticating(false);
+      setIsResettingPassword(false);
+      setView('login');
+      setResetEmail('');
+      setResetCode('');
+      setNewPassword('');
+      setConfirmPassword('');
     }
   }, [isOpen]);
 
@@ -142,6 +156,87 @@ export default function BuyerLoginModal({
     });
   };
 
+  const handleRequestResetCode = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorText('');
+
+    const targetEmail = (resetEmail || email).trim();
+    if (!targetEmail) {
+      setErrorText('Enter the buyer email address associated with the account.');
+      return;
+    }
+
+    setIsAuthenticating(true);
+    try {
+      const res = await fetch('/api/auth/buyer/password-reset/request', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: targetEmail })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || 'Unable to send reset code.');
+      }
+
+      setResetEmail(targetEmail);
+      setEmail(targetEmail);
+      setView('reset-password');
+      setResetCode('');
+      setNewPassword('');
+      setConfirmPassword('');
+      setErrorText('');
+    } catch (err: any) {
+      setErrorText(err.message || 'Unable to send reset code.');
+    } finally {
+      setIsAuthenticating(false);
+    }
+  };
+
+  const handleConfirmPasswordReset = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setErrorText('');
+
+    const targetEmail = (resetEmail || email).trim();
+    if (!targetEmail || !resetCode || !newPassword || !confirmPassword) {
+      setErrorText('Fill out the reset code and both password fields.');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      setErrorText('The new password and confirmation do not match.');
+      return;
+    }
+
+    setIsResettingPassword(true);
+    try {
+      const res = await fetch('/api/auth/buyer/password-reset/confirm', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          email: targetEmail,
+          code: resetCode,
+          newPassword,
+        })
+      });
+
+      const data = await res.json().catch(() => ({}));
+      if (!res.ok) {
+        throw new Error(data.error || 'Reset code verification failed.');
+      }
+
+      setIsSuccess(true);
+      setTimeout(() => {
+        onLoginSuccess(data.account);
+        onClose();
+      }, 900);
+    } catch (err: any) {
+      setErrorText(err.message || 'Reset code verification failed.');
+    } finally {
+      setIsResettingPassword(false);
+    }
+  };
+
   // Auto pre-fill credentials for testing
   const prefillAccount = (account: BusinessAccount) => {
     setEmail(account.email);
@@ -203,7 +298,7 @@ export default function BuyerLoginModal({
                 <p className="text-xs text-neutral-400 mt-1">Accessing secure catalog rates & active shipping profiles...</p>
               </div>
             </motion.div>
-          ) : (
+          ) : view === 'login' ? (
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -237,6 +332,18 @@ export default function BuyerLoginModal({
                 <div className="space-y-1">
                   <div className="flex justify-between items-center">
                     <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Security Access Key/Password</label>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setView('request-reset');
+                        setResetEmail(email);
+                        setErrorText('');
+                      }}
+                      className="text-[10px] font-mono text-amber-500 hover:text-amber-400 transition-colors cursor-pointer"
+                      disabled={isAuthenticating}
+                    >
+                      Forgot password?
+                    </button>
                   </div>
                   <div className="relative">
                     <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
@@ -304,32 +411,191 @@ export default function BuyerLoginModal({
                 </button>
               </div>
 
-              {/* Seed Demo Users for Quick Diagnostics */}
-              <div className="bg-neutral-950 p-3 rounded-lg border border-neutral-850 space-y-2">
-                <span className="text-[9px] font-mono tracking-widest text-neutral-500 uppercase font-bold block">
-                  DEMO CORPORATE CREDENTIALS
-                </span>
-                <div className="space-y-1.5 divide-y divide-neutral-900/60 font-mono text-[10px]">
-                  {DEFAULT_BUYER_ACCOUNTS.map((acc, index) => (
-                    <div
-                      key={index}
-                      onClick={() => prefillAccount(acc)}
-                      className={`pt-1.5 pb-0.5 first:pt-0 cursor-pointer text-left group hover:bg-neutral-900/40 px-1 py-1 rounded transition-colors ${
-                        email === acc.email ? 'border border-amber-500/20 bg-amber-500/5' : ''
-                      }`}
-                      title="Click to automatically pre-fill credentials"
-                    >
-                      <div className="flex justify-between text-neutral-400 group-hover:text-amber-400 transition-colors">
-                        <span className="font-semibold truncate max-w-[140px] text-[10.5px] uppercase">{acc.businessName.split(' ')[0]}</span>
-                        <span className="text-[9px] bg-amber-500/10 border border-amber-500/15 text-amber-500 px-1 rounded-sm uppercase tracking-wide leading-none py-0.5 font-bold">Prefill</span>
-                      </div>
-                      <div className="text-neutral-500 text-[9px] mt-0.5 truncate leading-none">Email: <span className="text-neutral-300">{acc.email}</span></div>
-                      <div className="text-neutral-500 text-[9px] mt-0.5 leading-none">Key: <span className="text-neutral-300">{acc.password}</span></div>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            
+            </motion.div>
+          ) : view === 'request-reset' ? (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-4"
+            >
+              <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                Request a one-time verification code. We will email a reset link to the buyer address on file.
+              </p>
 
+              <form onSubmit={handleRequestResetCode} className="space-y-3.5">
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Buyer Email Address</label>
+                  <div className="relative">
+                    <span className="absolute inset-y-0 left-0 pl-3 flex items-center text-neutral-500">
+                      <Mail size={13} />
+                    </span>
+                    <input
+                      type="email"
+                      required
+                      value={resetEmail}
+                      onChange={(e) => setResetEmail(e.target.value)}
+                      placeholder="merchant@corporate.com"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                      disabled={isAuthenticating}
+                    />
+                  </div>
+                </div>
+
+                {errorText && (
+                  <div className="p-2.5 rounded-lg bg-red-500/5 border border-red-500/20 text-[11px] text-red-400 font-mono flex items-start gap-1.5 leading-relaxed">
+                    <span className="font-bold flex-shrink-0 animate-pulse">● Error:</span>
+                    <span>{errorText}</span>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setView('login')}
+                    className="w-1/3 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 py-2.5 rounded-lg text-xs font-mono font-semibold tracking-wider cursor-pointer"
+                    disabled={isAuthenticating}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isAuthenticating}
+                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-amber-500 hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
+                  >
+                    {isAuthenticating ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-3 w-3 border-2 border-neutral-950 border-t-transparent rounded-full animate-spin" />
+                        <span>SENDING RESET CODE...</span>
+                      </span>
+                    ) : (
+                      <>
+                        <span>SEND RESET CODE</span>
+                        <ArrowRight size={12} />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          ) : (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="space-y-4"
+            >
+              <p className="text-xs text-neutral-400 leading-relaxed font-light">
+                Enter the OTP sent to your buyer email and choose a new password.
+              </p>
+
+              <form onSubmit={handleConfirmPasswordReset} className="space-y-3.5">
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Buyer Email Address</label>
+                  <input
+                    type="email"
+                    required
+                    value={resetEmail}
+                    onChange={(e) => setResetEmail(e.target.value)}
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    disabled={isResettingPassword}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Reset OTP</label>
+                  <input
+                    type="text"
+                    inputMode="numeric"
+                    maxLength={6}
+                    required
+                    value={resetCode}
+                    onChange={(e) => setResetCode(e.target.value.replace(/\D/g, ''))}
+                    placeholder="123456"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors tracking-[0.4em]"
+                    disabled={isResettingPassword}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">New Password</label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={newPassword}
+                    onChange={(e) => setNewPassword(e.target.value)}
+                    placeholder="Enter a secure new password"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    disabled={isResettingPassword}
+                  />
+                </div>
+
+                <div className="space-y-1">
+                  <label className="block text-[10px] font-mono text-neutral-400 uppercase tracking-wider">Confirm Password</label>
+                  <input
+                    type={showPassword ? 'text' : 'password'}
+                    required
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="Confirm the new password"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    disabled={isResettingPassword}
+                  />
+                </div>
+
+                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500">
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    className="text-amber-500 hover:text-amber-400 transition-colors cursor-pointer"
+                    disabled={isResettingPassword}
+                  >
+                    {showPassword ? 'Hide password' : 'Show password'}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setView('request-reset')}
+                    className="text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                    disabled={isResettingPassword}
+                  >
+                    Resend code
+                  </button>
+                </div>
+
+                {errorText && (
+                  <div className="p-2.5 rounded-lg bg-red-500/5 border border-red-500/20 text-[11px] text-red-400 font-mono flex items-start gap-1.5 leading-relaxed">
+                    <span className="font-bold flex-shrink-0 animate-pulse">● Error:</span>
+                    <span>{errorText}</span>
+                  </div>
+                )}
+
+                <div className="flex gap-3">
+                  <button
+                    type="button"
+                    onClick={() => setView('login')}
+                    className="w-1/3 bg-neutral-900 hover:bg-neutral-800 text-neutral-300 border border-neutral-800 py-2.5 rounded-lg text-xs font-mono font-semibold tracking-wider cursor-pointer"
+                    disabled={isResettingPassword}
+                  >
+                    Back
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isResettingPassword}
+                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-amber-500 hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
+                  >
+                    {isResettingPassword ? (
+                      <span className="flex items-center gap-2">
+                        <span className="h-3 w-3 border-2 border-neutral-950 border-t-transparent rounded-full animate-spin" />
+                        <span>UPDATING PASSWORD...</span>
+                      </span>
+                    ) : (
+                      <>
+                        <span>VERIFY & RESET</span>
+                        <ArrowRight size={12} />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
             </motion.div>
           )}
         </AnimatePresence>

@@ -36,6 +36,8 @@ export default function App() {
     return localStorage.getItem('pacific_password_unlocked') === 'true';
   });
 
+  const [currentPath, setCurrentPath] = useState(() => window.location.pathname);
+
   const [businessAccount, setBusinessAccount] = useState<BusinessAccount | null>(() => {
     const saved = localStorage.getItem('pacific_business_account');
     return saved ? JSON.parse(saved) : null;
@@ -108,15 +110,6 @@ export default function App() {
       .catch(err => console.error("Failed to sync orders ledger with API:", err));
   };
 
-  // Synchronize state updates and fetch backend loads
-  useEffect(() => {
-    if (isPasswordUnlocked) {
-      fetchProducts();
-      fetchOrders();
-      fetchSystemStatus();
-    }
-  }, [isPasswordUnlocked]);
-
   // UI state managers
   const [activeCategory, setActiveCategory] = useState<string>('All');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -131,12 +124,29 @@ export default function App() {
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
   // Admin and Desk state
-  const [isAdminMode, setIsAdminMode] = useState(false);
   const [isProfileMode, setIsProfileMode] = useState(false);
   const [isAdminVerified, setIsAdminVerified] = useState(() => {
     return localStorage.getItem('pacific_admin_verified') === 'true';
   });
   const [isAdminLoginOpen, setIsAdminLoginOpen] = useState(false);
+
+  const isAdminPage = currentPath.startsWith('/admin-dashboard');
+  const isAdminMode = isAdminPage && isAdminVerified;
+
+  const navigateTo = (path: string) => {
+    if (window.location.pathname !== path) {
+      window.history.pushState({}, '', path);
+    }
+    setCurrentPath(path);
+  };
+
+  const goHome = () => navigateTo('/');
+  const goAdminPage = () => navigateTo('/admin-dashboard');
+  const exitAdminPage = () => {
+    if (isAdminPage) {
+      goHome();
+    }
+  };
 
   // Sync state variables to Local Storage
   useEffect(() => {
@@ -162,6 +172,35 @@ export default function App() {
   useEffect(() => {
     localStorage.setItem('pacific_admin_verified', String(isAdminVerified));
   }, [isAdminVerified]);
+
+  // Synchronize state updates and fetch backend loads
+  useEffect(() => {
+    if (isPasswordUnlocked || isAdminVerified) {
+      fetchProducts();
+      fetchOrders();
+      fetchSystemStatus();
+    }
+  }, [isPasswordUnlocked, isAdminVerified]);
+
+  useEffect(() => {
+    const handlePopState = () => {
+      setCurrentPath(window.location.pathname);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  useEffect(() => {
+    if (isAdminPage && !isAdminVerified) {
+      setIsAdminLoginOpen(true);
+      return;
+    }
+
+    if (!isAdminPage) {
+      setIsAdminLoginOpen(false);
+    }
+  }, [isAdminPage, isAdminVerified]);
 
   // Cart operations
   const handleAddToCart = (product: Product, quantity: number) => {
@@ -246,7 +285,7 @@ export default function App() {
     setIsPasswordUnlocked(false);
     setBusinessAccount(null);
     setCart([]);
-    setIsAdminMode(false);
+    exitAdminPage();
     setIsProfileMode(false);
     setIsAdminVerified(false);
     localStorage.removeItem('pacific_password_unlocked');
@@ -303,6 +342,66 @@ export default function App() {
 
   const categoriesList = ['All', 'Disposables', 'Pod Systems', 'E-Liquid', 'Hardware', 'Vaporizers', 'Vessels', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets'];
 
+  if (isAdminPage) {
+    return (
+      <div className="min-h-screen bg-neutral-950 text-neutral-100">
+        <div className="relative min-h-screen overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(245,158,11,0.14),_transparent_32%),radial-gradient(circle_at_bottom_right,_rgba(17,24,39,0.9),_transparent_50%)]" />
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <div className="flex items-center justify-between gap-4 border border-neutral-900 bg-neutral-950/70 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-2xl shadow-black/20">
+              <div>
+                <span className="block text-[10px] uppercase tracking-[0.35em] text-amber-500 font-mono font-bold">Administrator Workspace</span>
+                <h1 className="text-lg sm:text-xl font-semibold text-white">Pacific Smoke Admin Dashboard</h1>
+              </div>
+              <button
+                type="button"
+                onClick={goHome}
+                className="bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 rounded-lg px-4 py-2 text-xs font-mono uppercase tracking-widest transition-colors"
+              >
+                Back to site
+              </button>
+            </div>
+
+            <div className="mt-6">
+              {isAdminVerified ? (
+                <AdminDashboard
+                  orders={orders}
+                  onUpdateOrderStatus={handleUpdateOrderStatus}
+                  onDeleteOrder={handleDeleteOrder}
+                  onSimulateOrder={handleSimulateOrder}
+                  onClose={goHome}
+                  products={productsList}
+                  onRefreshProducts={fetchProducts}
+                />
+              ) : (
+                <div className="flex items-center justify-center py-12">
+                  <p className="text-sm text-neutral-400 font-mono">Admin access requires sign in.</p>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <AnimatePresence>
+            {isAdminLoginOpen && (
+              <AdminLoginModal
+                isOpen={isAdminLoginOpen}
+                onClose={() => {
+                  setIsAdminLoginOpen(false);
+                  goHome();
+                }}
+                onLoginSuccess={() => {
+                  setIsAdminVerified(true);
+                  setIsAdminLoginOpen(false);
+                  goAdminPage();
+                }}
+              />
+            )}
+          </AnimatePresence>
+        </div>
+      </div>
+    );
+  }
+
   // Gatekeeping page view
   if (!isPasswordUnlocked) {
     return <PasswordGate onSuccess={() => setIsPasswordUnlocked(true)} />;
@@ -322,11 +421,11 @@ export default function App() {
         isAdminMode={isAdminMode}
         onToggleAdminMode={() => {
           setIsProfileMode(false);
-          if (isAdminMode) {
-            setIsAdminMode(false);
+          if (isAdminPage) {
+            goHome();
           } else {
             if (isAdminVerified) {
-              setIsAdminMode(true);
+              goAdminPage();
             } else {
               setIsAdminLoginOpen(true);
             }
@@ -337,13 +436,13 @@ export default function App() {
           if (!businessAccount) {
             setIsBuyerLoginOpen(true);
           } else {
-            setIsAdminMode(false);
+            exitAdminPage();
             setIsProfileMode(prev => !prev);
           }
         }}
         activeCategory={activeCategory}
         onSelectCategory={(category) => {
-          setIsAdminMode(false);
+          exitAdminPage();
           setIsProfileMode(false);
           setActiveCategory(category);
           // Auto-scroll to catalog container
@@ -353,7 +452,7 @@ export default function App() {
           }, 100);
         }}
         onSelectBrand={(brand) => {
-          setIsAdminMode(false);
+          exitAdminPage();
           setIsProfileMode(false);
           setActiveCategory('All');
           setSearchQuery(brand);
@@ -373,7 +472,7 @@ export default function App() {
             onUpdateOrderStatus={handleUpdateOrderStatus}
             onDeleteOrder={handleDeleteOrder}
             onSimulateOrder={handleSimulateOrder}
-            onClose={() => setIsAdminMode(false)}
+            onClose={goHome}
             products={productsList}
             onRefreshProducts={fetchProducts}
           />
@@ -811,11 +910,13 @@ export default function App() {
         {isAdminLoginOpen && (
           <AdminLoginModal
             isOpen={isAdminLoginOpen}
-            onClose={() => setIsAdminLoginOpen(false)}
+            onClose={() => {
+              setIsAdminLoginOpen(false);
+            }}
             onLoginSuccess={() => {
               setIsAdminVerified(true);
-              setIsAdminMode(true);
               setIsAdminLoginOpen(false);
+              goAdminPage();
             }}
           />
         )}

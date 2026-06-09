@@ -4,6 +4,10 @@ import { Product, BusinessAccount } from '../types';
 import { PRODUCTS } from '../data/products';
 import { hashPassword } from './security';
 
+function escapeRegex(value: string): string {
+  return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 // Let's model a robust B2B Order interface for backend persistence in our collections
 export interface DbOrder {
   id: string;
@@ -236,6 +240,28 @@ export const dbOperations = {
       return false;
     }
     memoryDb.buyers.push(accountCopy);
+    return true;
+  },
+
+  async updateBuyerPassword(email: string, password: string): Promise<boolean> {
+    await connectToDatabase();
+    const lookupEmail = email.toLowerCase().trim();
+    const hashedPassword = hashPassword(password);
+
+    if (isConnected && db) {
+      const result = await db.collection('buyers').updateOne(
+        { email: { $regex: `^${escapeRegex(lookupEmail)}$`, $options: 'i' } },
+        { $set: { password: hashedPassword } }
+      );
+      return result.matchedCount > 0;
+    }
+
+    const buyer = memoryDb.buyers.find(b => b.email.toLowerCase().trim() === lookupEmail);
+    if (!buyer) {
+      return false;
+    }
+
+    buyer.password = hashedPassword;
     return true;
   },
 

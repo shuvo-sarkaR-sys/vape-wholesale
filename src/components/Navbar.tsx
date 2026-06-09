@@ -58,6 +58,8 @@ export default function Navbar({
     message: ''
   });
   const [contactSubmitted, setContactSubmitted] = useState(false);
+  const [contactLoading, setContactLoading] = useState(false);
+  const [contactError, setContactError] = useState('');
 
   const brandShowcases = [
     { name: 'Apex Labs', category: 'Disposables', desc: 'Quartz glass convective disposables & e-liquids.', count: 'ps-09' },
@@ -67,14 +69,34 @@ export default function Navbar({
     { name: 'Pacific Humidors', category: 'Cigar Accessories', desc: 'Smart moisture humidor storage cases.', count: 'ps-02' }
   ];
 
-  const handleContactSubmit = (e: React.FormEvent) => {
+  const handleContactSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setContactSubmitted(true);
-    setTimeout(() => {
-      setContactSubmitted(false);
+    setContactError('');
+    setContactLoading(true);
+
+    try {
+      const response = await fetch('/api/contact/send', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(contactForm)
+      });
+
+      const data = await response.json().catch(() => ({}));
+      if (!response.ok) {
+        throw new Error(data.error || 'Unable to send the contact request.');
+      }
+
+      setContactSubmitted(true);
       setContactForm({ name: '', email: '', phone: '', topic: 'Dispatch Allocation', message: '' });
-      setShowContactModal(false);
-    }, 2500);
+      setTimeout(() => {
+        setContactSubmitted(false);
+        setShowContactModal(false);
+      }, 2500);
+    } catch (err: any) {
+      setContactError(err.message || 'Unable to send the contact request.');
+    } finally {
+      setContactLoading(false);
+    }
   };
 
   const handleBrandClick = (brandName: string) => {
@@ -162,13 +184,13 @@ export default function Navbar({
                     className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-850 text-amber-400 hover:text-amber-300 border border-amber-500/15 hover:border-amber-500/30 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all cursor-pointer"
                   >
                     <UserCheck size={12} />
-                    <span>Verify Business</span>
+                    <span>Register Business</span>
                   </button>
                 </div>
               )}
 
               {/* B2B Administration Toggle Control */}
-              <button
+              {/* <button
                 onClick={onToggleAdminMode}
                 className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all cursor-pointer ${
                   isAdminMode 
@@ -179,7 +201,7 @@ export default function Navbar({
               >
                 <Sparkles size={11} className={isAdminMode ? 'animate-spin' : ''} />
                 <span>{isAdminMode ? 'ADMIN DESK' : 'CONTROL ROOM'}</span>
-              </button>
+              </button> */}
 
               {/* Cart Allocation Toggle */}
               <button
@@ -791,6 +813,12 @@ export default function Navbar({
                     exit={{ opacity: 0 }}
                   >
                     
+                    {contactError && (
+                      <div className="p-3 rounded-xl bg-red-500/10 border border-red-500/20 text-xs text-red-400 font-mono">
+                        {contactError}
+                      </div>
+                    )}
+
                     <div>
                       <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Your Full Name</label>
                       <input
@@ -858,10 +886,20 @@ export default function Navbar({
                     <div className="pt-2">
                       <button
                         type="submit"
+                        disabled={contactLoading}
                         className="w-full bg-amber-500 hover:bg-amber-400 text-neutral-950 py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-widest flex items-center justify-center gap-1.5 shadow-md active:translate-y-[1px] transition-all cursor-pointer"
                       >
-                        <Send size={12} />
-                        <span>Transmit Broker Dispatch Request</span>
+                        {contactLoading ? (
+                          <>
+                            <span className="h-3 w-3 border-2 border-neutral-950 border-t-transparent rounded-full animate-spin" />
+                            <span>Sending message...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Send size={12} />
+                            <span>Transmit Broker Dispatch Request</span>
+                          </>
+                        )}
                       </button>
                     </div>
 
