@@ -99,14 +99,14 @@ export default function ProductCard({
         {/* Pricing matrix block & order controls */}
         <div className="mt-5 pt-4 border-t border-neutral-900 space-y-4">
           <div className="flex justify-between items-end">
-            <div>
+            {/* <div>
               <span className="block text-[8px] font-mono text-neutral-500 tracking-widest uppercase">
                 SUGGESTED MSRP
               </span>
               <span className="text-xs font-mono text-neutral-400">
                 {product.suggestedMSRP !== undefined ? `$${product.suggestedMSRP.toFixed(2)}` : 'TBD'}
               </span>
-            </div>
+            </div> */}
 
             <div className="text-right">
               <span className="block text-[8px] font-mono text-neutral-500 tracking-widest uppercase flex items-center justify-end gap-1">

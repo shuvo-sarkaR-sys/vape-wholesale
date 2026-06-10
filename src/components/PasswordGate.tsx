@@ -41,7 +41,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
       <div className="w-full flex justify-between items-center pt-8 max-w-7xl z-20">
         <div className="flex items-center gap-2">
           <span className="text-xs tracking-[0.25em] font-light text-neutral-400 uppercase">
-            PACIFIC SMOKE
+           PUFFMANIA DISTRO.
           </span>
           <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
         </div>
@@ -62,7 +62,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
             <Lock className="text-amber-500 group-hover:rotate-6 transition-transform duration-300" size={20} />
           </div>
           <h1 className="text-3xl sm:text-4xl font-sans tracking-tight font-light text-neutral-100">
-            PACIFIC SMOKE
+            PUFFMANIA DISTRO.
           </h1>
           <p className="text-xs tracking-[0.4em] text-neutral-400 font-light mt-2 uppercase">
             PRIVATE WHOLESALE INGRESS
