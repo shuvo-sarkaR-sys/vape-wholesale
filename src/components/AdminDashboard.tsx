@@ -942,7 +942,7 @@ export default function AdminDashboard({
                         onChange={(e) => setFormCategory(e.target.value as Product['category'])}
                         className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
                       >
-                        {['Vessels', 'Vaporizers', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets', 'Disposables', 'Pod Systems', 'E-Liquid', 'Hardware'].map(cat => (
+                        {['Vessels', 'Vaporizers', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets', 'Disposables', 'E-Liquid & Pod', 'Pouches', 'Pod Systems', 'E-Liquid', 'Hardware'].map(cat => (
                           <option key={cat} value={cat}>{cat}</option>
                         ))}
                       </select>

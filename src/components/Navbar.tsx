@@ -136,7 +136,7 @@ export default function Navbar({
               className="flex items-center gap-2 cursor-pointer select-none"
             >
               <span className="text-base md:text-lg font-sans tracking-[0.25em] font-light text-white uppercase">
-                PACIFIC <span className="font-semibold text-amber-500">SMOKE</span>
+                PUFFMANIA<span className="font-semibold text-amber-500"> DISTRO.</span>
               </span>
               <span className="hidden xs:inline-block text-[8px] font-mono tracking-widest text-neutral-500 uppercase border border-neutral-850 px-1.5 py-0.5 rounded ml-1.5 font-medium">
                 Wholesale
@@ -649,7 +649,7 @@ export default function Navbar({
               <div className="flex justify-between items-start border-b border-neutral-950 pb-5 mb-6">
                 <div>
                   <span className="text-[10px] font-mono tracking-[0.3em] font-semibold text-emerald-400 uppercase flex items-center gap-1.5 mb-1.5">
-                    <Activity size={12} /> PACIFIC SMOKE B2B TREND INTELLIGENCE
+                    <Activity size={12} /> PUFFMANIA DISTRO B2B TREND INTELLIGENCE
                   </span>
                   <h3 className="text-xl sm:text-2xl font-light tracking-tight text-white">
                     Seasonal <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-200">Consignment Forecast (Q3-Q4)</span>
