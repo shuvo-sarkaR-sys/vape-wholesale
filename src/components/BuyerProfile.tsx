@@ -424,7 +424,9 @@ export default function BuyerProfile({
                           
                           <div className="text-right font-mono flex-shrink-0">
                             <span className="text-neutral-400 text-[11px] block">{item.quantity} units</span>
-                            <span className="text-neutral-500 font-medium text-[9px] block">${(item.product.price * item.quantity).toFixed(2)} sub</span>
+                            <span className="text-neutral-500 font-medium text-[9px] block">
+                              {item.product.price !== undefined ? `$${(item.product.price * item.quantity).toFixed(2)} sub` : 'Price TBD'}
+                            </span>
                           </div>
                         </div>
                       ))}

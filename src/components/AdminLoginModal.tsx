@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Mail, Lock, Eye, EyeOff, ShieldCheck, X, AlertCircle, Loader2, Key, Sparkles } from 'lucide-react';
 
@@ -9,6 +9,7 @@ interface AdminLoginModalProps {
 }
 
 export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess }: AdminLoginModalProps) {
+   
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [otp, setOtp] = useState('');
@@ -61,6 +62,7 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess }: Adm
 
       onLoginSuccess();
       onClose();
+       
     } catch (err: any) {
       setErrorMessage(err.message || 'Invalid administrator credentials.');
     } finally {

@@ -52,8 +52,8 @@ export default function AdminDashboard({
   const [formName, setFormName] = useState('');
   const [formBrand, setFormBrand] = useState('');
   const [formCategory, setFormCategory] = useState<Product['category']>('Vaporizers');
-  const [formPrice, setFormPrice] = useState(150);
-  const [formSuggestedMSRP, setFormSuggestedMSRP] = useState(299);
+  const [formPrice, setFormPrice] = useState<number | undefined>(undefined);
+  const [formSuggestedMSRP, setFormSuggestedMSRP] = useState<number | undefined>(undefined);
   const [formImage, setFormImage] = useState('');
   const [formDescription, setFormDescription] = useState('');
   const [formMaterial, setFormMaterial] = useState('');
@@ -94,7 +94,7 @@ export default function AdminDashboard({
       ? [{ product: item1, quantity: q1 }]
       : [{ product: item1, quantity: q1 }, { product: item2, quantity: q2 }];
 
-    const subtotal = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    const subtotal = cartItems.reduce((acc, item) => acc + ((item.product.price ?? 0) * item.quantity), 0);
     const shipping = subtotal > 1000 ? 0 : 45.00;
     const tax = subtotal * 0.08;
     const finalTotal = subtotal + shipping + tax;
@@ -156,16 +156,16 @@ export default function AdminDashboard({
     setFormName('');
     setFormBrand('');
     setFormCategory('Vaporizers');
-    setFormPrice(150);
-    setFormSuggestedMSRP(299);
-    setFormImage('https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=600');
-    setFormDescription('Aerospace engineered high precision vape system. Advanced thermal coils and luxury chassis.');
-    setFormMaterial('Anodized Aluminum / Quartz');
-    setFormDimensions('110mm x 22mm x 15mm');
-    setFormOrigin('Designed in Canada');
-    setFormCapacity('2.0 mL');
+    setFormPrice(undefined);
+    setFormSuggestedMSRP(undefined);
+    setFormImage('');
+    setFormDescription('');
+    setFormMaterial('');
+    setFormDimensions('');
+    setFormOrigin('');
+    setFormCapacity('');
     setFormInStock(true);
-    setFormFeatures('Precision flow controls, Magnetic storage lock, OLED telemetry screen');
+    setFormFeatures('');
     setFormError('');
     setActionDoneMsg('');
     setIsProductModalOpen(true);
@@ -194,8 +194,8 @@ export default function AdminDashboard({
 
   const handleProductSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formId || !formName || !formBrand || !formPrice) {
-      setFormError('Please supply all required fields (ID, Brand, Title, Cost).');
+    if (!formId || !formName || !formBrand) {
+      setFormError('Please supply all required fields (ID, Brand, Title).');
       return;
     }
 
@@ -208,9 +208,9 @@ export default function AdminDashboard({
       name: formName,
       brand: formBrand,
       category: formCategory,
-      price: Number(formPrice),
-      suggestedMSRP: Number(formSuggestedMSRP) || Number(formPrice) * 2,
-      image: formImage || 'https://images.unsplash.com/photo-1555664424-778a1e5e1b48?auto=format&fit=crop&q=80&w=600',
+      price: formPrice !== undefined ? Number(formPrice) : undefined,
+      suggestedMSRP: formSuggestedMSRP !== undefined ? Number(formSuggestedMSRP) : formPrice !== undefined ? Number(formPrice) * 2 : undefined,
+      image: formImage || '/src/assets/images/luxury_smoke_banner_1780813987485.png',
       description: formDescription,
       rating: editingProduct ? editingProduct.rating : 4.8,
       specs: {
@@ -588,7 +588,7 @@ export default function AdminDashboard({
                                         <span className="block text-[8px] font-mono text-neutral-500 uppercase">{item.product.brand}</span>
                                         <span className="block text-white font-medium truncate">{item.product.name}</span>
                                         <span className="block text-[10px] font-mono text-neutral-400 mt-0.5">
-                                          {item.quantity} units x ${item.product.price.toFixed(2)}
+                                          {item.quantity} units x {item.product.price !== undefined ? `$${item.product.price.toFixed(2)}` : 'Price TBD'}
                                         </span>
                                       </div>
                                     </div>
@@ -958,14 +958,31 @@ export default function AdminDashboard({
                   </h4>
 
                   <div>
-                    <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Image URL</label>
+                    <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Image Upload</label>
                     <input
-                      type="url"
-                      value={formImage}
-                      onChange={(e) => setFormImage(e.target.value)}
-                      placeholder="https://images.unsplash.com/photo-..."
-                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                      type="file"
+                      accept="image/*"
+                      onChange={(e) => {
+                        const file = e.target.files?.[0];
+                        if (file) {
+                          const reader = new FileReader();
+                          reader.onload = () => {
+                            if (typeof reader.result === 'string') {
+                              setFormImage(reader.result);
+                            }
+                          };
+                          reader.readAsDataURL(file);
+                        }
+                      }}
+                      className="w-full text-xs text-neutral-200 file:bg-amber-500 file:text-neutral-950 file:px-3 file:py-2 file:rounded-lg file:border-none file:font-semibold bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
                     />
+                    {formImage && (
+                      <img
+                        src={formImage}
+                        alt="Product preview"
+                        className="mt-3 h-24 w-24 object-cover rounded-lg border border-neutral-850"
+                      />
+                    )}
                   </div>
 
                   <div>
@@ -989,14 +1006,13 @@ export default function AdminDashboard({
 
                   <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                     <div>
-                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Wholesale Cost ($) <span className="text-amber-500">*</span></label>
+                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Wholesale Cost ($)</label>
                       <input
                         type="number"
                         step="0.01"
-                        required
                         min="0"
-                        value={formPrice}
-                        onChange={(e) => setFormPrice(Number(e.target.value))}
+                        value={formPrice ?? ''}
+                        onChange={(e) => setFormPrice(e.target.value ? Number(e.target.value) : undefined)}
                         className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
                       />
                     </div>

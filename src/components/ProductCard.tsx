@@ -104,7 +104,7 @@ export default function ProductCard({
                 SUGGESTED MSRP
               </span>
               <span className="text-xs font-mono text-neutral-400">
-                ${product.suggestedMSRP.toFixed(2)}
+                {product.suggestedMSRP !== undefined ? `$${product.suggestedMSRP.toFixed(2)}` : 'TBD'}
               </span>
             </div>
 
@@ -118,9 +118,13 @@ export default function ProductCard({
               </span>
 
               {isBusinessVerified ? (
-                <span className="text-lg font-mono text-white font-semibold">
-                  ${product.price.toFixed(2)}
-                </span>
+                product.price !== undefined ? (
+                  <span className="text-lg font-mono text-white font-semibold">
+                    ${product.price.toFixed(2)}
+                  </span>
+                ) : (
+                  <span className="text-sm font-mono text-amber-400 font-semibold">Price on request</span>
+                )
               ) : (
                 <button
                   onClick={onOpenRegister}
@@ -134,7 +138,7 @@ export default function ProductCard({
           </div>
 
           {/* Cart triggers */}
-          {isBusinessVerified && product.specs.inStock && (
+          {isBusinessVerified && product.specs.inStock && product.price !== undefined && (
             <div className="space-y-3 pt-2">
               <div className="flex justify-between items-center text-[10px] font-mono">
                 <span className="text-neutral-500 uppercase tracking-widest flex items-center gap-1">

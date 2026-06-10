@@ -240,7 +240,7 @@ export default function App() {
   const handlePlaceOrder = () => {
     if (!businessAccount) return;
 
-    const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+    const subtotal = cart.reduce((acc, item) => acc + ((item.product.price ?? 0) * item.quantity), 0);
     const shipping = subtotal > 1000 ? 0 : 45.00;
     const tax = subtotal * 0.08;
     const finalTotal = subtotal + shipping + tax;

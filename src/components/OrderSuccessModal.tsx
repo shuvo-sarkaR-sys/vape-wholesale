@@ -64,7 +64,9 @@ export default function OrderSuccessModal({ order, onClose }: OrderSuccessModalP
             {order.items.map((item, i) => (
               <div key={i} className="flex justify-between text-xs text-neutral-300 font-light">
                 <span className="line-clamp-1 max-w-[220px]">{item.product.name} (x{item.quantity})</span>
-                <span className="font-mono">${(item.product.price * item.quantity).toFixed(2)}</span>
+                <span className="font-mono">
+                  {item.product.price !== undefined ? `$${(item.product.price * item.quantity).toFixed(2)}` : 'TBD'}
+                </span>
               </div>
             ))}
           </div>

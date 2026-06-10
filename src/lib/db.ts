@@ -133,13 +133,15 @@ export async function connectToDatabase() {
 async function seedDatabaseIfNeeded() {
   if (!db) return;
   try {
-    const productsColl = db.collection('products');
     const buyersColl = db.collection('buyers');
 
-    const count = await productsColl.countDocuments();
-    if (count === 0) {
-      console.log(`🌱 Seeding ${PRODUCTS.length} baseline premium products into MongoDB 'products' collection...`);
-      await productsColl.insertMany(JSON.parse(JSON.stringify(PRODUCTS)));
+    if (PRODUCTS.length > 0) {
+      const productsColl = db.collection('products');
+      const count = await productsColl.countDocuments();
+      if (count === 0) {
+        console.log(`🌱 Seeding ${PRODUCTS.length} catalog products into MongoDB 'products' collection...`);
+        await productsColl.insertMany(JSON.parse(JSON.stringify(PRODUCTS)));
+      }
     }
 
     const buyerCount = await buyersColl.countDocuments();

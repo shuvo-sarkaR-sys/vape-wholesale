@@ -27,7 +27,7 @@ export default function CartModal({
 }: CartModalProps) {
   if (!isOpen) return null;
 
-  const subtotal = cartItems.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
+  const subtotal = cartItems.reduce((acc, item) => acc + ((item.product.price ?? 0) * item.quantity), 0);
   const estimatedShipping = subtotal > 1000 ? 0 : 45.00; // Free wholesale shipping for orders over $1,000
   const taxRate = 0.08; // 8% distributor tier tax
   const estimatedTax = subtotal * taxRate;
@@ -174,7 +174,7 @@ export default function CartModal({
                           </div>
 
                           <span className="text-xs font-mono text-neutral-300">
-                            ${(item.product.price * item.quantity).toFixed(2)}
+                            {item.product.price !== undefined ? `$${(item.product.price * item.quantity).toFixed(2)}` : 'Price TBD'}
                           </span>
                         </div>
                       </div>

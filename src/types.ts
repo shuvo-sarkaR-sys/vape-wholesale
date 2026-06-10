@@ -3,8 +3,8 @@ export interface Product {
   name: string;
   brand: string;
   category: 'Vessels' | 'Vaporizers' | 'Cigar Accessories' | 'Artisanal Pipes' | 'Curated Sets' | 'Disposables' | 'Pod Systems' | 'E-Liquid' | 'Hardware';
-  price: number; // Wholesale price
-  suggestedMSRP: number;
+  price?: number; // Wholesale price
+  suggestedMSRP?: number;
   image: string;
   description: string;
   rating: number;

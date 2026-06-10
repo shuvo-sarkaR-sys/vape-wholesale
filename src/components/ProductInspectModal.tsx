@@ -137,10 +137,17 @@ export default function ProductInspectModal({
                 <div className="text-center py-2 text-xs font-mono text-amber-500 font-semibold">
                   ⚠️ STATUS: ALLOCATION COMPLETED
                 </div>
+              ) : product.price === undefined ? (
+                <div className="text-center py-4 rounded-xl bg-neutral-900/70 border border-amber-500/20">
+                  <p className="text-xs text-amber-300 font-medium tracking-wide">Pricing is not set for this item yet.</p>
+                  <p className="text-[11px] text-neutral-400 leading-relaxed mt-1">Contact account support to update the product cost before placing an order.</p>
+                </div>
               ) : (
                 <div className="space-y-3">
                   <div className="flex justify-between items-center text-[10px] font-mono">
-                    <span className="text-neutral-400">UNIT PRICE: ${product.price.toFixed(2)}</span>
+                    <span className="text-neutral-400">
+                      UNIT PRICE: {product.price !== undefined ? `$${product.price.toFixed(2)}` : 'Price on request'}
+                    </span>
                     <span className="text-amber-500 font-bold bg-amber-500/10 border border-amber-500/20 px-1.5 py-0.5 rounded leading-none uppercase">
                       B2B MOQ: {moq} PCS
                     </span>
@@ -238,27 +245,7 @@ export default function ProductInspectModal({
             </div>
 
             {/* Technical Blueprint attributes list */}
-            <div>
-              <h4 className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase border-b border-neutral-850 pb-2 mb-2 flex items-center gap-2">
-                <Settings size={12} className="text-amber-500" />
-                <span>TECHNICAL BLUEPRINT SUMMARY</span>
-              </h4>
-
-              <div className="space-y-1.5 font-mono text-[11px]">
-                <div className="flex justify-between py-0.5 border-b border-neutral-900/60">
-                  <span className="text-neutral-500 uppercase">CHASSIS MATERIAL</span>
-                  <span className="text-white text-right">{product.specs.material}</span>
-                </div>
-                <div className="flex justify-between py-0.5 border-b border-neutral-900/60">
-                  <span className="text-neutral-500 uppercase">DIMENSIONS</span>
-                  <span className="text-white text-right">{product.specs.dimensions}</span>
-                </div>
-                <div className="flex justify-between py-0.5 border-b border-neutral-900/60">
-                  <span className="text-neutral-500 uppercase">CONTAINMENT</span>
-                  <span className="text-white text-right">{product.specs.capacity || 'Not Specified'}</span>
-                </div>
-              </div>
-            </div>
+            
 
             {/* Premium Highlights */}
             <div>
