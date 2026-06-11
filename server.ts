@@ -616,7 +616,7 @@ app.get('/api/buyers', async (req, res) => {
 app.post('/api/buyers/register', async (req, res) => {
   try {
     const account: BusinessAccount = req.body;
-    if (!account.businessName || !account.email || !account.licenseNumber || !account.password) {
+    if (!account.businessName || !account.email  || !account.password) {
       return res.status(400).json({ error: 'Required registration metrics not provided.' });
     }
     
@@ -663,7 +663,7 @@ app.post('/api/buyers/login', async (req, res) => {
       return res.status(404).json({ error: 'Corporate account does not exist or has expired.' });
     }
 
-    const expectedPassword = matched.password || matched.licenseNumber;
+    const expectedPassword = matched.password ;
     
     // 2. Perform Timing-Safe Cryptographic Scrypt verification
     const isMatched = verifyPassword(password, expectedPassword);
@@ -715,7 +715,7 @@ app.post('/api/orders', async (req, res) => {
       totalAmount: orderData.total,
       status: orderData.status === 'Pending Verification' ? 'Pending' : 'Approved',
       createdAt: orderData.orderDate,
-      licenseNumber: orderData.businessAccount.licenseNumber
+      
     };
 
     await dbOperations.createOrder(formattedOrder);

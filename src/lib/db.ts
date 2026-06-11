@@ -20,7 +20,7 @@ export interface DbOrder {
   totalAmount: number;
   status: 'Pending' | 'Approved' | 'Dispatched' | 'Completed';
   createdAt: string;
-  licenseNumber: string;
+  
 }
 
 // In-Memory Fallback store in case MongoDB URI is not active
@@ -39,7 +39,7 @@ class InMemoryDatabase {
         email: 'apex.distributor@pacificsmoke.com',
         address: '100 Apex Way, Toronto, ON, M5V 2N8',
         phone: '(416) 555-0199',
-        licenseNumber: 'SMK-LIC-400192',
+        
         isVerified: true,
         registeredAt: 'January 14, 2026',
         password: hashPassword('apex-secured-wholesale')
@@ -49,7 +49,7 @@ class InMemoryDatabase {
         email: 'merchant@vapeshop.com',
         address: '455 Broad Street, Vancouver, BC, V6B 1P4',
         phone: '(604) 555-0142',
-        licenseNumber: 'VPE-REG-982110',
+        
         isVerified: true,
         registeredAt: 'March 28, 2026',
         password: hashPassword('merchant-verified-buyer')

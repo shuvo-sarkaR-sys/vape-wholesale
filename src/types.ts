@@ -23,7 +23,6 @@ export interface BusinessAccount {
   email: string;
   address: string;
   phone: string;
-  licenseNumber: string; // Business/State stamp
   isVerified: boolean;
   registeredAt: string;
   password?: string;

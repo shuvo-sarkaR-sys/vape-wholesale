@@ -29,7 +29,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
     email: '',
     address: '',
     phone: '',
-    licenseNumber: '',
+
     password: ''
   });
 
@@ -71,7 +71,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
   const handleFormSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.businessName || !form.email || !form.address || !form.phone || !form.licenseNumber || !form.password) {
+    if (!form.businessName || !form.email || !form.address || !form.phone ||  !form.password) {
       setErrorText('Please furnish complete regulatory disclosures above.');
       return;
     }
@@ -206,7 +206,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
               email: form.email,
               address: form.address,
               phone: form.phone,
-              licenseNumber: form.licenseNumber,
+       
               isVerified: true,
               registeredAt: new Date().toLocaleDateString('en-US', {
                 year: 'numeric',
@@ -504,7 +504,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
             </div>
 
              {/* Development Mode Helper Box with OTP code for easy user access */}
-            <div className="bg-[#5aa8b3]/5 border border-dashed border-[#5aa8b3]/25 rounded-xl p-4 text-left mb-6 relative overflow-hidden">
+            {/* <div className="bg-[#5aa8b3]/5 border border-dashed border-[#5aa8b3]/25 rounded-xl p-4 text-left mb-6 relative overflow-hidden">
               <div className="absolute top-0 right-0 bg-[#5aa8b3]/10 text-[8px] font-mono font-bold text-[#5aa8b3] uppercase px-2 py-0.5 rounded-bl">
                 SIMULATOR CONTROLLER
               </div>
@@ -533,7 +533,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                   </a>
                 </div>
               )}
-            </div>
+            </div> */}
 
             <form onSubmit={handleVerifyCode} className="space-y-4">
               <div>
