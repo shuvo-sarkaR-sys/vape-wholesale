@@ -256,7 +256,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
 
             <div className="flex justify-between items-start mb-6">
               <div>
-                <span className="text-[10px] tracking-[0.3em] font-mono text-amber-500 uppercase flex items-center gap-1.5 mb-1.5 font-bold">
+                <span className="text-[10px] tracking-[0.3em] font-mono text-[#5aa8b3] uppercase flex items-center gap-1.5 mb-1.5 font-bold">
                   <Award size={12} /> SECURE COMPLIANCE PORTAL
                 </span>
                 <h3 className="text-xl font-light text-neutral-500 font-sans tracking-tight">
@@ -272,14 +272,14 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
             </div>
 
             <p className="text-xs text-neutral-400 leading-relaxed font-light mb-6">
-              To activate commercial wholesale dispatch, you must verify your profile. Our system will validate your registered <strong className="text-amber-400 font-medium">Business Name</strong>, owner <strong className="text-amber-400 font-medium">Email</strong>, and corporate <strong className="text-amber-400 font-medium">Shipping Address</strong>.
+              To activate commercial wholesale dispatch, you must verify your profile. Our system will validate your registered <strong className="text-[#5aa8b3]/80 font-medium">Business Name</strong>, owner <strong className="text-[#5aa8b3]/80 font-medium">Email</strong>, and corporate <strong className="text-[#5aa8b3] font-medium">Shipping Address</strong>.
             </p>
 
             <form onSubmit={handleFormSubmit} className="space-y-4">
               {/* Business Name */}
               <div>
                 <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
-                  Official Business Name <span className="text-amber-500 text-xs font-bold font-sans">*</span> <span className="text-[9px] text-neutral-550 lowercase">(Required for profile verification)</span>
+                  Official Business Name <span className="text-[#5aa8b3] text-xs font-bold font-sans">*</span>
                 </label>
                 <div className="relative">
                   <input
@@ -289,7 +289,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     value={form.businessName}
                     onChange={handleInputChange}
                     placeholder="e.g. Pacific Boutique LLC"
-                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                   />
                   <Building className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                 </div>
@@ -300,7 +300,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                 {/* Email Address */}
                 <div>
                   <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
-                    Owner Email <span className="text-amber-500 text-xs font-bold font-sans">*</span> <span className="text-[9px] text-neutral-550 lowercase">(Requires interactive mail check)</span>
+                    Owner Email <span className="text-[#5aa8b3] text-xs font-bold font-sans">*</span> 
                   </label>
                   <div className="relative">
                     <input
@@ -310,7 +310,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                       value={form.email}
                       onChange={handleInputChange}
                       placeholder="buyer@corporate.com"
-                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                     />
                     <Mail className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                   </div>
@@ -329,7 +329,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                       value={form.phone}
                       onChange={handleInputChange}
                       placeholder="+1 (555) 019-2834"
-                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                     />
                     <Phone className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                   </div>
@@ -339,7 +339,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
               {/* Physical Corporate Address */}
               <div>
                 <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
-                  Corporate Shipping Location & Suite <span className="text-amber-500 text-xs font-bold font-sans">*</span> <span className="text-[9px] text-neutral-550 lowercase">(Required for profile verification)</span>
+                  Corporate Shipping Location & Suite <span className="text-[#5aa8b3] text-xs font-bold font-sans">*</span> 
                 </label>
                 <div className="relative">
                   <input
@@ -349,14 +349,14 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     value={form.address}
                     onChange={handleInputChange}
                     placeholder="e.g. 742 Ocean Edge Drive, Suite 10, Vancouver, BC"
-                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                    className="w-full bg-neutral-950 border border-neutral-850 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                   />
                   <MapPin className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                 </div>
               </div>
 
               {/* Business License / EIN Stamp */}
-              <div>
+              {/* <div>
                 <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
                   Tobacco Distribution / Business License Identification
                 </label>
@@ -368,16 +368,16 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     value={form.licenseNumber}
                     onChange={handleInputChange}
                     placeholder="e.g. EIN-489201-9238 / LIC-PACIFIC"
-                    className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                    className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                   />
                   <Award className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                 </div>
-              </div>
+              </div> */}
 
               {/* Security Access Key / Password */}
               <div>
                 <label className="block text-[10px] uppercase tracking-[0.15em] text-neutral-400 mb-1.5 font-mono">
-                  Security Access Key / Password <span className="text-amber-500 text-xs font-bold font-sans">*</span> <span className="text-[9px] text-neutral-550 lowercase">(Requires hardened strength)</span>
+                  Security Access Key / Password <span className="text-[#5aa8b3] text-xs font-bold font-sans">*</span> 
                 </label>
                 <div className="relative">
                   <input
@@ -387,7 +387,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     value={form.password}
                     onChange={handleInputChange}
                     placeholder="Create a password (8+ chars, upper, lower, numbers, symbols)"
-                    className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-600"
+                    className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                   />
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
                 </div>
@@ -427,7 +427,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
               >
                 {isSendingEmail ? (
                   <>
-                    <Loader2 size={13} className="animate-spin text-amber-500" />
+                    <Loader2 size={13} className="animate-spin text-[#5aa8b3]" />
                     <span>DISPATCHING SECURITY TOKEN...</span>
                   </>
                 ) : (
@@ -446,7 +446,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     onClick={() => {
                       onOpenLogin();
                     }}
-                    className="text-amber-500 hover:text-amber-400 font-semibold underline underline-offset-2 transition-colors cursor-pointer"
+                    className="text-[#5aa8b3] hover:text-amber-400 font-semibold underline underline-offset-2 transition-colors cursor-pointer"
                   >
                     Buyer Sign In
                   </button>
@@ -481,14 +481,14 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                 <span>Back</span>
               </button>
               <div className="flex-grow text-right">
-                <span className="text-[9px] font-mono text-amber-500 uppercase font-black bg-amber-500/10 px-2 py-0.5 rounded-full">
+                <span className="text-[9px] font-mono text-[#5aa8b3] uppercase font-black bg-[#5aa8b3]/10 px-2 py-0.5 rounded-full">
                   STEP 2 OF 3
                 </span>
               </div>
             </div>
 
             <div className="text-center space-y-2 mb-6">
-              <div className="mx-auto h-11 w-11 rounded-full bg-amber-500/10 border border-amber-500/20 text-amber-400 flex items-center justify-center">
+              <div className="mx-auto h-11 w-11 rounded-full bg-[#5aa8b3]/10 border border-[#5aa8b3]/20 text-amber-400 flex items-center justify-center">
                 <Mail size={18} />
               </div>
               <h3 className="text-lg font-light tracking-tight text-white font-sans">
@@ -504,11 +504,11 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
             </div>
 
              {/* Development Mode Helper Box with OTP code for easy user access */}
-            <div className="bg-amber-500/5 border border-dashed border-amber-500/25 rounded-xl p-4 text-left mb-6 relative overflow-hidden">
-              <div className="absolute top-0 right-0 bg-amber-500/10 text-[8px] font-mono font-bold text-amber-400 uppercase px-2 py-0.5 rounded-bl">
+            <div className="bg-[#5aa8b3]/5 border border-dashed border-[#5aa8b3]/25 rounded-xl p-4 text-left mb-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 bg-[#5aa8b3]/10 text-[8px] font-mono font-bold text-[#5aa8b3] uppercase px-2 py-0.5 rounded-bl">
                 SIMULATOR CONTROLLER
               </div>
-              <span className="text-[9px] font-mono tracking-wider text-amber-400 uppercase font-black flex items-center gap-1 mb-1">
+              <span className="text-[9px] font-mono tracking-wider text-[#5aa8b3]/80 uppercase font-black flex items-center gap-1 mb-1">
                 <Sparkles size={10} /> LOCAL DISPATCH FEED:
               </span>
               <p className="text-[11px] text-neutral-300 leading-snug font-light font-sans">
@@ -526,7 +526,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     href={previewEmailUrl} 
                     target="_blank" 
                     rel="noreferrer" 
-                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-500 text-neutral-950 text-[10px] font-mono tracking-wider uppercase font-bold rounded hover:bg-amber-400 transition-colors"
+                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#5aa8b3] text-neutral-950 text-[10px] font-mono tracking-wider uppercase font-bold rounded hover:bg-[#5aa8b3]/80 transition-colors"
                   >
                     <Mail size={11} />
                     <span>Open Sandbox Inbox</span>
@@ -553,7 +553,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                       setUserInputCode(val);
                     }}
                     placeholder="0 0 0 0 0 0"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl py-3 px-4 text-center font-mono text-lg tracking-[0.4em] text-amber-400 font-bold focus:outline-none focus:border-amber-500 placeholder-neutral-800"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-xl py-3 px-4 text-center font-mono text-lg tracking-[0.4em] text-[#5aa8b3]/80 font-bold focus:outline-none focus:border-[#5aa8b3] placeholder-neutral-800"
                   />
                   <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-700 pointer-events-none" size={13} />
                 </div>
@@ -582,7 +582,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                   className={`w-full py-2 px-3 rounded-lg text-[10px] font-mono uppercase tracking-wider flex items-center justify-center gap-1.5 transition-colors ${
                     timer > 0 
                       ? 'bg-neutral-900/40 text-neutral-600' 
-                      : 'bg-neutral-950 hover:bg-neutral-950/70 text-amber-400 hover:text-amber-300 border border-neutral-850 hover:border-amber-500/20 cursor-pointer'
+                      : 'bg-neutral-950 hover:bg-neutral-950/70 text-amber-400 hover:text-amber-300 border border-neutral-850 hover:border-[#5aa8b3]/20 cursor-pointer'
                   }`}
                 >
                   <RefreshCw size={11} className={timer > 0 ? '' : 'animate-spin-slow'} />
@@ -602,11 +602,11 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
             exit={{ opacity: 0, scale: 0.95 }}
             className="relative bg-neutral-920 border border-neutral-800 rounded-2xl w-full max-w-md p-8 text-neutral-100 z-10 shadow-2xl text-center flex flex-col items-center"
           >
-            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-amber-600 via-amber-400 to-amber-600 animate-pulse" />
+            <div className="absolute top-0 left-0 right-0 h-[3px] bg-gradient-to-r from-[#5aa8b3] via-[#5aa8b3]/80 to-[#5aa8b3] animate-pulse" />
             
             <div className="h-16 w-16 rounded-full border border-neutral-800 bg-neutral-950/80 flex items-center justify-center mb-6 relative">
-              <Loader2 className="text-amber-500 animate-spin" size={24} />
-              <div className="absolute h-20 w-20 rounded-full border border-dashed border-amber-500/10 animate-[spin_10s_linear_infinite]" />
+              <Loader2 className="text-[#5aa8b3] animate-spin" size={24} />
+              <div className="absolute h-20 w-20 rounded-full border border-dashed border-[#5aa8b3]/10 animate-[spin_10s_linear_infinite]" />
             </div>
 
             <span className="text-[10px] tracking-[0.4em] text-neutral-500 font-mono uppercase mb-1">AUTOMATED SECURE DISCLOSURE</span>
@@ -625,7 +625,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     {isFinished ? (
                       <span className="text-green-500 select-none">✓</span>
                     ) : isActive ? (
-                      <span className="text-amber-500 select-none animate-ping">●</span>
+                      <span className="text-[#5aa8b3] select-none animate-ping">●</span>
                     ) : (
                       <span className="text-neutral-700 select-none">◦</span>
                     )}
