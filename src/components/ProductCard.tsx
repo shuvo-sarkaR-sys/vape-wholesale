@@ -69,7 +69,7 @@ export default function ProductCard({
         {/* Out of stock alert */}
         {!product.specs.inStock && (
           <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-[2px] flex items-center justify-center">
-            <span className="text-[10px] font-mono tracking-[0.3em] font-semibold text-amber-500 uppercase border border-amber-500/30 px-3 py-1 bg-neutral-950 rounded-full">
+            <span className="text-[10px] font-mono tracking-[0.3em] font-semibold text-[#62cdd9] uppercase border border-[#62cdd9]/30 px-3 py-1 bg-neutral-950 rounded-full">
               ALLOCATION COMPLETED
             </span>
           </div>
@@ -82,12 +82,12 @@ export default function ProductCard({
           <div className="flex justify-between items-center text-[10px] font-mono text-neutral-500">
             <span className="uppercase tracking-widest">{product.brand}</span>
             <span className="flex items-center gap-0.5">
-              <Star size={10} className="fill-amber-500 text-amber-500" />
+              <Star size={10} className="fill-[#62cdd9] text-[#62cdd9]" />
               {product.rating}
             </span>
           </div>
 
-          <h4 className="text-sm font-sans tracking-tight text-white font-medium group-hover:text-amber-400 transition-colors duration-300 line-clamp-1">
+          <h4 className="text-sm font-sans tracking-tight text-white font-medium group-hover:text-[#62cdd9] transition-colors duration-300 line-clamp-1">
             {product.name}
           </h4>
 
@@ -111,7 +111,7 @@ export default function ProductCard({
             <div className="text-right">
               <span className="block text-[8px] font-mono text-neutral-500 tracking-widest uppercase flex items-center justify-end gap-1">
                 {isBusinessVerified ? (
-                  <span className="text-emerald-500 flex items-center gap-0.5"><ShieldCheck size={9} /> B2B WHOLESALE</span>
+                  <span className="text-[#62cdd9] flex items-center gap-0.5"><ShieldCheck size={9} /> B2B WHOLESALE</span>
                 ) : (
                   <span>WHOLESALE COST</span>
                 )}
@@ -123,12 +123,12 @@ export default function ProductCard({
                     ${product.price.toFixed(2)}
                   </span>
                 ) : (
-                  <span className="text-sm font-mono text-amber-400 font-semibold">Price on request</span>
+                  <span className="text-sm font-mono text-[#62cdd9] font-semibold">Price on request</span>
                 )
               ) : (
                 <button
                   onClick={onOpenRegister}
-                  className="flex items-center gap-1.5 text-xs text-amber-500 hover:text-amber-400 font-mono mt-1 group-hover:underline transition-all cursor-pointer bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/20 px-2 py-1 rounded"
+                  className="flex items-center gap-1.5 text-xs text-[#62cdd9] hover:text-[#62cdd9]/80 font-mono mt-1 group-hover:underline transition-all cursor-pointer bg-[#62cdd9]/5 hover:bg-[#62cdd9]/15 border border-[#62cdd9]/20 px-2 py-1 rounded"
                 >
                   <Lock size={10} />
                   <span>Verify to see pricing</span>
@@ -138,19 +138,19 @@ export default function ProductCard({
           </div>
 
           {/* Cart triggers */}
-          {isBusinessVerified && product.specs.inStock && product.price !== undefined && (
+          {isBusinessVerified && product.specs.inStock &&  (
             <div className="space-y-3 pt-2">
               <div className="flex justify-between items-center text-[10px] font-mono">
                 <span className="text-neutral-500 uppercase tracking-widest flex items-center gap-1">
                   <ShoppingCart size={10} /> ALLOCATION SIZE
                 </span>
-                <span className="text-amber-500 font-semibold bg-amber-500/10 px-1.5 py-0.5 rounded border border-amber-500/10">
+                <span className="text-[#62cdd9] font-semibold bg-[#62cdd9]/10 px-1.5 py-0.5 rounded border border-[#62cdd9]/10">
                   MOQ: {moq} UNITS
                 </span>
               </div>
 
               <div className="flex gap-2">
-                <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-neutral-950 focus-within:border-amber-500/40 transition-colors">
+                <div className="flex items-center border border-neutral-800 rounded-lg overflow-hidden bg-neutral-950 focus-within:border-[#62cdd9]/40 transition-colors">
                   <button
                     type="button"
                     onClick={() => setQuantity(prev => Math.max(moq, prev - 1))}
@@ -190,10 +190,10 @@ export default function ProductCard({
                 <button
                   type="button"
                   onClick={handleAdd}
-                  className={`flex-grow rounded-lg py-2 px-3 text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-2 transition-all duration-300 cursor-pointer ${
+                  className={`flex-grow rounded-lg py-2 px-2 text-xs tracking-wider uppercase font-semibold flex items-center justify-center gap-1 transition-all duration-300 cursor-pointer ${
                     isAdded
                       ? 'bg-emerald-500 text-neutral-950 shadow-emerald-500/10 shadow-lg'
-                      : 'bg-amber-500 text-neutral-950 hover:bg-amber-400 shadow-md shadow-amber-500/5'
+                      : 'bg-[#62cdd9] text-neutral-950 hover:bg-[#62cdd9]/80 shadow-md shadow-[#62cdd9]/5'
                   }`}
                 >
                   {isAdded ? (
@@ -204,7 +204,7 @@ export default function ProductCard({
                   ) : (
                     <>
                       <Plus size={12} className="stroke-[3]" />
-                      <span>ADD {quantity || moq} TO ORDER</span>
+                      <span>ADD TO CART</span>
                     </>
                   )}
                 </button>
@@ -230,7 +230,7 @@ export default function ProductCard({
                   <button
                     type="button"
                     onClick={() => setQuantity(moq)}
-                    className="text-[9.5px] font-mono text-amber-500 bg-amber-500/5 hover:bg-amber-500/15 border border-amber-500/15 hover:border-amber-500/40 px-1.5 py-0.5 rounded cursor-pointer transition-all active:scale-95 flex items-center gap-0.5 font-bold"
+                    className="text-[9.5px] font-mono text-[#62cdd9] bg-[#62cdd9]/5 hover:bg-[#62cdd9]/15 border border-[#62cdd9]/15 hover:border-[#62cdd9]/40 px-1.5 py-0.5 rounded cursor-pointer transition-all active:scale-95 flex items-center gap-0.5 font-bold"
                     title="Reset to B2B Minimum Order Quantity"
                   >
                     RESET

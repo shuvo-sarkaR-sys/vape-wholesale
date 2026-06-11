@@ -16,7 +16,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'PACIFIC2026' || password.toLowerCase() === 'pacific') {
+    if (password === 'PUFFMANIA@2026' ) {
       setIsSubmitting(true);
       setErrorInput(false);
       setTimeout(() => {
@@ -43,7 +43,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
           <span className="text-xs tracking-[0.25em] font-light text-neutral-400 uppercase">
            PUFFMANIA DISTRO.
           </span>
-          <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+          <span className="h-1.5 w-1.5 rounded-full bg-[#62cdd9]/80 animate-pulse" />
         </div>
        
       </div>
@@ -58,8 +58,8 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
           className="mb-8 flex flex-col items-center text-center"
         >
           <div className="h-14 w-14 rounded-full border border-neutral-800 bg-neutral-900/80 flex items-center justify-center mb-6 shadow-inner relative group">
-            <div className="absolute inset-0 rounded-full bg-amber-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
-            <Lock className="text-amber-500 group-hover:rotate-6 transition-transform duration-300" size={20} />
+            <div className="absolute inset-0 rounded-full bg-[#62cdd9]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+            <Lock className="text-[#62cdd9] group-hover:rotate-6 transition-transform duration-300" size={20} />
           </div>
           <h1 className="text-3xl sm:text-4xl font-sans tracking-tight font-light text-neutral-100">
             PUFFMANIA DISTRO.
@@ -90,7 +90,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
                   className={`w-full bg-neutral-950/80 text-white rounded-lg pl-4 pr-12 py-3 border.5 focus:outline-none transition-all duration-300 placeholder-neutral-600 font-mono tracking-widest ${
                     errorInput 
                       ? 'border-red-500 animate-shake focus:ring-1 focus:ring-red-500' 
-                      : 'border-neutral-800 focus:border-amber-500/50 focus:ring-1 focus:ring-amber-500/20'
+                      : 'border-neutral-800 focus:border-[#62cdd9]/50 focus:ring-1 focus:ring-[#62cdd9]/20'
                   }`}
                   disabled={isSubmitting}
                 />
@@ -120,7 +120,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full bg-amber-500 text-neutral-950 hover:bg-amber-400 font-sans tracking-widest uppercase text-xs font-semibold py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none cursor-pointer"
+              className="w-full bg-[#62cdd9] text-neutral-950 hover:bg-[#62cdd9]/80 font-sans tracking-widest uppercase text-xs font-semibold py-3.5 px-4 rounded-lg flex items-center justify-center gap-2 transition-all duration-300 shadow-md hover:shadow-lg focus:outline-none cursor-pointer"
             >
               {isSubmitting ? (
                 <div className="flex items-center gap-2">
@@ -148,7 +148,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
       {/* Footer Design Line */}
       <div className="w-full py-8 text-center border-t border-neutral-900/40">
         <p className="text-[10px] font-mono tracking-widest text-neutral-600">
-          © 2026 PACIFIC SMOKE INC. LUXURY DISTRIBUTION PRESETS • ALL RIGHTS RESERVED
+          © PUFFMANIA DISTRO LUXURY DISTRIBUTION PRESETS • ALL RIGHTS RESERVED
         </p>
       </div>
     </div>

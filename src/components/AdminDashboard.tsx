@@ -279,11 +279,11 @@ export default function AdminDashboard({
       {/* Admin Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-6 border-b border-neutral-900 pb-8">
         <div>
-          <span className="text-[10px] tracking-[0.4em] font-mono text-amber-500 uppercase flex items-center gap-1.5 mb-1">
+          <span className="text-[10px] tracking-[0.4em] font-mono text-[#62cdd9] uppercase flex items-center gap-1.5 mb-1">
             <Database size={12} className="animate-pulse" /> CENTRALIZED WAREHOUSE SYSTEM
           </span>
           <h2 className="text-2xl sm:text-3xl font-light text-white tracking-tight">
-            Distributor <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">Corporate Terminal</span>
+            Distributor <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#62cdd9]/80 via-[#62cdd9]/40 to-[#62cdd9]">Corporate Terminal</span>
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-1 max-w-xl">
             Authorize state tax exemptions, manage luxury wholesale inventories in MongoDB Atlas, audit incoming tobacco license EIN keys, and dispatch LTL logistics.
@@ -296,17 +296,17 @@ export default function AdminDashboard({
             <button
               type="button"
               onClick={handleIntakeSimulation}
-              className="bg-amber-500/10 hover:bg-amber-500/15 border border-amber-500/20 text-amber-400 rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]"
+              className="bg-[#62cdd9]/10 hover:bg-[#62cdd9]/15 border border-[#62cdd9]/20 text-[#62cdd9] rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98]"
               title="Simulate random commercial buyers ordering products"
             >
-              <PlusCircle size={14} className="text-amber-500" />
+              <PlusCircle size={14} className="text-[#62cdd9]" />
               <span>Simulate Order Intake</span>
             </button>
           ) : (
             <button
               type="button"
               onClick={openCreateModal}
-              className="bg-amber-500 hover:bg-amber-400 text-neutral-950 rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] font-bold shadow-lg shadow-amber-500/10"
+              className="bg-[#62cdd9] hover:bg-[#62cdd9]/80 text-neutral-950 rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all active:scale-[0.98] font-bold shadow-lg shadow-[#62cdd9]/10"
               title="Register a brand new wholesale product item"
             >
               <Plus size={14} className="text-neutral-950 stroke-[3]" />
@@ -329,25 +329,25 @@ export default function AdminDashboard({
         <button
           onClick={() => setActiveTab('orders')}
           className={`pb-4 px-1 text-xs font-mono tracking-widest uppercase font-semibold flex items-center gap-2 relative transition-all cursor-pointer ${
-            activeTab === 'orders' ? 'text-amber-500' : 'text-neutral-500 hover:text-neutral-300'
+            activeTab === 'orders' ? 'text-[#62cdd9]' : 'text-neutral-500 hover:text-neutral-300'
           }`}
         >
           <ShoppingBag size={14} />
           <span>Wholesale Orders Desk</span>
           {activeTab === 'orders' && (
-            <motion.div layoutId="adminActiveTabBar" className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500" />
+            <motion.div layoutId="adminActiveTabBar" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#62cdd9]" />
           )}
         </button>
         <button
           onClick={() => setActiveTab('products')}
           className={`pb-4 px-1 text-xs font-mono tracking-widest uppercase font-semibold flex items-center gap-2 relative transition-all cursor-pointer ${
-            activeTab === 'products' ? 'text-amber-500' : 'text-neutral-500 hover:text-neutral-300'
+            activeTab === 'products' ? 'text-[#62cdd9]' : 'text-neutral-500 hover:text-neutral-300'
           }`}
         >
           <Package size={14} />
           <span>Product Inventory Manager</span>
           {activeTab === 'products' && (
-            <motion.div layoutId="adminActiveTabBar" className="absolute bottom-0 left-0 right-0 h-0.5 bg-amber-500" />
+            <motion.div layoutId="adminActiveTabBar" className="absolute bottom-0 left-0 right-0 h-0.5 bg-[#62cdd9]" />
           )}
         </button>
       </div>
@@ -370,10 +370,10 @@ export default function AdminDashboard({
             </div>
 
             <div className="bg-neutral-900/30 border border-neutral-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-20 w-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 h-20 w-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#62cdd9]/5 to-transparent pointer-events-none" />
               <div className="flex justify-between items-center mb-4">
                 <span className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase">Total Items Dispatched</span>
-                <Package size={16} className="text-amber-400" />
+                <Package size={16} className="text-[#62cdd9]/80" />
               </div>
               <div>
                 <span className="block text-2xl font-mono font-semibold text-white tracking-tight">{totalItemUnits} Units</span>
@@ -382,14 +382,14 @@ export default function AdminDashboard({
             </div>
 
             <div className="bg-neutral-900/30 border border-neutral-900 rounded-2xl p-5 flex flex-col justify-between relative overflow-hidden">
-              <div className="absolute top-0 right-0 h-20 w-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 h-20 w-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#62cdd9]/5 to-transparent pointer-events-none" />
               <div className="flex justify-between items-center mb-4">
                 <span className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase">Pending Registry</span>
-                <CircleDot size={16} className="text-amber-500 animate-pulse" />
+                <CircleDot size={16} className="text-[#62cdd9] animate-pulse" />
               </div>
               <div>
-                <span className="block text-2xl font-mono font-semibold text-amber-500 tracking-tight">{pendingCount} Audits</span>
-                <span className="block text-[9px] font-mono text-amber-400/80 uppercase tracking-widest mt-1">LICENSE VERIFICATIONS PENDING</span>
+                <span className="block text-2xl font-mono font-semibold text-[#62cdd9] tracking-tight">{pendingCount} Audits</span>
+                <span className="block text-[9px] font-mono text-[#62cdd9]/80 uppercase tracking-widest mt-1">LICENSE VERIFICATIONS PENDING</span>
               </div>
             </div>
 
@@ -420,12 +420,12 @@ export default function AdminDashboard({
                     onClick={() => setFilterStatus(status)}
                     className={`px-4 py-2 rounded-lg text-xs font-mono tracking-wide transition-all cursor-pointer select-none flex items-center gap-2 ${
                       filterStatus === status
-                        ? 'bg-amber-500 text-neutral-950 font-semibold'
+                        ? 'bg-[#62cdd9] text-neutral-950 font-semibold'
                         : 'bg-neutral-900 text-neutral-400 hover:text-white hover:bg-neutral-850'
                     }`}
                   >
                     <span>{status.toUpperCase()}</span>
-                    <span className={`text-[9px] px-1 rounded-full ${filterStatus === status ? 'bg-neutral-950 text-amber-400' : 'bg-neutral-950 text-neutral-500'}`}>
+                    <span className={`text-[9px] px-1 rounded-full ${filterStatus === status ? 'bg-neutral-950 text-[#62cdd9]/80' : 'bg-neutral-950 text-neutral-500'}`}>
                       {count}
                     </span>
                   </button>
@@ -439,7 +439,7 @@ export default function AdminDashboard({
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Query Registry ID, Business Name..."
-                className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-4 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-500 font-mono"
+                className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-4 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/20 transition-all placeholder-neutral-500 font-mono"
               />
               <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
                 <SlidersHorizontal size={13} />
@@ -467,7 +467,7 @@ export default function AdminDashboard({
                   return (
                     <div 
                       key={order.id} 
-                      className={`bg-neutral-900/20 border border-neutral-900 rounded-2xl overflow-hidden transition-all duration-300 hover:border-neutral-800 ${isExpanded ? 'ring-1 ring-amber-500/10' : ''}`}
+                      className={`bg-neutral-900/20 border border-neutral-900 rounded-2xl overflow-hidden transition-all duration-300 hover:border-neutral-800 ${isExpanded ? 'ring-1 ring-[#62cdd9]/10' : ''}`}
                     >
                       {/* Collapsible Header */}
                       <div 
@@ -475,7 +475,7 @@ export default function AdminDashboard({
                         className="p-5 sm:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer select-none"
                       >
                         <div className="flex items-center gap-3.5">
-                          <div className="p-2.5 bg-neutral-950 border border-neutral-850 rounded-xl text-amber-500 flex-shrink-0">
+                          <div className="p-2.5 bg-neutral-950 border border-neutral-850 rounded-xl text-[#62cdd9] flex-shrink-0">
                             <ShoppingBag size={18} />
                           </div>
                           <div>
@@ -496,7 +496,7 @@ export default function AdminDashboard({
                           </div>
                           <div>
                             <span className="text-[8px] text-neutral-500 uppercase tracking-widest block">Sub-Total</span>
-                            <span className="text-xs text-amber-500 font-bold block mt-0.5">
+                            <span className="text-xs text-[#62cdd9] font-bold block mt-0.5">
                               ${order.total.toFixed(2)}
                             </span>
                           </div>
@@ -509,14 +509,14 @@ export default function AdminDashboard({
                                 ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
                                 : order.status === 'Processing'
                                 ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                                : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                              : 'bg-[#62cdd9]/10 text-[#62cdd9]/80 border border-[#62cdd9]/20'
                             }`}>
                               <span className={`h-1.5 w-1.5 rounded-full ${
                                 order.status === 'Shipped' 
                                   ? 'bg-emerald-400' 
                                   : order.status === 'Processing'
                                   ? 'bg-blue-400 animate-pulse'
-                                  : 'bg-amber-400 animate-pulse'
+                                  : 'bg-[#62cdd9]/80 animate-pulse'
                               }`} />
                               <span>{order.status}</span>
                             </span>
@@ -613,12 +613,12 @@ export default function AdminDashboard({
                                       onClick={() => onUpdateOrderStatus(order.id, 'Pending Verification')}
                                       className={`w-full text-left px-3 py-2 rounded-lg text-xs font-mono transition-all flex items-center justify-between cursor-pointer border ${
                                         order.status === 'Pending Verification'
-                                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/30 font-semibold'
+                                          ? 'bg-[#62cdd9]/10 text-[#62cdd9]/80 border-[#62cdd9]/30 font-semibold'
                                           : 'bg-neutral-900 text-neutral-500 border-transparent hover:text-neutral-300 hover:bg-neutral-850'
                                       }`}
                                     >
                                       <span>1. AUDIT REGISTRY</span>
-                                      {order.status === 'Pending Verification' && <CheckCircle2 size={12} className="text-amber-500" />}
+                                      {order.status === 'Pending Verification' && <CheckCircle2 size={12} className="text-[#62cdd9]" />}
                                     </button>
 
                                     <button
@@ -688,12 +688,12 @@ export default function AdminDashboard({
                     onClick={() => setInventoryCategory(cat)}
                     className={`px-3 py-1.5 rounded-lg text-[10px] font-mono tracking-wide transition-all cursor-pointer select-none flex items-center gap-1.5 ${
                       inventoryCategory === cat
-                        ? 'bg-amber-500 text-neutral-950 font-semibold text-neut'
+                        ? 'bg-[#62cdd9] text-neutral-950 font-semibold text-neut'
                         : 'bg-neutral-900 text-neutral-400 hover:text-white hover:bg-neutral-850'
                     }`}
                   >
                     <span>{cat.toUpperCase()}</span>
-                    <span className={`text-[8px] px-1 rounded-full ${inventoryCategory === cat ? 'bg-neutral-950 text-amber-400 font-bold' : 'bg-neutral-950 text-neutral-500'}`}>
+                    <span className={`text-[8px] px-1 rounded-full ${inventoryCategory === cat ? 'bg-neutral-950 text-[#62cdd9]/80 font-bold' : 'bg-neutral-950 text-neutral-500'}`}>
                       {count}
                     </span>
                   </button>
@@ -707,7 +707,7 @@ export default function AdminDashboard({
                 value={inventorySearch}
                 onChange={(e) => setInventorySearch(e.target.value)}
                 placeholder="Search catalog ID, brand, name..."
-                className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-3 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all font-mono"
+                className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-3 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/20 transition-all font-mono"
               />
               <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
                 <Search size={13} />
@@ -764,7 +764,7 @@ export default function AdminDashboard({
                     </td>
 
                     {/* Wholesale/Dealer Cost */}
-                    <td className="py-4 px-5 font-mono font-bold text-amber-500">
+                    <td className="py-4 px-5 font-mono font-bold text-[#62cdd9]">
                       ${Number(product.price).toFixed(2)}
                     </td>
 
@@ -791,7 +791,7 @@ export default function AdminDashboard({
                         <button
                           type="button"
                           onClick={() => openEditModal(product)}
-                          className="p-2 hover:bg-amber-500/10 hover:text-amber-400 rounded-lg text-neutral-500 transition-all cursor-pointer border border-transparent hover:border-amber-500/10"
+                          className="p-2 hover:bg-amber-500/10 hover:text-[#62cdd9]/80 rounded-lg text-neutral-500 transition-all cursor-pointer border border-transparent hover:border-amber-500/10"
                           title="Edit product parameters"
                         >
                           <Edit size={13} />
@@ -850,12 +850,12 @@ export default function AdminDashboard({
               className="relative w-full max-w-2xl bg-neutral-900/95 border border-neutral-850 rounded-2xl overflow-hidden shadow-2xl max-h-[90vh] flex flex-col z-10"
             >
               {/* Premium Accent Line */}
-              <div className="h-0.5 bg-gradient-to-r from-amber-500 via-amber-200 to-amber-500" />
+              <div className="h-0.5 bg-gradient-to-r from-[#62cdd9] via-[#62cdd9]/40 to-[#62cdd9]" />
 
               {/* Modal Header */}
               <div className="p-6 border-b border-neutral-850 flex items-center justify-between">
                 <div>
-                  <span className="text-[9px] tracking-widest font-mono text-amber-500 uppercase block">
+                  <span className="text-[9px] tracking-widest font-mono text-[#62cdd9] uppercase block">
                     {editingProduct ? 'SPECIFICATION REVISION PROTOCOL' : 'NEW WHOLESALE CATALOGUE REGISTRY'}
                   </span>
                   <h3 className="text-lg font-light text-white tracking-tight mt-1">
@@ -897,7 +897,7 @@ export default function AdminDashboard({
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Catalogue ID <span className="text-amber-500">*</span></label>
+                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Catalogue ID <span className="text-[#62cdd9]">*</span></label>
                       <input
                         type="text"
                         required
@@ -905,42 +905,42 @@ export default function AdminDashboard({
                         value={formId}
                         onChange={(e) => setFormId(e.target.value)}
                         placeholder="e.g., PAC-PROD-901"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10 disabled:opacity-50 disabled:cursor-not-allowed"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Wholesale Brand / MASTER <span className="text-amber-500">*</span></label>
+                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Wholesale Brand / MASTER <span className="text-[#62cdd9]">*</span></label>
                       <input
                         type="text"
                         required
                         value={formBrand}
                         onChange={(e) => setFormBrand(e.target.value)}
                         placeholder="e.g., SMOK, PAX, SUTRA"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Title / Name <span className="text-amber-500">*</span></label>
+                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Product Title / Name <span className="text-[#62cdd9]">*</span></label>
                       <input
                         type="text"
                         required
                         value={formName}
                         onChange={(e) => setFormName(e.target.value)}
                         placeholder="e.g., Sutra Vaporizer System v2"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
 
                     <div>
-                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Category <span className="text-amber-500">*</span></label>
+                      <label className="block text-[9px] font-mono text-neutral-400 uppercase tracking-widest mb-1.5">Category <span className="text-[#62cdd9]">*</span></label>
                       <select
                         value={formCategory}
                         onChange={(e) => setFormCategory(e.target.value as Product['category'])}
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       >
                         {['Vessels', 'Vaporizers', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets', 'Disposables', 'E-Liquid & Pod', 'Pouches', 'Pod Systems', 'E-Liquid', 'Hardware'].map(cat => (
                           <option key={cat} value={cat}>{cat}</option>
@@ -953,7 +953,7 @@ export default function AdminDashboard({
                 {/* Section 2: Media and brief */}
                 <div className="space-y-4">
                   <h4 className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase border-b border-neutral-850 pb-2 flex items-center gap-1.5">
-                    <FileText size={11} className="text-amber-500" />
+                    <FileText size={11} className="text-[#62cdd9]" />
                     <span>2. MEDIA & SPEC BRIEF</span>
                   </h4>
 
@@ -974,7 +974,7 @@ export default function AdminDashboard({
                           reader.readAsDataURL(file);
                         }
                       }}
-                      className="w-full text-xs text-neutral-200 file:bg-amber-500 file:text-neutral-950 file:px-3 file:py-2 file:rounded-lg file:border-none file:font-semibold bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                      className="w-full text-xs text-neutral-200 file:bg-[#62cdd9] file:text-neutral-950 file:px-3 file:py-2 file:rounded-lg file:border-none file:font-semibold bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                     />
                     {formImage && (
                       <img
@@ -992,7 +992,7 @@ export default function AdminDashboard({
                       onChange={(e) => setFormDescription(e.target.value)}
                       rows={2}
                       placeholder="Enter a brief commercial overview outlining premium feature highlight parameters."
-                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10 resize-none animate-none"
+                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10 resize-none animate-none"
                     />
                   </div>
                 </div>
@@ -1000,7 +1000,7 @@ export default function AdminDashboard({
                 {/* Section 3: Commercial pricing & stock */}
                 <div className="space-y-4">
                   <h4 className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase border-b border-neutral-850 pb-2 flex items-center gap-1.5">
-                    <CreditCard size={11} className="text-amber-500" />
+                    <CreditCard size={11} className="text-[#62cdd9]" />
                     <span>3. COMMERCIAL PRICING & STOCK STATUS</span>
                   </h4>
 
@@ -1013,7 +1013,7 @@ export default function AdminDashboard({
                         min="0"
                         value={formPrice ?? ''}
                         onChange={(e) => setFormPrice(e.target.value ? Number(e.target.value) : undefined)}
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
 
@@ -1025,7 +1025,7 @@ export default function AdminDashboard({
                         min="0"
                         value={formSuggestedMSRP}
                         onChange={(e) => setFormSuggestedMSRP(Number(e.target.value))}
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 font-mono text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
 
@@ -1037,7 +1037,7 @@ export default function AdminDashboard({
                           id="formInStock"
                           checked={formInStock}
                           onChange={(e) => setFormInStock(e.target.checked)}
-                          className="h-4 w-4 bg-neutral-900 border-neutral-800 rounded text-amber-550 focus:ring-amber-500 focus:ring-offset-neutral-950"
+                          className="h-4 w-4 bg-neutral-900 border-neutral-800 rounded text-[#62cdd9] focus:ring-[#62cdd9] focus:ring-offset-neutral-950"
                         />
                         <label htmlFor="formInStock" className="text-xs text-neutral-300 font-medium cursor-pointer font-mono">
                           {formInStock ? 'IN STOCK' : 'OUT-OF-STOCK'}
@@ -1050,7 +1050,7 @@ export default function AdminDashboard({
                 {/* Section 4: Specifications detail */}
                 <div className="space-y-4">
                   <h4 className="text-[10px] font-mono tracking-widest text-neutral-500 uppercase border-b border-neutral-850 pb-2 flex items-center gap-1.5">
-                    <LayoutGrid size={11} className="text-amber-500" />
+                    <LayoutGrid size={11} className="text-[#62cdd9]" />
                     <span>4. MATERIAL SPECIFICATIONS & ENGINEERING</span>
                   </h4>
 
@@ -1062,7 +1062,7 @@ export default function AdminDashboard({
                         value={formMaterial}
                         onChange={(e) => setFormMaterial(e.target.value)}
                         placeholder="e.g., Premium Titanium Alloy, Borosilicate Quartz"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
 
@@ -1073,7 +1073,7 @@ export default function AdminDashboard({
                         value={formDimensions}
                         onChange={(e) => setFormDimensions(e.target.value)}
                         placeholder="e.g., 140mm x 35mm x 35mm"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
                   </div>
@@ -1086,7 +1086,7 @@ export default function AdminDashboard({
                         value={formOrigin}
                         onChange={(e) => setFormOrigin(e.target.value)}
                         placeholder="e.g., Designed in USA / Crafted in Toronto"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
 
@@ -1097,7 +1097,7 @@ export default function AdminDashboard({
                         value={formCapacity}
                         onChange={(e) => setFormCapacity(e.target.value)}
                         placeholder="e.g., 2.5 mL / 1200 mAh"
-                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                        className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                       />
                     </div>
                   </div>
@@ -1109,7 +1109,7 @@ export default function AdminDashboard({
                       value={formFeatures}
                       onChange={(e) => setFormFeatures(e.target.value)}
                       placeholder="e.g., Precision airflow, Haptic feedback, Magnet cap"
-                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/10"
+                      className="w-full bg-neutral-950 border border-neutral-850 rounded-lg p-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/10"
                     />
                   </div>
                 </div>
@@ -1127,7 +1127,7 @@ export default function AdminDashboard({
                   <button
                     type="submit"
                     disabled={isFormSaving}
-                    className="px-6 py-2.5 bg-amber-500 hover:bg-amber-400 disabled:opacity-50 disabled:cursor-not-allowed text-neutral-950 font-semibold rounded-lg text-xs font-mono tracking-wider uppercase flex items-center gap-2 cursor-pointer shadow-lg shadow-amber-500/10"
+                    className="px-6 py-2.5 bg-[#62cdd9] hover:bg-[#5aa8b3] disabled:opacity-50 disabled:cursor-not-allowed text-neutral-950 font-semibold rounded-lg text-xs font-mono tracking-wider uppercase flex items-center gap-2 cursor-pointer shadow-lg shadow-[#62cdd9]/10"
                   >
                     {isFormSaving ? (
                       <>

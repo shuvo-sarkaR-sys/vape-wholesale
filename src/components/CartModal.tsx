@@ -59,7 +59,7 @@ export default function CartModal({
           {/* Header */}
           <div className="p-6 border-b border-neutral-900 flex justify-between items-center bg-neutral-900/10">
             <div className="flex items-center gap-2.5">
-              <div className="p-2 bg-amber-500/10 rounded-lg text-amber-500">
+              <div className="p-2 bg-[#62cdd9]/10 rounded-lg text-[#62cdd9]">
                 <ShoppingBag size={18} />
               </div>
               <div>
@@ -93,10 +93,10 @@ export default function CartModal({
                 </div>
               </div>
             ) : (
-              <div className="p-4 bg-amber-500/5 rounded-xl border border-amber-500/10 flex items-start gap-3">
-                <Building size={16} className="text-amber-500 mt-0.5 flex-shrink-0" />
+            <div className="p-4 bg-[#62cdd9]/5 rounded-xl border border-[#62cdd9]/10 flex items-start gap-3">
+                <Building size={16} className="text-[#62cdd9] mt-0.5 flex-shrink-0" />
                 <div>
-                  <span className="block text-xs font-semibold text-amber-500 font-sans tracking-wide">BUSINESS ACCOUNT MANDATORY</span>
+                  <span className="block text-xs font-semibold text-[#62cdd9] font-sans tracking-wide">BUSINESS ACCOUNT MANDATORY</span>
                   <p className="text-[11px] text-neutral-400 leading-relaxed font-light mt-1">
                     An active tobacco distributor status is required before executing wholesale logistics.
                   </p>
@@ -130,7 +130,7 @@ export default function CartModal({
                       <div className="flex-grow font-sans">
                         <div className="flex justify-between items-start">
                           <span className="block text-[9px] text-neutral-500 tracking-wider font-mono uppercase">{item.product.brand}</span>
-                          <span className="text-[8px] text-amber-500 font-mono bg-amber-500/10 border border-amber-500/10 px-1.5 py-0.5 rounded leading-none uppercase font-bold">
+                          <span className="text-[8px] text-[#62cdd9] font-mono bg-[#62cdd9]/10 border border-[#62cdd9]/10 px-1.5 py-0.5 rounded leading-none uppercase font-bold">
                             MOQ: {moq}
                           </span>
                         </div>
@@ -138,7 +138,7 @@ export default function CartModal({
                         
                         <div className="flex items-center justify-between mt-2.5">
                           {/* Quantity picker */}
-                          <div className="flex items-center border border-neutral-900 rounded bg-neutral-950 overflow-hidden focus-within:border-amber-550/40 transition-colors">
+                          <div className="flex items-center border border-neutral-900 rounded bg-neutral-950 overflow-hidden focus-within:border-[#62cdd9]/40 transition-colors">
                             <button
                               onClick={() => onUpdateQuantity(item.product.id, Math.max(moq, item.quantity - 1))}
                               className="px-2 py-0.5 text-neutral-400 hover:text-white hover:bg-neutral-900 transition-colors select-none"
@@ -216,7 +216,7 @@ export default function CartModal({
                 </div>
                 <div className="flex justify-between text-sm text-white font-semibold border-t border-neutral-900 pt-3">
                   <span>TOTAL ESTIMATED ORDER</span>
-                  <span className="text-amber-500">${total.toFixed(2)}</span>
+                  <span className="text-[#62cdd9]">${total.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -225,7 +225,7 @@ export default function CartModal({
                   <button
                     type="button"
                     onClick={onPlaceOrder}
-                    className="w-full bg-amber-500 text-neutral-950 hover:bg-amber-400 font-sans tracking-widest uppercase text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer"
+                    className="w-full bg-[#62cdd9] text-neutral-950 hover:bg-[#62cdd9]/80 font-sans tracking-widest uppercase text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer"
                   >
                     <CreditCard size={14} />
                     <span>TRANSMIT WHOLESALE ORDER</span>
@@ -256,12 +256,12 @@ export default function CartModal({
                       onClose();
                       onOpenRegister();
                     }}
-                    className="w-full bg-amber-500 text-neutral-950 hover:bg-amber-400 font-sans tracking-widest uppercase text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer"
+                    className="w-full bg-[#62cdd9] text-neutral-950 hover:bg-[#62cdd9]/80 font-sans tracking-widest uppercase text-xs font-bold py-3.5 px-4 rounded-xl flex items-center justify-center gap-2 transition-all shadow-md hover:shadow-lg cursor-pointer"
                   >
                     <UserCheck size={14} />
                     <span>CREATE BUSINESS ACCOUNT</span>
                   </button>
-                  <p className="text-[10px] text-amber-500 font-mono uppercase tracking-wider text-center">
+                  <p className="text-[10px] text-[#62cdd9] font-mono uppercase tracking-wider text-center">
                     Verification Account Required to Order
                   </p>
                   <p className="text-[11px] text-neutral-400 font-light leading-relaxed text-center">

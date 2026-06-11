@@ -7,7 +7,7 @@ import {
   Flame, ShieldAlert, ArrowRight, TrendingUp, Compass, Send
 } from 'lucide-react';
 import { BusinessAccount } from '../types';
-
+import logo from '../assets/images/logo.png';
 interface NavbarProps {
   businessAccount: BusinessAccount | null;
   cartCount: number;
@@ -135,8 +135,9 @@ export default function Navbar({
               onClick={() => handleCategoryClick('All')}
               className="flex items-center gap-2 cursor-pointer select-none"
             >
+              <img src={logo} alt="PUFFMANIA DISTRO" className="h-10 w-10 object-contain" />
               <span className="text-base md:text-lg font-sans tracking-[0.25em] font-light text-white uppercase">
-                PUFFMANIA<span className="font-semibold text-amber-500"> DISTRO.</span>
+                PUFFMANIA<span className="font-semibold text-[#A1D6DC]"> DISTRO.</span>
               </span>
               <span className="hidden xs:inline-block text-[8px] font-mono tracking-widest text-neutral-500 uppercase border border-neutral-850 px-1.5 py-0.5 rounded ml-1.5 font-medium">
                 Wholesale
@@ -181,7 +182,7 @@ export default function Navbar({
                   </button>
                   <button
                     onClick={onOpenRegister}
-                    className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-850 text-amber-400 hover:text-amber-300 border border-amber-500/15 hover:border-amber-500/30 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all cursor-pointer"
+                    className="flex items-center gap-1.5 bg-neutral-900 hover:bg-neutral-850 text-[#A1D6DC] hover:text-amber-300 border border-[#A1D6DC/15] hover:border-[#62cdd9]/30 rounded-full px-4 py-1.5 text-xs font-sans tracking-wide uppercase font-medium transition-all cursor-pointer"
                   >
                     <UserCheck size={12} />
                     <span>Register Business</span>
@@ -194,7 +195,7 @@ export default function Navbar({
                 onClick={onToggleAdminMode}
                 className={`flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-mono tracking-wider transition-all cursor-pointer ${
                   isAdminMode 
-                    ? 'bg-amber-500 text-neutral-950 font-bold border border-transparent shadow-[0_0_15px_rgba(245,158,11,0.2)]' 
+                    ? 'bg-[#62cdd9] text-neutral-950 font-bold border border-transparent shadow-[0_0_15px_rgba(245,158,11,0.2)]' 
                     : 'bg-neutral-900 hover:bg-neutral-850 text-neutral-400 hover:text-amber-400 border border-neutral-800'
                 }`}
                 title="Toggle B2B Administration Module"
@@ -217,7 +218,7 @@ export default function Navbar({
                     key={cartCount}
                     initial={{ scale: 0.6, opacity: 0 }}
                     animate={{ scale: 1, opacity: 1 }}
-                    className="absolute -top-0.5 -right-0.5 h-4.5 w-4.5 rounded-full bg-amber-500 text-neutral-950 font-mono text-[9px] font-bold flex items-center justify-center"
+                    className="absolute -top-0.5 -right-0.5 h-4.5 w-4.5 rounded-full bg-[#62cdd9] text-neutral-950 font-mono text-[9px] font-bold flex items-center justify-center"
                   >
                     {cartCount}
                   </motion.span>
@@ -245,7 +246,7 @@ export default function Navbar({
               >
                 <ShoppingCart size={17} />
                 {cartCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-amber-500 text-neutral-950 font-mono text-[8px] font-bold flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 h-4 w-4 rounded-full bg-[#62cdd9] text-neutral-950 font-mono text-[8px] font-bold flex items-center justify-center">
                     {cartCount}
                   </span>
                 )}
@@ -271,9 +272,9 @@ export default function Navbar({
               <button
                 type="button" 
                 onClick={() => setShowBrandsModal(true)}
-                className="hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1"
+                className="hover:text-[#62cdd9] transition-colors cursor-pointer flex items-center gap-1"
               >
-                <Award size={11} className="text-amber-500" />
+                <Award size={11} className="text-[#62cdd9]" />
                 <span>Top Brands</span>
                 <ChevronDown size={11} />
               </button>
@@ -283,7 +284,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => handleCategoryClick('Disposables')}
-                className={`hover:text-amber-400 transition-colors cursor-pointer ${activeCategory === 'Disposables' ? 'text-amber-500 font-semibold' : ''}`}
+                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'Disposables' ? 'text-[#62cdd9] font-semibold' : ''}`}
               >
                 Disposables
               </button>
@@ -293,7 +294,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => handleCategoryClick('Pod Systems')}
-                className={`hover:text-amber-400 transition-colors cursor-pointer ${activeCategory === 'Pod Systems' ? 'text-amber-500 font-semibold' : ''}`}
+                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'Pod Systems' ? 'text-[#62cdd9] font-semibold' : ''}`}
               >
                 Pod Systems
               </button>
@@ -303,7 +304,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => handleCategoryClick('E-Liquid')}
-                className={`hover:text-amber-400 transition-colors cursor-pointer ${activeCategory === 'E-Liquid' ? 'text-amber-500 font-semibold' : ''}`}
+                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'E-Liquid' ? 'text-[#62cdd9] font-semibold' : ''}`}
               >
                 E-Liquid
               </button>
@@ -313,7 +314,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => handleCategoryClick('Hardware')}
-                className={`hover:text-amber-400 transition-colors cursor-pointer ${activeCategory === 'Hardware' ? 'text-amber-500 font-semibold' : ''}`}
+                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'Hardware' ? 'text-[#62cdd9] font-semibold' : ''}`}
               >
                 Hardware
               </button>
@@ -333,7 +334,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => setShowTrendsModal(true)}
-                className="hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1 text-emerald-400 hover:text-emerald-300"
+                className="hover:text-[#62cdd9] transition-colors cursor-pointer flex items-center gap-1 text-white hover:text-[#62cdd9]/80"
               >
                 <Activity size={10} className="text-emerald-400" />
                 <span>Industry Trends</span>
@@ -344,7 +345,7 @@ export default function Navbar({
               <button 
                 type="button"
                 onClick={() => setShowContactModal(true)}
-                className="hover:text-amber-400 transition-colors cursor-pointer flex items-center gap-1 pl-1"
+                className="hover:text-[#62cdd9] transition-colors cursor-pointer flex items-center gap-1 pl-1"
               >
                 <MessageSquare size={10} className="text-neutral-500" />
                 <span>Contact Us</span>
@@ -401,7 +402,7 @@ export default function Navbar({
                       setIsMobileMenuOpen(false);
                       onOpenRegister();
                     }}
-                    className="w-full bg-gradient-to-r from-amber-500 to-amber-600 text-neutral-950 py-3 px-4 rounded-xl font-sans text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg cursor-pointer"
+                    className="w-full bg-gradient-to-r from-[#62cdd9] to-amber-600 text-neutral-950 py-3 px-4 rounded-xl font-sans text-xs font-bold tracking-wider uppercase flex items-center justify-center gap-2 shadow-lg cursor-pointer"
                   >
                     <UserCheck size={14} />
                     <span>Register Wholesale Business</span>
@@ -422,7 +423,7 @@ export default function Navbar({
                     }}
                     className="bg-neutral-920 border border-neutral-850 hover:border-neutral-800 rounded-xl p-3.5 text-left space-y-1.5 transition-all text-neutral-200 cursor-pointer"
                   >
-                    <Award size={14} className="text-amber-500" />
+                    <Award size={14} className="text-[#62cdd9]" />
                     <p className="text-xs font-semibold tracking-tight">Top Brands</p>
                     <p className="text-[10px] text-neutral-500 font-light leading-snug">Curation filter</p>
                   </button>
@@ -455,7 +456,7 @@ export default function Navbar({
                       onClick={() => handleCategoryClick(dept.id)}
                       className={`w-full flex items-center justify-between p-3 rounded-xl border text-left transition-all cursor-pointer ${
                         activeCategory === dept.id 
-                          ? 'bg-amber-500/10 border-amber-500/30 text-amber-400' 
+                          ? 'bg-[#62cdd9]/10 border-[#62cdd9]/30 text-amber-400' 
                           : 'bg-neutral-920/45 border-neutral-900 text-neutral-300 hover:bg-neutral-900'
                       }`}
                     >
@@ -498,7 +499,7 @@ export default function Navbar({
                         setIsMobileMenuOpen(false);
                         setShowContactModal(true);
                       }}
-                      className="bg-neutral-900 hover:bg-neutral-850 border border-amber-500/20 hover:border-amber-500/40 px-3.5 py-2 rounded-lg text-[10px] font-mono tracking-wider uppercase text-amber-400 font-medium cursor-pointer flex items-center gap-1.5"
+                      className="bg-neutral-900 hover:bg-neutral-850 border border-[#62cdd9]/20 hover:border-[#62cdd9]/40 px-3.5 py-2 rounded-lg text-[10px] font-mono tracking-wider uppercase text-[#62cdd9] font-medium cursor-pointer flex items-center gap-1.5"
                     >
                       <MessageSquare size={11} />
                       <span>Contact Bureau</span>
@@ -518,7 +519,7 @@ export default function Navbar({
                   }}
                   className={`w-full flex items-center justify-between px-4 py-3 rounded-xl text-xs font-mono tracking-wider transition-all cursor-pointer ${
                     isAdminMode
-                      ? 'bg-amber-500 text-neutral-950 font-bold'
+                      ? 'bg-[#62cdd9] text-neutral-950 font-bold'
                       : 'bg-neutral-900 hover:bg-neutral-850 text-neutral-400 border border-neutral-850'
                   }`}
                 >
@@ -565,15 +566,15 @@ export default function Navbar({
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               className="relative bg-neutral-900 border border-neutral-800 rounded-2xl w-full max-w-xl p-6 sm:p-8 text-neutral-100 z-10 shadow-2xl overflow-hidden"
             >
-              <div className="absolute top-0 right-0 h-32 w-32 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 h-32 w-32 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#62cdd9]/5 to-transparent pointer-events-none" />
 
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <span className="text-[9px] font-mono tracking-[0.3em] font-semibold text-amber-500 uppercase flex items-center gap-1.5 mb-1 bg-amber-500/10 px-2 py-0.5 rounded-full w-fit">
-                    <Award size={11} /> MERCHANDISE BRANDS REGISTER
+                  <span className="text-[9px] font-mono tracking-[0.3em] font-semibold text-[#62cdd9] uppercase flex items-center gap-1.5 mb-1 bg-[#62cdd9]/10 px-2 py-0.5 rounded-full w-fit">
+                    <Award size={11} />  ALL BRANDS
                   </span>
                   <h3 className="text-xl sm:text-2xl font-light tracking-tight text-white mt-1">
-                    Select a <span className="font-semibold text-amber-400">Manufacture Portfolio</span>
+                    Select a <span className="font-semibold text-[#62cdd9]">Manufacture Portfolio</span>
                   </h3>
                   <p className="text-xs text-neutral-500 font-light mt-0.5">
                     Click any licensed factory brand to extract their isolated consignment listings.
@@ -594,9 +595,9 @@ export default function Navbar({
                   <button
                     key={brand.name}
                     onClick={() => handleBrandClick(brand.name)}
-                    className="w-full text-left bg-neutral-950/50 hover:bg-neutral-950 border border-neutral-900 hover:border-amber-500/30 rounded-xl p-4 transition-all duration-300 flex items-center justify-between gap-4 group cursor-pointer"
+                    className="w-full text-left bg-neutral-950/50 hover:bg-neutral-950 border border-neutral-900 hover:border-[#62cdd9]/30 rounded-xl p-4 transition-all duration-300 flex items-center justify-between gap-4 group cursor-pointer"
                   >
-                    <div className="min-w-0">
+                    {/* <div className="min-w-0">
                       <div className="flex items-center gap-2">
                         <span className="font-semibold text-sm text-neutral-200 group-hover:text-amber-400 transition-colors">{brand.name}</span>
                         <span className="text-[8px] font-mono uppercase bg-neutral-900 text-neutral-500 border border-neutral-850 px-1.5 py-0.5 rounded-md">
@@ -604,10 +605,10 @@ export default function Navbar({
                         </span>
                       </div>
                       <p className="text-xs text-neutral-400 font-light mt-1 tracking-wide leading-snug">{brand.desc}</p>
-                    </div>
+                    </div> */}
 
-                    <div className="flex-shrink-0 flex items-center gap-1.5 font-mono text-[9px] text-neutral-500 group-hover:text-amber-400 transition-all uppercase tracking-widest font-medium">
-                      <span>Examine portfolio</span>
+                    <div className="flex-shrink-0 flex items-center gap-1.5 font-mono text-[9px] text-neutral-500 group-hover:text-[#62cdd9] transition-all uppercase tracking-widest font-medium">
+                      <span>{brand.name}</span>
                       <ArrowRight size={12} className="transition-transform group-hover:translate-x-0.5" />
                     </div>
                   </button>
@@ -652,7 +653,7 @@ export default function Navbar({
                     <Activity size={12} /> PUFFMANIA DISTRO B2B TREND INTELLIGENCE
                   </span>
                   <h3 className="text-xl sm:text-2xl font-light tracking-tight text-white">
-                    Seasonal <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-amber-200">Consignment Forecast (Q3-Q4)</span>
+                    Seasonal <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-[#62cdd9]/40">Consignment Forecast (Q3-Q4)</span>
                   </h3>
                   <p className="text-xs text-neutral-400 font-light mt-1">
                     Analyse verified distribution metrics, excise rate forecasts, and consumer materials shifts for maximum margins.
@@ -696,7 +697,7 @@ export default function Navbar({
                         <span className="font-bold text-white">61% volume increase</span>
                       </div>
                       <div className="h-2 w-full bg-neutral-900 rounded-full overflow-hidden">
-                        <div className="h-full bg-gradient-to-r from-amber-500 to-amber-400 rounded-full" style={{ width: '61%' }} />
+                        <div className="h-full bg-gradient-to-r from-[#62cdd9] to-amber-400 rounded-full" style={{ width: '61%' }} />
                       </div>
                     </div>
 
@@ -779,15 +780,15 @@ export default function Navbar({
               exit={{ scale: 0.95, opacity: 0, y: 15 }}
               className="relative bg-neutral-900 border border-neutral-800 rounded-3xl w-full max-w-lg p-6 sm:p-8 text-neutral-100 z-10 shadow-2xl overflow-hidden font-sans"
             >
-              <div className="absolute top-0 right-0 h-32 w-32 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
+              <div className="absolute top-0 right-0 h-32 w-32 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#62cdd9]/5 to-transparent pointer-events-none" />
 
               <div className="flex justify-between items-start mb-6">
                 <div>
-                  <span className="text-[9px] font-mono tracking-[0.3em] font-semibold text-amber-500 uppercase flex items-center gap-1.5 mb-1 bg-neutral-950 border border-neutral-850 px-2 py-0.5 rounded-full w-fit">
-                    <Phone size={10} className="text-amber-500" /> DIRECT FREIGHT HELPDESK
+                  <span className="text-[9px] font-mono tracking-[0.3em] font-semibold text-[#62cdd9] uppercase flex items-center gap-1.5 mb-1 bg-neutral-950 border border-neutral-850 px-2 py-0.5 rounded-full w-fit">
+                    <Phone size={10} className="text-[#62cdd9]" /> DIRECT FREIGHT HELPDESK
                   </span>
                   <h3 className="text-xl sm:text-2xl font-light tracking-tight text-white mt-2">
-                    Submit <span className="font-semibold text-amber-400">Broker Inquiry</span>
+                    Submit <span className="font-semibold text-[#62cdd9]">Broker Inquiry</span>
                   </h3>
                   <p className="text-xs text-neutral-500 font-light mt-0.5">
                     Need custom shipping slots or volume custom quotes? Reach our Seattle dispatcher.
@@ -827,7 +828,7 @@ export default function Navbar({
                         placeholder="e.g. Marcus Vance"
                         value={contactForm.name}
                         onChange={(e) => setContactForm({...contactForm, name: e.target.value})}
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 font-sans"
+                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] font-sans"
                       />
                     </div>
 
@@ -840,7 +841,7 @@ export default function Navbar({
                           placeholder="vance@smikeshops.com"
                           value={contactForm.email}
                           onChange={(e) => setContactForm({...contactForm, email: e.target.value})}
-                          className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                          className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] font-mono"
                         />
                       </div>
 
@@ -852,7 +853,7 @@ export default function Navbar({
                           placeholder="(206) 555-0182"
                           value={contactForm.phone}
                           onChange={(e) => setContactForm({...contactForm, phone: e.target.value})}
-                          className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                          className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] font-mono"
                         />
                       </div>
                     </div>
@@ -862,7 +863,7 @@ export default function Navbar({
                       <select
                         value={contactForm.topic}
                         onChange={(e) => setContactForm({...contactForm, topic: e.target.value})}
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 focus:bg-neutral-950"
+                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:bg-neutral-950"
                       >
                         <option value="Dispatch Allocation">Consignment Vol / Allocation adjustments</option>
                         <option value="LTL Freight Cargo">LTL Freight Delivery slots</option>
@@ -879,7 +880,7 @@ export default function Navbar({
                         placeholder="Write down your corporate custom inquiry instructions..."
                         value={contactForm.message}
                         onChange={(e) => setContactForm({...contactForm, message: e.target.value})}
-                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 resize-none font-sans"
+                        className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] resize-none font-sans"
                       />
                     </div>
 
@@ -887,7 +888,7 @@ export default function Navbar({
                       <button
                         type="submit"
                         disabled={contactLoading}
-                        className="w-full bg-amber-500 hover:bg-amber-400 text-neutral-950 py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-widest flex items-center justify-center gap-1.5 shadow-md active:translate-y-[1px] transition-all cursor-pointer"
+                        className="w-full bg-[#62cdd9] hover:bg-amber-400 text-neutral-950 py-3 px-4 rounded-xl text-xs font-mono font-bold uppercase tracking-widest flex items-center justify-center gap-1.5 shadow-md active:translate-y-[1px] transition-all cursor-pointer"
                       >
                         {contactLoading ? (
                           <>

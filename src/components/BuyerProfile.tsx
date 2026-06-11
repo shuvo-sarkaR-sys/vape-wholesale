@@ -93,7 +93,7 @@ export default function BuyerProfile({
         <div>
           <button
             onClick={onClose}
-            className="group flex items-center gap-2 text-xs font-mono tracking-wider text-amber-500 uppercase hover:text-amber-400 mb-3 cursor-pointer"
+            className="group flex items-center gap-2 text-xs font-mono tracking-wider text-[#62cdd9] uppercase hover:text-[#62cdd9]/80 mb-3 cursor-pointer"
           >
             <ArrowLeft size={12} className="transition-transform group-hover:-translate-x-0.5" />
             <span>Return to Catalog</span>
@@ -103,7 +103,7 @@ export default function BuyerProfile({
             <CheckCircle2 size={11} /> VERIFIED B2B MERCHANT ARCHIVE
           </span>
           <h2 className="text-2xl sm:text-3xl font-light text-white tracking-tight">
-            Wholesale <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-amber-200 to-amber-500">Buyer Workspace</span>
+            Wholesale <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 via-[#62cdd9] to-[#62cdd9]">Buyer Workspace</span>
           </h2>
           <p className="text-xs text-neutral-400 font-light mt-1 max-w-xl">
             Monitor consignment pipelines, track active commercial freight codes, and update your regulatory corporate profiles.
@@ -130,7 +130,7 @@ export default function BuyerProfile({
             className={`rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all border ${
               isEditing 
                 ? 'bg-neutral-900 border-neutral-800 text-neutral-400 hover:text-white' 
-                : 'bg-amber-500 hover:bg-amber-400 text-neutral-950 border-transparent font-semibold shadow-md'
+                : 'bg-[#62cdd9] hover:bg-[#62cdd9]/80 text-neutral-950 border-transparent font-semibold shadow-md'
             }`}
           >
             <Edit3 size={13} />
@@ -147,7 +147,7 @@ export default function BuyerProfile({
           <div className="absolute top-0 right-0 h-32 w-32 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
 
           <h3 className="text-xs font-mono tracking-[0.25em] text-neutral-400 uppercase mb-6 pb-2.5 border-b border-neutral-900 flex items-center gap-2">
-            <Building size={14} className="text-amber-500" />
+            <Building size={14} className="text-[#62cdd9]" />
             <span>BUSINESS REGISTRY BIO</span>
           </h3>
 
@@ -198,7 +198,7 @@ export default function BuyerProfile({
 
                   <div className="space-y-1 pt-2 border-t border-neutral-900/60">
                     <span className="block text-[9px] font-mono uppercase tracking-widest text-neutral-500">State Tobacco Stamp / EIN Key</span>
-                    <p className="text-amber-400 font-mono text-[13px] font-semibold flex items-center gap-2 mt-0.5">
+                    <p className="text-[#62cdd9]/80 font-mono text-[13px] font-semibold flex items-center gap-2 mt-0.5">
                       <FileText size={13} className="text-neutral-500" />
                       <span>{businessAccount.licenseNumber}</span>
                     </p>
@@ -230,7 +230,7 @@ export default function BuyerProfile({
                     required
                     value={editName}
                     onChange={(e) => setEditName(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9]"
                   />
                 </div>
 
@@ -241,7 +241,7 @@ export default function BuyerProfile({
                     required
                     value={editEmail}
                     onChange={(e) => setEditEmail(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9]"
                   />
                 </div>
 
@@ -263,7 +263,7 @@ export default function BuyerProfile({
                     required
                     value={editPhone}
                     onChange={(e) => setEditPhone(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 font-mono"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] font-mono"
                   />
                 </div>
 
@@ -274,7 +274,7 @@ export default function BuyerProfile({
                     required
                     value={editLicense}
                     onChange={(e) => setEditLicense(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-amber-500 font-mono tracking-widest"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs text-white focus:outline-none focus:border-[#62cdd9] font-mono tracking-widest"
                   />
                 </div>
 
@@ -302,7 +302,7 @@ export default function BuyerProfile({
             <div className="bg-neutral-900/20 border border-neutral-900 p-5 rounded-2xl flex flex-col justify-between">
               <div className="flex justify-between items-center text-neutral-500 border-b border-neutral-950 pb-2 mb-3">
                 <span className="text-[9px] font-mono uppercase tracking-widest">W/S Capital Spent</span>
-                <DollarSign size={13} className="text-amber-500" />
+                <DollarSign size={13} className="text-[#62cdd9]" />
               </div>
               <div>
                 <span className="text-xl font-mono font-bold text-white block">${totalSpent.toFixed(2)}</span>
@@ -313,7 +313,7 @@ export default function BuyerProfile({
             <div className="bg-neutral-900/20 border border-neutral-900 p-5 rounded-2xl flex flex-col justify-between">
               <div className="flex justify-between items-center text-neutral-500 border-b border-neutral-950 pb-2 mb-3">
                 <span className="text-[9px] font-mono uppercase tracking-widest">Total Cargo Imported</span>
-                <Package size={13} className="text-amber-500" />
+                <Package size={13} className="text-[#62cdd9]" />
               </div>
               <div>
                 <span className="text-xl font-mono font-bold text-white block">{totalItemsOrdered} Units</span>
@@ -324,7 +324,7 @@ export default function BuyerProfile({
             <div className="bg-neutral-900/20 border border-neutral-900 p-5 rounded-2xl flex flex-col justify-between">
               <div className="flex justify-between items-center text-neutral-500 border-b border-neutral-950 pb-2 mb-3">
                 <span className="text-[9px] font-mono uppercase tracking-widest">Dispatch Status</span>
-                <Clock size={13} className="text-emerald-400" />
+                <Clock size={13} className="text-[#62cdd9]" />
               </div>
               <div>
                 <div className="flex items-center gap-2 mt-0.5">
@@ -335,7 +335,7 @@ export default function BuyerProfile({
                     <span className="text-xs font-mono text-blue-400 font-semibold">{processingOrdersCount} PROCESSING</span>
                   )}
                   {pendingOrdersCount > 0 && (
-                    <span className="text-xs font-mono text-amber-500 font-semibold">{pendingOrdersCount} REVIEWS</span>
+                    <span className="text-xs font-mono text-[#62cdd9] font-semibold">{pendingOrdersCount} REVIEWS</span>
                   )}
                   {buyerOrders.length === 0 && (
                     <span className="text-xs font-mono text-neutral-500 font-medium">NO ACTIVE LOGISTICS</span>
@@ -352,7 +352,7 @@ export default function BuyerProfile({
             
             <div className="flex justify-between items-center border-b border-neutral-900 pb-3">
               <h4 className="text-xs font-mono tracking-[0.25em] text-neutral-400 uppercase flex items-center gap-1.5">
-                <Layers size={13} className="text-amber-500" />
+                <Layers size={13} className="text-[#62cdd9]" />
                 <span>DIRECT CONSIGNMENT RECORD LEDGER</span>
               </h4>
               <span className="text-[10px] font-mono text-neutral-500">{buyerOrders.length} bookings</span>
@@ -386,10 +386,10 @@ export default function BuyerProfile({
                             ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20' 
                             : order.status === 'Processing'
                             ? 'bg-blue-500/10 text-blue-400 border border-blue-500/20'
-                            : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                            : 'bg-[#62cdd9]/10 text-[#62cdd9] border border-[#62cdd9]/20'
                         }`}>
                           <span className={`h-1 w-1 rounded-full ${
-                            order.status === 'Shipped' ? 'bg-emerald-400' : order.status === 'Processing' ? 'bg-blue-400 animate-pulse' : 'bg-amber-400 animate-pulse'
+                            order.status === 'Shipped' ? 'bg-emerald-400' : order.status === 'Processing' ? 'bg-blue-400 animate-pulse' : 'bg-[#62cdd9] animate-pulse'
                           }`} />
                           <span>{order.status}</span>
                         </span>
@@ -417,7 +417,7 @@ export default function BuyerProfile({
                               className="h-10 w-10 rounded-lg object-cover bg-neutral-950 border border-neutral-905 flex-shrink-0"
                             />
                             <div className="min-w-0">
-                              <span className="block text-[8px] font-mono text-amber-500/80 uppercase">{item.product.brand}</span>
+                              <span className="block text-[8px] font-mono text-[#62cdd9]/80 uppercase">{item.product.brand}</span>
                               <span className="text-neutral-200 tracking-tight block font-medium truncate">{item.product.name}</span>
                             </div>
                           </div>
@@ -435,7 +435,7 @@ export default function BuyerProfile({
                     {/* Footer receipt info */}
                     <div className="flex justify-between items-center pt-3 border-t border-neutral-900/40 text-[11px] font-mono text-neutral-400">
                       <span>Consignment Volume: {order.items.reduce((s, i) => s + i.quantity, 0)} Units</span>
-                      <span>Total Invoice: <strong className="text-amber-500 font-bold font-mono">${order.total.toFixed(2)}</strong></span>
+                      <span>Total Invoice: <strong className="text-[#62cdd9] font-bold font-mono">${order.total.toFixed(2)}</strong></span>
                     </div>
 
                   </div>

@@ -267,7 +267,7 @@ export default function BuyerLoginModal({
 
         <div className="flex justify-between items-start mb-5">
           <div>
-            <span className="text-[10px] tracking-[0.3em] font-mono text-amber-500 uppercase flex items-center gap-1.5 mb-1 font-bold">
+            <span className="text-[10px] tracking-[0.3em] font-mono text-[#62cdd9] uppercase flex items-center gap-1.5 mb-1 font-bold">
               <ShieldCheck size={12} /> B2B BUYER GATEWAY
             </span>
             <h3 className="text-lg font-light text-neutral-400 font-sans tracking-tight">
@@ -322,7 +322,7 @@ export default function BuyerLoginModal({
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                       placeholder="merchant@corporate.com"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                       disabled={isAuthenticating}
                     />
                   </div>
@@ -339,7 +339,7 @@ export default function BuyerLoginModal({
                         setResetEmail(email);
                         setErrorText('');
                       }}
-                      className="text-[10px] font-mono text-amber-500 hover:text-amber-400 transition-colors cursor-pointer"
+                      className="text-[10px] font-mono text-[#62cdd9] hover:text-amber-400 transition-colors cursor-pointer"
                       disabled={isAuthenticating}
                     >
                       Forgot password?
@@ -355,7 +355,7 @@ export default function BuyerLoginModal({
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                       placeholder="••••••••••••"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-9 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-9 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                       disabled={isAuthenticating}
                     />
                     <button
@@ -380,7 +380,7 @@ export default function BuyerLoginModal({
                 <button
                   type="submit"
                   disabled={isAuthenticating}
-                  className="w-full flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-amber-500 hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
+                className="w-full flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-[#62cdd9] hover:bg-[#5aa8b3] border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
                 >
                   {isAuthenticating ? (
                     <span className="flex items-center gap-2">
@@ -436,7 +436,7 @@ export default function BuyerLoginModal({
                       value={resetEmail}
                       onChange={(e) => setResetEmail(e.target.value)}
                       placeholder="merchant@corporate.com"
-                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                      className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 pl-9 pr-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                       disabled={isAuthenticating}
                     />
                   </div>
@@ -461,7 +461,7 @@ export default function BuyerLoginModal({
                   <button
                     type="submit"
                     disabled={isAuthenticating}
-                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-amber-500 hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
+                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-[#62cdd9] hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
                   >
                     {isAuthenticating ? (
                       <span className="flex items-center gap-2">
@@ -496,7 +496,7 @@ export default function BuyerLoginModal({
                     required
                     value={resetEmail}
                     onChange={(e) => setResetEmail(e.target.value)}
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                     disabled={isResettingPassword}
                   />
                 </div>
@@ -511,7 +511,7 @@ export default function BuyerLoginModal({
                     value={resetCode}
                     onChange={(e) => setResetCode(e.target.value.replace(/\D/g, ''))}
                     placeholder="123456"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors tracking-[0.4em]"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors tracking-[0.4em]"
                     disabled={isResettingPassword}
                   />
                 </div>
@@ -524,7 +524,7 @@ export default function BuyerLoginModal({
                     value={newPassword}
                     onChange={(e) => setNewPassword(e.target.value)}
                     placeholder="Enter a secure new password"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                     disabled={isResettingPassword}
                   />
                 </div>
@@ -537,7 +537,7 @@ export default function BuyerLoginModal({
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="Confirm the new password"
-                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-amber-500/40 focus:ring-0 transition-colors"
+                    className="w-full bg-neutral-950 border border-neutral-800 rounded-lg py-2 px-3 text-xs font-mono text-white placeholder-neutral-600 focus:outline-none focus:border-[#62cdd9]/40 focus:ring-0 transition-colors"
                     disabled={isResettingPassword}
                   />
                 </div>
@@ -546,7 +546,7 @@ export default function BuyerLoginModal({
                   <button
                     type="button"
                     onClick={() => setShowPassword((prev) => !prev)}
-                    className="text-amber-500 hover:text-amber-400 transition-colors cursor-pointer"
+                    className="text-[#62cdd9] hover:text-[#5aa8b3] transition-colors cursor-pointer"
                     disabled={isResettingPassword}
                   >
                     {showPassword ? 'Hide password' : 'Show password'}
@@ -554,7 +554,7 @@ export default function BuyerLoginModal({
                   <button
                     type="button"
                     onClick={() => setView('request-reset')}
-                    className="text-neutral-400 hover:text-white transition-colors cursor-pointer"
+                    className="text-[#62cdd9] hover:text-[#5aa8b3] transition-colors cursor-pointer"
                     disabled={isResettingPassword}
                   >
                     Resend code
@@ -580,7 +580,7 @@ export default function BuyerLoginModal({
                   <button
                     type="submit"
                     disabled={isResettingPassword}
-                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-amber-500 hover:bg-amber-400 border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
+                    className="w-2/3 flex items-center justify-center gap-1.5 text-xs text-neutral-950 font-semibold font-mono tracking-wider cursor-pointer bg-[#62cdd9] hover:bg-[#5aa8b3] border border-transparent py-2.5 rounded-lg transition-all active:scale-98 disabled:opacity-50"
                   >
                     {isResettingPassword ? (
                       <span className="flex items-center gap-2">

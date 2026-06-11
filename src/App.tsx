@@ -350,8 +350,8 @@ export default function App() {
           <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
             <div className="flex items-center justify-between gap-4 border border-neutral-900 bg-neutral-950/70 backdrop-blur-xl rounded-2xl px-4 py-3 shadow-2xl shadow-black/20">
               <div>
-                <span className="block text-[10px] uppercase tracking-[0.35em] text-amber-500 font-mono font-bold">Administrator Workspace</span>
-                <h1 className="text-lg sm:text-xl font-semibold text-white">Pacific Smoke Admin Dashboard</h1>
+                <span className="block text-[10px] uppercase tracking-[0.35em] text-[#62cdd9] font-mono font-bold">Administrator Workspace</span>
+                <h1 className="text-lg sm:text-xl font-semibold text-white">PUFFMANIA DISTRO Admin Dashboard</h1>
               </div>
               <button
                 type="button"
@@ -514,7 +514,7 @@ export default function App() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="text-[10px] tracking-[0.4em] text-amber-500 uppercase font-mono bg-amber-500/10 border border-amber-500/20 px-3 py-1.5 rounded-full inline-flex items-center gap-2">
+              <span className="text-[10px] tracking-[0.4em] text-[#62cdd9] uppercase font-mono bg-[#62cdd9]/10 border border-[#62cdd9]/20 px-3 py-1.5 rounded-full inline-flex items-center gap-2">
                 <Sparkles size={11} className="animate-spin" /> EXCLUSIVE REGULATORY OUTLET
               </span>
             </motion.div>
@@ -526,7 +526,7 @@ export default function App() {
               className="text-4xl sm:text-5xl font-light tracking-tight text-white leading-[1.1]"
             >
               The Pinnacle of <br />
-              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 via-amber-200 to-amber-500">
+              <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#62cdd9] via-[#62cdd9]/80 to-[#62cdd9]">
                 Premium Smoke Curations
               </span>
             </motion.h2>
@@ -550,7 +550,7 @@ export default function App() {
                 <button
                   type="button"
                   onClick={() => setIsRegisterOpen(true)}
-                  className="bg-amber-500 hover:bg-amber-400 text-neutral-950 font-semibold tracking-wider text-xs uppercase py-3.5 px-6 rounded-lg flex items-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
+                  className="bg-[#62cdd9] hover:bg-[#62cdd9]/80 text-neutral-950 font-semibold tracking-wider text-xs uppercase py-3.5 px-6 rounded-lg flex items-center gap-2 shadow-lg transition-transform hover:-translate-y-0.5 active:translate-y-0 cursor-pointer"
                 >
                   <UserCheck size={14} />
                   <span>REGISTER TO SEE WHOLESALE PRICES</span>
@@ -568,9 +568,9 @@ export default function App() {
         {/* Decorative Grid Specs sidebar subtle accent on the bottom border of hero */}
         <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-neutral-950 to-transparent flex items-center z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-between gap-4 text-[10px] font-mono text-neutral-500 tracking-wider overflow-x-auto pb-2 scrollbar-none select-none">
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><Award size={12} className="text-amber-500" /> SECURE STRIPED REGISTRY</span>
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><Compass size={12} className="text-amber-500" /> HERB THERMOSTATIC CONVECTS</span>
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><RefreshCw size={12} className="text-amber-500" /> LTL FREIGHT ON &gt;$1K DISPATCH</span>
+            <span className="flex items-center gap-1.5 whitespace-nowrap"><Award size={12} className="text-[#62cdd9]" /> SECURE STRIPED REGISTRY</span>
+            <span className="flex items-center gap-1.5 whitespace-nowrap"><Compass size={12} className="text-[#62cdd9]" /> HERB THERMOSTATIC CONVECTS</span>
+            <span className="flex items-center gap-1.5 whitespace-nowrap"><RefreshCw size={12} className="text-[#62cdd9]" /> LTL FREIGHT ON &gt;$1K DISPATCH</span>
           </div>
         </div>
       </header>
@@ -583,10 +583,10 @@ export default function App() {
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="mb-12 p-4 bg-amber-500/5 border border-amber-500/20 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+            className="mb-12 p-4 bg-[#62cdd9]/5 border border-[#62cdd9]/20 rounded-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4"
           >
             <div className="flex items-start gap-3">
-              <div className="p-2 bg-amber-500/10 rounded-lg text-amber-500 flex-shrink-0">
+              <div className="p-2 bg-[#62cdd9]/10 rounded-lg text-[#62cdd9] flex-shrink-0">
                 <Lock size={16} />
               </div>
               <div>
@@ -617,7 +617,7 @@ export default function App() {
                 onClick={() => setActiveCategory(category)}
                 className={`px-4 py-2 rounded-lg text-xs font-medium tracking-wide transition-all cursor-pointer select-none ${
                   activeCategory === category
-                    ? 'bg-amber-500 text-neutral-950 font-semibold'
+                    ? 'bg-[#62cdd9] text-neutral-950 font-semibold'
                     : 'bg-neutral-900 text-neutral-400 hover:text-white hover:bg-neutral-850'
                 }`}
               >
@@ -633,7 +633,7 @@ export default function App() {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Search catalog collections..."
-              className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-4 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/20 transition-all placeholder-neutral-500"
+              className="w-full bg-neutral-900 border border-neutral-850 rounded-lg pl-4 pr-10 py-2.5 text-xs text-white focus:outline-none focus:border-[#62cdd9] focus:ring-1 focus:ring-[#62cdd9]/20 transition-all placeholder-neutral-500"
             />
             <div className="absolute right-3.5 top-1/2 -translate-y-1/2 text-neutral-500">
               <SlidersHorizontal size={13} />
@@ -675,27 +675,27 @@ export default function App() {
 
         {/* Brand Legacy Editorial Block */}
         <section id="about" className="mt-28 py-16 px-6 sm:px-10 bg-neutral-900/20 border border-neutral-900 rounded-3xl relative overflow-hidden">
-          <div className="absolute top-0 right-0 h-40 w-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-amber-500/5 to-transparent pointer-events-none" />
+          <div className="absolute top-0 right-0 h-40 w-40 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-[#62cdd9]/5 to-transparent pointer-events-none" />
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
             <div className="space-y-6">
-              <span className="text-[10px] tracking-[0.3em] text-amber-500 font-mono uppercase block">ESTABLISHED 2011 • THE PACIFIC HERITAGE</span>
+              <span className="text-[10px] tracking-[0.3em] text-[#62cdd9] font-mono uppercase block">ESTABLISHED 2011 • THE PUFFMANIA DISTRO.</span>
               
               <h3 className="text-2xl sm:text-3xl font-light text-white tracking-tight leading-snug">
                 Purity of Stream. <br />
-                <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-amber-400 to-amber-200">Uncompromising Engineering.</span>
+                <span className="font-semibold text-transparent bg-clip-text bg-gradient-to-r from-[#62cdd9] to-[#62cdd9]/50">Uncompromising Engineering.</span>
               </h3>
               
               <p className="text-xs text-neutral-400 leading-relaxed font-light">
-                Pacific Smoke acts as the exclusive gatekeeper for the world's most progressive heating assemblies and storage boxes. We hold premium wholesale allocations representing global masters, supporting specialized merchants across North America with certified government-compliant logistical networks.
+                PUFFMANIA DISTRO acts as the exclusive gatekeeper for the world's most progressive heating assemblies and storage boxes. We hold premium wholesale allocations representing global masters, supporting specialized merchants across North America with certified government-compliant logistical networks.
               </p>
 
               <div className="grid grid-cols-2 gap-4 pt-2 font-mono text-[11px] text-neutral-300">
-                <div className="border-l border-amber-500/40 pl-4 space-y-1">
+                <div className="border-l border-[#62cdd9]/40 pl-4 space-y-1">
                   <span className="block text-[9px] text-neutral-500 uppercase tracking-widest leading-none">REGULATORY STANDARDS</span>
                   <span className="font-semibold">FDA & Health Canada</span>
                 </div>
-                <div className="border-l border-amber-500/40 pl-4 space-y-1">
+                <div className="border-l border-[#62cdd9]/40 pl-4 space-y-1">
                   <span className="block text-[9px] text-neutral-500 uppercase tracking-widest leading-none">THERMAL RESILIENCE</span>
                   <span className="font-semibold">Aerospace Grade</span>
                 </div>
@@ -725,7 +725,7 @@ export default function App() {
       {businessAccount && orders.length > 0 && (
         <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 bg-neutral-950 border-t border-neutral-900">
           <div className="flex items-center gap-2 mb-6">
-            <span className="h-1.5 w-1.5 rounded-full bg-amber-400 animate-pulse" />
+            <span className="h-1.5 w-1.5 rounded-full bg-[#62cdd9] animate-pulse" />
             <h4 className="text-xs tracking-[0.25em] font-mono text-neutral-400 uppercase">
               ACTIVE MERCHANT DISPATCH SHIPMENTS ({orders.length})
             </h4>
@@ -750,8 +750,8 @@ export default function App() {
                 </div>
                 <div>
                   <span className="text-neutral-500 text-[10px] block">STATUS</span>
-                  <span className="mt-0.5 inline-flex items-center gap-1 text-emerald-400 font-semibold px-2 py-0.5 rounded bg-emerald-500/5 border border-emerald-500/10">
-                    <span className="h-1 w-1 rounded-full bg-emerald-400 animate-pulse" />
+                  <span className="mt-0.5 inline-flex items-center gap-1 text-[#62cdd9] font-semibold px-2 py-0.5 rounded bg-[#62cdd9]/5 border border-[#62cdd9]/10">
+                    <span className="h-1 w-1 rounded-full bg-[#62cdd9] animate-pulse" />
                     {order.status.toUpperCase()}
                   </span>
                 </div>
@@ -790,17 +790,14 @@ export default function App() {
 
           <div className="pt-8 border-t border-neutral-900 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono tracking-widest uppercase">
             <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-center sm:text-left">
-              <span>© 2026 PACIFIC SMOKE INC. LUXURY SECURE PORTALS • ALL RIGHTS RESERVED.</span>
+              <span>© 2026 PUFFMANIA DISTRO LUXURY SECURE PORTALS • ALL RIGHTS RESERVED.</span>
               <span className="hidden sm:inline text-neutral-850">|</span>
-              <span className={`inline-flex items-center gap-1.5 ${isDbConnected ? 'text-emerald-400' : 'text-neutral-500'}`}>
-                <span className={`h-1.5 w-1.5 rounded-full ${isDbConnected ? 'bg-emerald-400 animate-pulse' : 'bg-neutral-600'}`} />
-                DATABASE SECURE LOG: {dbType.toUpperCase()}
-              </span>
+              
             </div>
             <div className="flex gap-4">
-              <a href="#compliance" className="hover:text-amber-500">TERMS OF SALE</a>
+              <a href="#compliance" className="hover:text-[#62cdd9]">TERMS OF SALE</a>
               <span>•</span>
-              <a href="#compliance" className="hover:text-amber-500">LICENSE DISCLOSURE</a>
+              <a href="#compliance" className="hover:text-[#62cdd9]">LICENSE DISCLOSURE</a>
             </div>
           </div>
         </div>
