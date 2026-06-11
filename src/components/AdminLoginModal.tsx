@@ -62,6 +62,7 @@ export default function AdminLoginModal({ isOpen, onClose, onLoginSuccess }: Adm
 
       onLoginSuccess();
       onClose();
+        window.location.href = '/admin-dashboard';
        
     } catch (err: any) {
       setErrorMessage(err.message || 'Invalid administrator credentials.');
