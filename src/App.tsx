@@ -537,7 +537,7 @@ export default function App() {
               transition={{ delay: 0.4, duration: 0.8 }}
               className="text-sm font-light text-neutral-300 leading-relaxed max-w-lg"
             >
-              Welcome to the Pacific Smoke authorized private Wholesaler portal. Explore precision-engineered vaporizers, artisanal borosilicate vessels, and smart Spanish Cedar humidors curated for specialized boutique retail establishments.
+              Welcome to the PUFFMANIA DISTRO authorized private Wholesaler portal. Explore precision-engineered vaporizers, artisanal borosilicate vessels, and smart Spanish Cedar humidors curated for specialized boutique retail establishments.
             </motion.p>
 
             <motion.div
@@ -768,7 +768,7 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="space-y-2">
-              <span className="text-xs text-white uppercase font-sans tracking-widest font-bold">PACIFIC SMOKE WHOLESALE</span>
+              <span className="text-xs text-white uppercase font-sans tracking-widest font-bold">PUFFMANIA DISTRO. WHOLESALE</span>
               <p className="text-neutral-500 leading-relaxed font-light">
                 Private commercial-only platform providing certified distribution channels across North America. Tobacco Wholesale License ID registration required standard checkouts.
               </p>
