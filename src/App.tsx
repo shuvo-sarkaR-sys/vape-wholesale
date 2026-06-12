@@ -340,7 +340,7 @@ export default function App() {
     return matchesCategory && matchesSearch;
   });
 
-  const categoriesList = ['All', 'Disposables', 'Pod Systems', 'E-Liquid', 'Hardware', 'Vaporizers', 'Vessels', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets'];
+  const categoriesList = ['All', 'Disposables', 'Pod Systems', 'E-Liquid', 'Pouches', 'Vaporizers', 'Vessels', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets'];
 
   if (isAdminPage) {
     return (

@@ -64,7 +64,7 @@ export default function Navbar({
   const brandShowcases = [
     { name: 'Apex Labs', category: 'Disposables', desc: 'Quartz glass convective disposables & e-liquids.', count: 'ps-09' },
     { name: 'Vessel Luxe', category: 'Pod Systems', desc: 'Machined satin brass B2B cartridge vessels.', count: 'ps-10' },
-    { name: 'Aether Technologies', category: 'Hardware', desc: 'Aerospace grade inductive heating equipment.', count: 'ps-12' },
+    { name: 'Aether Technologies', category: 'Po', desc: 'Aerospace grade inductive heating equipment.', count: 'ps-12' },
     { name: 'Nectar Alchemy', category: 'E-Liquid', desc: 'Premium barrel-aged tobacco & fruit distillates.', count: 'ps-11' },
     { name: 'Pacific Humidors', category: 'Cigar Accessories', desc: 'Smart moisture humidor storage cases.', count: 'ps-02' }
   ];
@@ -313,10 +313,10 @@ export default function Navbar({
 
               <button 
                 type="button"
-                onClick={() => handleCategoryClick('Hardware')}
-                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'Hardware' ? 'text-[#62cdd9] font-semibold' : ''}`}
+                onClick={() => handleCategoryClick('Pouches')}
+                className={`hover:text-[#62cdd9] transition-colors cursor-pointer ${activeCategory === 'Pouches' ? 'text-[#62cdd9] font-semibold' : ''}`}
               >
-                Hardware
+                Pouches
               </button>
 
               <span className="h-1 w-1 rounded-full bg-neutral-800" />
@@ -449,7 +449,7 @@ export default function Navbar({
                     { id: 'Disposables', label: 'Disposables', desc: 'Pre-filled ceramic quartz vaporizers' },
                     { id: 'Pod Systems', label: 'Pod Systems', desc: 'Refillable modular magnetic pods' },
                     { id: 'E-Liquid', label: 'E-Liquid', desc: 'Oak-barrel aged salt-nic distillates' },
-                    { id: 'Hardware', label: 'Hardware', desc: 'Precision electronic enails & smart chargers' }
+                    { id: 'Pouches', label: 'Pouches', desc: 'Precision electronic enails & smart chargers' }
                   ].map((dept) => (
                     <button
                       key={dept.id}
