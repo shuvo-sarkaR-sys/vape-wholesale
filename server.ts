@@ -192,8 +192,8 @@ app.post('/api/contact/send', async (req, res) => {
     }
 
     const transporter = await getMailTransporter();
-    const recipient =  process.env.SMTP_USER  ;
-    const fromAddress = process.env.SMTP_FROM || '"Pacific Smoke Wholesale" <no-reply@pacificsmokewholesale.local>';
+    const recipient =  process.env.ADMIN_EMAIL  ;
+    const fromAddress = process.env.SMTP_FROM || '"PUFFMANIA DISTRO" <no-reply@PUFFMANIA DISTROsmokewholesale.local>';
 
     const info = await transporter.sendMail({
       from: fromAddress,
@@ -496,7 +496,7 @@ app.post('/api/auth/admin/otp/request', async (req, res) => {
 
     const previewUrl = await sendOtpEmail({
       to: email,
-      subject: '[Pacific Smoke Wholesale] Admin Login OTP',
+      subject: '[ PUFFMANIA DISTRO] Admin Login OTP',
       title: 'Admin OTP Login',
       code,
       intro: 'Use the one-time code below to complete administrator sign in.',
