@@ -60,13 +60,27 @@ export default function Navbar({
   const [contactSubmitted, setContactSubmitted] = useState(false);
   const [contactLoading, setContactLoading] = useState(false);
   const [contactError, setContactError] = useState('');
+// GEEKBAR
+// • ELFBAR
+// • OVNS
+// • FLAVOURBEAST & BAZOOKA
+// • MARZ VAPOR
+// • STLTH
+// • AL FAKHER/E-SHISHAS
+// • MORE DISPOS
 
   const brandShowcases = [
-    { name: 'Apex Labs', category: 'Disposables', desc: 'Quartz glass convective disposables & e-liquids.', count: 'ps-09' },
-    { name: 'Vessel Luxe', category: 'Pod Systems', desc: 'Machined satin brass B2B cartridge vessels.', count: 'ps-10' },
-    { name: 'Aether Technologies', category: 'Po', desc: 'Aerospace grade inductive heating equipment.', count: 'ps-12' },
-    { name: 'Nectar Alchemy', category: 'E-Liquid', desc: 'Premium barrel-aged tobacco & fruit distillates.', count: 'ps-11' },
-    { name: 'Pacific Humidors', category: 'Cigar Accessories', desc: 'Smart moisture humidor storage cases.', count: 'ps-02' }
+    { name: 'GREEK BAR', category: 'Disposables', desc: 'Quartz glass convective disposables & e-liquids.', count: 'ps-09' },
+    { name: 'ELF BAR', category: 'Pod Systems', desc: 'Machined satin brass B2B cartridge vessels.', count: 'ps-10' },
+    { name: 'OVNS', category: 'Pod Systems', desc: 'Aerospace grade inductive heating equipment.', count: 'ps-12' },
+    { name: 'FLAVOUR BEAST', category: 'E-Liquid', desc: 'Premium barrel-aged tobacco & fruit distillates.', count: 'ps-11' },
+  {name: 'BAzOOKA', category: 'Pod Systems', desc: 'Precision quartz glass convective atomizers.', count: 'ps-04' },
+    { name: 'MARZ VAPOR', category: 'Cigar Accessories', desc: 'Smart moisture humidor storage cases.', count: 'ps-02' },
+    { name: 'STLTH', category: 'Pod Systems', desc: 'Precision machined magnetic pod systems.', count: 'ps-08' },
+    { name: 'AL FAKHER', category: 'E-Liquid', desc: 'Premium tobacco & fruit distillates.', count: 'ps-07' },
+     { name: 'Shilestial', category: 'Pouches', desc: 'Tobacco-free nicotine pouches in various flavors.', count: 'ps-06' },
+    { name: 'MORE DISPOSABLES', category: 'Disposables', desc: 'Additional licensed factory lines.', count: 'ps-05' }
+
   ];
 
   const handleContactSubmit = async (e: React.FormEvent) => {

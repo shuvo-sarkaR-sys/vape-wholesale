@@ -179,6 +179,7 @@ async function sendOtpEmail(params: {
   return previewUrl || null;
 }
 
+
 app.post('/api/contact/send', async (req, res) => {
   try {
     const name = String(req.body?.name || '').trim();
@@ -192,7 +193,7 @@ app.post('/api/contact/send', async (req, res) => {
     }
 
     const transporter = await getMailTransporter();
-    const recipient =  process.env.ADMIN_EMAIL  ;
+    const recipient =  process.env.ADMIN_EMAIL || process.env.SMTP_USER ;
     const fromAddress = process.env.SMTP_FROM || '"PUFFMANIA DISTRO" <no-reply@PUFFMANIA DISTROsmokewholesale.local>';
 
     const info = await transporter.sendMail({

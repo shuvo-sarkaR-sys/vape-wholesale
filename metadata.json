@@ -1,6 +1,6 @@
 {
-  "name": "Pacific Smoke Wholesale",
-  "description": "A luxury, modern wholesale distributor storefront featuring password access, verified business registration, and a secure full-stack Node/Express and MongoDB Atlas backend database pipeline.",
+  "name": "Puffmania Distro Wholesale",
+  "description": "A luxury, modern wholesale distributor storefront featuring password access, verified business registration, and a secure.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
