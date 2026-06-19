@@ -16,7 +16,7 @@ export default function PasswordGate({ onSuccess }: PasswordGateProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (password === 'PUFFMANIA@2026' ) {
+    if (password === 'wholesale' ) {
       setIsSubmitting(true);
       setErrorInput(false);
       setTimeout(() => {
