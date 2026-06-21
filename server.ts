@@ -3,7 +3,7 @@ import crypto from 'crypto';
 import path from 'path';
 import { createServer as createViteServer } from 'vite';
 import dotenv from 'dotenv';
-import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 import { connectToDatabase, dbOperations } from './src/lib/db';
 import { Product, BusinessAccount, Order } from './src/types';
 import { hashPassword, verifyPassword, validatePasswordStrength, bruteForceSentinel } from './src/lib/security';
@@ -25,52 +25,31 @@ app.use(express.urlencoded({
 // ==========================================
 // 📨 SECURE MAIL TRANSPORTER UTILITIES
 // ==========================================
-console.log("smtp host:", process.env.SMTP_HOST);
+console.log("resend api key configured:", !!process.env.RESEND_API_KEY);
 console.log("mongodb uri configured:", !!process.env.MONGODB_URI);
-let cachedTransporter: nodemailer.Transporter | null = null;
 
-const getMailTransporter = async (): Promise<nodemailer.Transporter> => {
-  if (cachedTransporter) return cachedTransporter;
+const resend = new Resend(process.env.RESEND_API_KEY);
+const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL || '"Pacific Smoke Wholesale" <no-reply@pacificsmokewholesale.local>';
 
-  // Custom SMTP setup if supplied in environmental parameters
-  if (process.env.SMTP_HOST && process.env.SMTP_USER && process.env.SMTP_PASS) {
-    console.log(`✨ Initializing production SMTP transporter for host: ${process.env.SMTP_HOST}`);
-    cachedTransporter = nodemailer.createTransport({
-      host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT) || 587,
-      secure: process.env.SMTP_SECURE === 'true' || Number(process.env.SMTP_PORT) === 465,
-      auth: {
-        user: process.env.SMTP_USER,
-        pass: process.env.SMTP_PASS,
-      },
+const getMailTransporter = async () => {
+  return { send: async (mailOptions: any) => {
+    const result = await resend.emails.send({
+      from: mailOptions.from,
+      to: mailOptions.to,
+      ...(mailOptions.replyTo && { replyTo: mailOptions.replyTo }),
+      subject: mailOptions.subject,
+      html: mailOptions.html,
     });
-    return cachedTransporter;
-  }
+    
+    if (result.error) {
+      throw new Error(result.error.message);
+    }
 
-  // Fallback testing SMTP account for visual inspection in preview container environment
-  console.log('📬 No SMTP settings found. Generating volatile testing Ethereal SMTP transporter...');
-  try {
-    const testAccount = await nodemailer.createTestAccount();
-    cachedTransporter = nodemailer.createTransport({
-      host: testAccount.smtp.host,
-      port: testAccount.smtp.port,
-      secure: testAccount.smtp.secure,
-      auth: {
-        user: testAccount.user,
-        pass: testAccount.pass,
-      },
-    });
-    console.log(`✅ Transient sandbox SMTP client generated successfully! User: ${testAccount.user}`);
-    return cachedTransporter;
-  } catch (err: any) {
-    console.error('❌ Ethereal SMTP account generation failed. Initializing minimal mock transporter.', err.message);
-    // Minimal pass-through mocked transporter
-    return nodemailer.createTransport({
-      streamTransport: true,
-      newline: 'unix',
-      buffer: true
-    });
-  }
+    return {
+      messageId: result.data?.id,
+      response: result.data?.id
+    };
+  }};
 };
 
 type OtpPurpose = 'buyer-reset' | 'admin-login';
@@ -86,8 +65,8 @@ interface OtpRecord {
 const otpStore = new Map<string, OtpRecord>();
 const OTP_TTL_MS = 10 * 60 * 1000;
 const OTP_MAX_ATTEMPTS = 5;
-const ADMIN_LOGIN_EMAIL = (process.env.ADMIN_EMAIL || process.env.SMTP_USER || 'admin@pacificsmoke.com').toLowerCase().trim();
-let adminPasswordHash = process.env.ADMIN_PASSWORD_HASH || hashPassword(process.env.ADMIN_PASSWORD || 'pacific-secure-admin');
+const ADMIN_LOGIN_EMAIL = process.env.ADMIN_EMAIL?.toLowerCase().trim();
+let adminPasswordHash = process.env.ADMIN_PASSWORD_HASH;
 
 function normalizeEmail(email: string): string {
   return email.toLowerCase().trim();
@@ -148,9 +127,9 @@ async function sendOtpEmail(params: {
   actionLabel: string;
 }) {
   const transporter = await getMailTransporter();
-  const fromAddress = process.env.SMTP_FROM || '"Pacific Smoke Wholesale" <no-reply@pacificsmokewholesale.local>';
+  const fromAddress = SENDER_EMAIL;
 
-  const info = await transporter.sendMail({
+  const info = await transporter.send({
     from: fromAddress,
     to: params.to,
     subject: params.subject,
@@ -171,12 +150,7 @@ async function sendOtpEmail(params: {
     `,
   });
 
-  const previewUrl = nodemailer.getTestMessageUrl(info);
-  if (previewUrl) {
-    console.log(`🔗 Sandbox Mailbox URL: ${previewUrl}`);
-  }
-
-  return previewUrl || null;
+  return null;
 }
 
 
@@ -193,10 +167,10 @@ app.post('/api/contact/send', async (req, res) => {
     }
 
     const transporter = await getMailTransporter();
-    const recipient =  process.env.ADMIN_EMAIL || process.env.SMTP_USER ;
-    const fromAddress = process.env.SMTP_FROM || '"PUFFMANIA DISTRO" <no-reply@PUFFMANIA DISTROsmokewholesale.local>';
+    const recipient =  process.env.ADMIN_EMAIL || process.env.RESEND_FROM_EMAIL ;
+    const fromAddress = SENDER_EMAIL;
 
-    const info = await transporter.sendMail({
+    const info = await transporter.send({
       from: fromAddress,
       to: recipient,
       replyTo: email,
@@ -233,12 +207,7 @@ app.post('/api/contact/send', async (req, res) => {
       `,
     });
 
-    const previewUrl = nodemailer.getTestMessageUrl(info);
-    if (previewUrl) {
-      console.log(`🔗 Contact form preview URL: ${previewUrl}`);
-    }
-
-    res.json({ success: true, message: 'Contact message sent successfully.', previewUrl, sentTo: recipient });
+    res.json({ success: true, message: 'Contact message sent successfully.', previewUrl: null, sentTo: recipient });
   } catch (err: any) {
     console.error('❌ Failed to send contact message:', err);
     res.status(500).json({ error: 'Unable to send contact message.', details: err.message });
@@ -258,9 +227,9 @@ app.post('/api/otp/send', async (req, res) => {
     }
 
     const transporter = await getMailTransporter();
-    const fromAddress = process.env.SMTP_FROM || '"Pacific Smoke Wholesale" <no-reply@pacificsmokewholesale.local>';
+    const fromAddress = SENDER_EMAIL;
 
-    const info = await transporter.sendMail({
+    const info = await transporter.send({
       from: fromAddress,
       to: email,
       subject: `[Pacific Smoke Wholesale] OTP Security Verification Code: ${code}`,
@@ -302,16 +271,12 @@ app.post('/api/otp/send', async (req, res) => {
       `,
     });
 
-    const previewUrl = nodemailer.getTestMessageUrl(info);
     console.log(`✉️ Email dispatched to: ${email}`);
-    if (previewUrl) {
-      console.log(`🔗 Sandbox Mailbox URL: ${previewUrl}`);
-    }
 
     res.json({
       success: true,
       message: 'OTP verification key successfully processed.',
-      previewUrl: previewUrl || null,
+      previewUrl: null,
       sentTo: email
     });
   } catch (err: any) {

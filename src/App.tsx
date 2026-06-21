@@ -9,7 +9,8 @@ import {
   Lock, ShieldCheck, Mail, Building, MapPin, Phone, 
   Award, Sparkles, Star, ChevronRight, Eye, ShieldAlert,
   SlidersHorizontal, Check, RefreshCw, ShoppingBag, 
-  HelpCircle, UserCheck, ArrowRight, Compass
+  HelpCircle, UserCheck, ArrowRight, Compass,
+  
 } from 'lucide-react';
 
 import { Product, BusinessAccount, CartItem, Order } from './types';
@@ -511,12 +512,12 @@ export default function App() {
 
         {/* Background Image overlay */}
         <div className="absolute inset-0 z-0">
-          <img 
+          {/* <img 
             src={HERO_BANNER} 
             alt="Pacific Smoke Collection Hero" 
             referrerPolicy="no-referrer"
             className="w-full h-full object-cover opacity-65 scale-102 filter brightness-[0.45] transition-all duration-1000"
-          />
+          /> */}
           <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/20 to-neutral-950" />
         </div>
 
@@ -531,7 +532,7 @@ export default function App() {
                 <Sparkles size={11} className="animate-spin" /> EXCLUSIVE REGULATORY OUTLET
               </span>
             </motion.div>
-
+<div className="flex items-center gap-1 md:justify-between ">
             <motion.h2
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -544,6 +545,11 @@ export default function App() {
               </span>
             </motion.h2>
 
+            <a  href="https://signal.me/#p/+8801XXXXXXXXX" target="_blank" rel="noopener noreferrer">
+              <img src='/unnamed.png' alt="" className="w-32 object-cover" />
+              <span className='text-xs text-white w-full text-center'>Signal messenger</span>
+            </a>
+</div>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
