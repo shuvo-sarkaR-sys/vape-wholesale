@@ -545,7 +545,7 @@ export default function App() {
               </span>
             </motion.h2>
 
-            <a  href="https://signal.me/#p/+8801XXXXXXXXX" target="_blank" rel="noopener noreferrer">
+            <a  href="https://signal.me/#p/+14168028394" target="_blank" rel="noopener noreferrer">
               <img src='/unnamed.png' alt="" className="w-32 object-cover rounded-xl" />
               <p className='text-xs text-white w-full text-center mt-2'>Chat on Signal</p>
             </a>
