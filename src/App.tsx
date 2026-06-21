@@ -340,7 +340,7 @@ export default function App() {
     return matchesCategory && matchesSearch;
   });
 
-  const categoriesList = ['All', 'Disposables', 'Pod Systems', 'E-Liquid', 'Pouches', 'Vaporizers', 'Vessels', 'Cigar Accessories', 'Artisanal Pipes', 'Curated Sets'];
+  const categoriesList = ['All', 'Disposables', 'Pod Systems', 'E-Liquid', 'Pouches', 'Vaporizers'];
 
   if (isAdminPage) {
     return (
@@ -353,13 +353,26 @@ export default function App() {
                 <span className="block text-[10px] uppercase tracking-[0.35em] text-[#62cdd9] font-mono font-bold">Administrator Workspace</span>
                 <h1 className="text-lg sm:text-xl font-semibold text-white">PUFFMANIA DISTRO Admin Dashboard</h1>
               </div>
-              <button
-                type="button"
-                onClick={goHome}
-                className="bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 rounded-lg px-4 py-2 text-xs font-mono uppercase tracking-widest transition-colors"
-              >
-                Back to site
-              </button>
+              <div className="flex items-center gap-3">
+  <button
+    type="button"
+    onClick={goHome}
+    className="bg-neutral-900 hover:bg-neutral-800 text-neutral-200 border border-neutral-800 rounded-lg px-4 py-2 text-xs font-mono uppercase tracking-widest transition-colors"
+  >
+    Back to Site
+  </button>
+
+  <button
+    type="button"
+    onClick={handleLockCatalog}
+    className="bg-red-600 hover:bg-red-700 text-white rounded-lg px-4 py-2 text-xs font-mono uppercase tracking-widest transition-colors"
+  >
+    Logout
+  </button>
+</div>
+
+
+               
             </div>
 
             <div className="mt-6">
@@ -566,13 +579,13 @@ export default function App() {
         </div>
 
         {/* Decorative Grid Specs sidebar subtle accent on the bottom border of hero */}
-        <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-neutral-950 to-transparent flex items-center z-20">
+        {/* <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-neutral-950 to-transparent flex items-center z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full flex justify-between gap-4 text-[10px] font-mono text-neutral-500 tracking-wider overflow-x-auto pb-2 scrollbar-none select-none">
             <span className="flex items-center gap-1.5 whitespace-nowrap"><Award size={12} className="text-[#62cdd9]" /> SECURE STRIPED REGISTRY</span>
             <span className="flex items-center gap-1.5 whitespace-nowrap"><Compass size={12} className="text-[#62cdd9]" /> HERB THERMOSTATIC CONVECTS</span>
             <span className="flex items-center gap-1.5 whitespace-nowrap"><RefreshCw size={12} className="text-[#62cdd9]" /> LTL FREIGHT ON &gt;$1K DISPATCH</span>
           </div>
-        </div>
+        </div> */}
       </header>
 
       {/* Main Catalog View Section */}
@@ -722,7 +735,7 @@ export default function App() {
       </main>
 
       {/* Historical Orders section for verified users */}
-      {businessAccount && orders.length > 0 && (
+      {/* {businessAccount && orders.length > 0 && (
         <section className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-10 bg-neutral-950 border-t border-neutral-900">
           <div className="flex items-center gap-2 mb-6">
             <span className="h-1.5 w-1.5 rounded-full bg-[#62cdd9] animate-pulse" />
@@ -759,7 +772,7 @@ export default function App() {
             ))}
           </div>
         </section>
-      )}
+      )} */}
         </>
       )}
 

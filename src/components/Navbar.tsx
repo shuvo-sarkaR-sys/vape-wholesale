@@ -240,13 +240,13 @@ export default function Navbar({
               </button>
 
               {/* Catalog Log Out */}
-              <button
+             {/*  <button
                 onClick={onLogout}
                 className="p-2 text-neutral-500 hover:text-red-400 hover:bg-neutral-950 rounded-full transition-all cursor-pointer"
                 title="Lock wholesale catalogs"
               >
                 <LogOut size={16} />
-              </button>
+              </button>*/}
 
             </div>
 
