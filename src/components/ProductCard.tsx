@@ -87,9 +87,10 @@ export default function ProductCard({
             </span>
           </div>
 
-          <h4 className="text-sm font-sans tracking-tight text-white font-medium group-hover:text-[#62cdd9] transition-colors duration-300 line-clamp-1">
+          <button
+            onClick={() => onInspectDetails(product)} className='cursor-pointer'><h4 className="text-sm font-sans tracking-tight text-white font-medium group-hover:text-[#62cdd9] transition-colors duration-300 line-clamp-1">
             {product.name}
-          </h4>
+          </h4> </button>
 
           <p className="text-xs text-neutral-400 leading-relaxed line-clamp-2 font-light">
             {product.description}
