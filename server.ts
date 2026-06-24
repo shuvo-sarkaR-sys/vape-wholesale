@@ -29,7 +29,7 @@ console.log("resend api key configured:", !!process.env.RESEND_API_KEY);
 console.log("mongodb uri configured:", !!process.env.MONGODB_URI);
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL || '"Pacific Smoke Wholesale" <no-reply@pacificsmokewholesale.local>';
+const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL || '"PUFFMANIA DISTRO Wholesale" <no-reply@pacificsmokewholesale.local>';
 
 const getMailTransporter = async () => {
   return { send: async (mailOptions: any) => {
@@ -138,7 +138,7 @@ async function sendOtpEmail(params: {
       <div style="font-family: Arial, Helvetica, sans-serif; max-width: 520px; margin: 0 auto; background: #111; color: #f5f5f5; border: 1px solid #222; border-radius: 14px; overflow: hidden;">
         <div style="height: 4px; background: linear-gradient(90deg, #d97706, #f59e0b, #d97706);"></div>
         <div style="padding: 28px;">
-          <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #f59e0b; margin-bottom: 12px; font-weight: 700;">Pacific Smoke Wholesale</div>
+          <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #f59e0b; margin-bottom: 12px; font-weight: 700;">PUFFMANIA DISTRO Wholesale</div>
           <h2 style="margin: 0 0 12px 0; font-size: 20px; font-weight: 600;">${params.title}</h2>
           <p style="margin: 0 0 22px 0; color: #cfcfcf; line-height: 1.6; font-size: 14px;">${params.intro}</p>
           <div style="display: inline-block; background: #0b0b0b; border: 1px solid #2a2a2a; border-radius: 10px; padding: 14px 20px; margin-bottom: 22px;">
@@ -190,7 +190,7 @@ app.post('/api/contact/send', async (req, res) => {
         <div style="font-family: Arial, Helvetica, sans-serif; max-width: 640px; margin: 0 auto; background: #111; color: #f5f5f5; border: 1px solid #222; border-radius: 14px; overflow: hidden;">
           <div style="height: 4px; background: linear-gradient(90deg, #d97706, #f59e0b, #d97706);"></div>
           <div style="padding: 28px;">
-            <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #f59e0b; margin-bottom: 12px; font-weight: 700;">Pacific Smoke Wholesale</div>
+            <div style="font-size: 11px; letter-spacing: 0.24em; text-transform: uppercase; color: #f59e0b; margin-bottom: 12px; font-weight: 700;">PUFFMANIA DISTRO Wholesale</div>
             <h2 style="margin: 0 0 8px 0; font-size: 22px; font-weight: 700;">New Contact Submission</h2>
             <p style="margin: 0 0 22px 0; color: #cfcfcf; line-height: 1.6; font-size: 14px;">${topic}</p>
 
@@ -232,8 +232,8 @@ app.post('/api/otp/send', async (req, res) => {
     const info = await transporter.send({
       from: fromAddress,
       to: email,
-      subject: `[Pacific Smoke Wholesale] OTP Security Verification Code: ${code}`,
-      text: `Hello ${businessName || 'Business Owner'},\n\nYour 6-digit security verification code is: ${code}\n\nThis code is valid for registration and login purposes, and protects your corporate dispatch profile. Please enter this code in the compliance portal to verify your account.\n\nBest regards,\nPacific Smoke Wholesaler Portal Admin Team`,
+      subject: `[PUFFMANIA DISTRO Wholesale] OTP Security Verification Code: ${code}`,
+      text: `Hello ${businessName || 'Business Owner'},\n\nYour 6-digit security verification code is: ${code}\n\nThis code is valid for registration and login purposes, and protects your corporate dispatch profile. Please enter this code in the compliance portal to verify your account.\n\nBest regards,\nPUFFMANIA DISTRO Wholesaler Portal Admin Team`,
       html: `
         <div style="font-family: 'Inter', Helvetica, Arial, sans-serif; max-width: 500px; margin: 0 auto; background-color: #121212; border: 1px solid #1f1f1f; border-radius: 12px; overflow: hidden; color: #e5e5e5; box-shadow: 0 4px 20px rgba(0,0,0,0.65);">
           <!-- Top Accent Bar -->
@@ -303,7 +303,7 @@ app.post('/api/auth/buyer/password-reset/request', async (req, res) => {
 
     const previewUrl = await sendOtpEmail({
       to: email,
-      subject: '[Pacific Smoke Wholesale] Password Reset Verification Code',
+      subject: '[PUFFMANIA DISTRO Wholesale] Password Reset Verification Code',
       title: 'Buyer Password Reset',
       code,
       intro: `A password reset was requested for ${buyer.businessName}. Use the code below to create a new password.`,
@@ -398,7 +398,7 @@ app.post('/api/auth/admin/password-reset/request', async (req, res) => {
 
     const previewUrl = await sendOtpEmail({
       to: email,
-      subject: '[Pacific Smoke Wholesale] Admin Password Reset OTP',
+      subject: '[PUFFMANIA DISTRO Wholesale] Admin Password Reset OTP',
       title: 'Admin Password Reset',
       code,
       intro: 'Use the one-time code below to reset your administrator password.',
