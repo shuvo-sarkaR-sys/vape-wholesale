@@ -795,8 +795,8 @@ export default function App() {
             <div className="space-y-2">
               <span className="text-xs text-white uppercase font-sans tracking-widest font-bold">CORPORATE OFFICES</span>
               <p className="text-neutral-500 leading-relaxed font-light">
-                742 Ocean Edge Drive, Suite 10, Vancouver, BC <br />
-                Telephone Assistance: +1 (555) 019-2834
+                742 Ocean Edge Drive, Suite 10, Vancouver, BC 
+                
               </p>
             </div>
             <div className="space-y-2">
