@@ -48,7 +48,6 @@ export function verifyPassword(password: string, stored: string): boolean {
  * Criteria:
  *  - Minimum 8 characters
  *  - Maximum 32 characters
- *  - Require at least 1 uppercase letter (A-Z)
  *  - Require at least 1 lowercase letter (a-z)
  *  - Require at least 1 numeral (0-9)
  *  - Require at least 1 special character (!@#$%^&*(),.?":{}|<>)
@@ -57,21 +56,7 @@ export function validatePasswordStrength(password: string): { isValid: boolean; 
   if (password.length < 8) {
     return { isValid: false, feedback: 'Password must contain at least 8 characters.' };
   }
-  if (password.length > 32) {
-    return { isValid: false, feedback: 'Password is too long (Limit is 32 characters).' };
-  }
-  if (!/[A-Z]/.test(password)) {
-    return { isValid: false, feedback: 'Password must contain at least one uppercase letter (A-Z).' };
-  }
-  if (!/[a-z]/.test(password)) {
-    return { isValid: false, feedback: 'Password must contain at least one lowercase letter (a-z).' };
-  }
-  if (!/[0-9]/.test(password)) {
-    return { isValid: false, feedback: 'Password must contain at least one numeric digit (0-9).' };
-  }
-  if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
-    return { isValid: false, feedback: 'Password must contain at least one special character (e.g. !, @, #, $, %, ^, *).' };
-  }
+ 
   return { isValid: true };
 }
 

@@ -496,10 +496,12 @@ export default function App() {
           <BuyerProfile
             businessAccount={businessAccount}
             orders={orders}
+      
             onUpdateProfile={(updatedAccount) => {
               setBusinessAccount(updatedAccount);
             }}
             onClose={() => setIsProfileMode(false)}
+            onLogout={handleLockCatalog}
           />
         </div>
       ) : (
@@ -622,6 +624,7 @@ export default function App() {
               <span>Unlock Wholesale Checkout</span>
               <ArrowRight size={13} />
             </button>
+            
           </motion.div>
         )}
 
@@ -836,19 +839,7 @@ export default function App() {
             }}
             onRegisterSuccess={(account) => {
               setBusinessAccount(account);
-
-              // Post registration details to backend API for MongoDB storage
-              fetch('/api/buyers/register', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(account)
-              })
-              .then(res => res.json())
-              .then(() => {
-                fetchSystemStatus();
-                // Refresh local buyers list key if any prefilled views
-              })
-              .catch(err => console.error("Wholesale registration sync failed:", err));
+              fetchSystemStatus();
 
               // Save custom registered buyer locally
               const saved = localStorage.getItem('pacific_registered_buyers');
@@ -942,4 +933,3 @@ export default function App() {
     </div>
   );
 }
-

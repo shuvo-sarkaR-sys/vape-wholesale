@@ -39,6 +39,7 @@ class InMemoryDatabase {
         email: 'apex.distributor@pacificsmoke.com',
         address: '100 Apex Way, Toronto, ON, M5V 2N8',
         phone: '(416) 555-0199',
+        licenseNumber: 'SMK-LIC-400192',
         
         isVerified: true,
         registeredAt: 'January 14, 2026',
@@ -49,6 +50,7 @@ class InMemoryDatabase {
         email: 'merchant@vapeshop.com',
         address: '455 Broad Street, Vancouver, BC, V6B 1P4',
         phone: '(604) 555-0142',
+        licenseNumber: 'VPE-REG-982110',
         
         isVerified: true,
         registeredAt: 'March 28, 2026',
@@ -228,11 +230,14 @@ export const dbOperations = {
     await connectToDatabase();
     // Clone and hash the input credentials before write ops
     const accountCopy = JSON.parse(JSON.stringify(account));
+    accountCopy.email = accountCopy.email.toLowerCase().trim();
     accountCopy.password = hashPassword(accountCopy.password);
 
     if (isConnected && db) {
       // Check if already exists
-      const existing = await db.collection('buyers').findOne({ email: accountCopy.email.toLowerCase() });
+      const existing = await db.collection('buyers').findOne({
+        email: { $regex: `^${escapeRegex(accountCopy.email)}$`, $options: 'i' }
+      });
       if (existing) return false;
       
       await db.collection('buyers').insertOne(accountCopy);

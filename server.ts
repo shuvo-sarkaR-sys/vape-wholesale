@@ -31,6 +31,19 @@ console.log("mongodb uri configured:", !!process.env.MONGODB_URI);
 const resend = new Resend(process.env.RESEND_API_KEY);
 const SENDER_EMAIL = process.env.RESEND_FROM_EMAIL || '"PUFFMANIA DISTRO Wholesale" <no-reply@pacificsmokewholesale.local>';
 
+function getAdminNotificationEmail(): string {
+  return String(process.env.ADMIN_EMAIL || process.env.RESEND_FROM_EMAIL || '').trim();
+}
+
+function escapeHtml(value: unknown): string {
+  return String(value ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
 const getMailTransporter = async () => {
   return { send: async (mailOptions: any) => {
     const result = await resend.emails.send({
@@ -38,6 +51,7 @@ const getMailTransporter = async () => {
       to: mailOptions.to,
       ...(mailOptions.replyTo && { replyTo: mailOptions.replyTo }),
       subject: mailOptions.subject,
+      ...(mailOptions.text && { text: mailOptions.text }),
       html: mailOptions.html,
     });
     
@@ -152,7 +166,59 @@ async function sendOtpEmail(params: {
 
   return null;
 }
+async function sendAdminRegistrationNotification(account: BusinessAccount): Promise<{ sent: boolean; error?: string }> {
+  try {
+    const transporter = await getMailTransporter();
+    const adminEmail = getAdminNotificationEmail();
+    if (!adminEmail) {
+      throw new Error('ADMIN_EMAIL or RESEND_FROM_EMAIL must be configured for registration notifications.');
+    }
 
+    const businessName = escapeHtml(account.businessName);
+    const email = escapeHtml(account.email);
+    const phone = escapeHtml(account.phone);
+    const address = escapeHtml(account.address);
+    
+    await transporter.send({
+      from: SENDER_EMAIL,
+      to: adminEmail,
+      replyTo: account.email,
+      subject: `[New Merchant] Registration: ${account.businessName}`,
+      text: [
+        'A new business has just registered on the portal:',
+        '',
+        `Business: ${account.businessName}`,
+        `Email: ${account.email}`,
+        `Phone: ${account.phone}`,
+        `Address: ${account.address}`,
+        '',
+        'Action Required: Review their license in the admin dashboard.',
+      ].join('\n'),
+      html: `
+        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #111; color: #f5f5f5; border: 1px solid #222; border-radius: 14px; overflow: hidden;">
+          <div style="height: 4px; background: linear-gradient(90deg, #d97706, #f59e0b, #d97706);"></div>
+          <div style="padding: 28px;">
+            <h2 style="margin: 0 0 12px 0; font-size: 20px; color: #fff;">New Merchant Registration</h2>
+            <p style="color: #cfcfcf;">A new business has just registered on the portal:</p>
+            <hr style="border: 0; border-top: 1px solid #222; margin: 20px 0;">
+            <p><strong>Business:</strong> ${businessName}</p>
+            <p><strong>Email:</strong> ${email}</p>
+            <p><strong>Phone:</strong> ${phone}</p>
+            <p><strong>Address:</strong> ${address}</p>
+            <div style="margin-top: 25px; font-size: 12px; color: #8f8f8f; border-top: 1px solid #222; padding-top: 15px;">
+              Action Required: Review their license in the admin dashboard.
+            </div>
+          </div>
+        </div>
+      `,
+    });
+    console.log(`Admin notified of new registration: ${account.businessName}`);
+    return { sent: true };
+  } catch (err: any) {
+    console.error('Failed to notify admin of registration:', err);
+    return { sent: false, error: err.message || 'Unknown mail delivery error.' };
+  }
+}
 
 app.post('/api/contact/send', async (req, res) => {
   try {
@@ -581,7 +647,15 @@ app.get('/api/buyers', async (req, res) => {
 
 app.post('/api/buyers/register', async (req, res) => {
   try {
-    const account: BusinessAccount = req.body;
+    const account: BusinessAccount = {
+      ...req.body,
+      businessName: String(req.body?.businessName || '').trim(),
+      email: String(req.body?.email || '').toLowerCase().trim(),
+      address: String(req.body?.address || '').trim(),
+      phone: String(req.body?.phone || '').trim(),
+      licenseNumber: String(req.body?.licenseNumber || 'Pending Review').trim(),
+      password: String(req.body?.password || ''),
+    };
     if (!account.businessName || !account.email  || !account.password) {
       return res.status(400).json({ error: 'Required registration metrics not provided.' });
     }
@@ -592,13 +666,33 @@ app.post('/api/buyers/register', async (req, res) => {
       return res.status(400).json({ error: strengthResult.feedback || 'The chosen password does not meet corporate security standards.' });
     }
     
+    const buyers = await dbOperations.getBuyers();
+    const existingBuyer = buyers.find((buyer) => buyer.email.toLowerCase().trim() === account.email);
+    if (existingBuyer) {
+      return res.status(409).json({ error: 'A merchant profile with this email already exists.' });
+    }
+
+    const notification = await sendAdminRegistrationNotification(account);
+    if (!notification.sent) {
+      return res.status(502).json({
+        success: false,
+        error: 'Admin registration notification email was not sent.',
+        adminNotificationSent: false,
+        adminNotificationError: notification.error,
+      });
+    }
+
     const success = await dbOperations.registerBuyer(account);
     if (!success) {
       return res.status(409).json({ error: 'A merchant profile with this email already exists.' });
     }
-    
+
     const { password, ...scrubbed } = account;
-    res.status(201).json({ success: true, account: scrubbed });
+    res.status(201).json({
+      success: true,
+      account: scrubbed,
+      adminNotificationSent: true,
+    });
   } catch (error: any) {
     res.status(500).json({ error: 'Registration pipeline failed.', details: error.message });
   }

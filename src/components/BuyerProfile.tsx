@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { 
   Building, Mail, Phone, MapPin, FileText, Calendar, 
   ArrowLeft, Edit3, Save, CheckCircle2, Copy, Trash2,
-  Package, DollarSign, Clock, Layers, ExternalLink, Sparkles
+  Package, DollarSign, Clock, Layers, ExternalLink, Sparkles, LogOut
 } from 'lucide-react';
 import { BusinessAccount, Order } from '../types';
 
@@ -12,13 +12,15 @@ interface BuyerProfileProps {
   orders: Order[];
   onUpdateProfile: (updatedAccount: BusinessAccount) => void;
   onClose: () => void;
+  onLogout: () => void;
 }
 
 export default function BuyerProfile({
   businessAccount,
   orders,
   onUpdateProfile,
-  onClose
+  onClose,
+  onLogout
 }: BuyerProfileProps) {
   const [isEditing, setIsEditing] = useState(false);
   const [copiedOrderId, setCopiedOrderId] = useState<string | null>(null);
@@ -110,7 +112,7 @@ export default function BuyerProfile({
           </p>
         </div>
 
-        <div>
+        <div className="flex flex-col sm:flex-row gap-3">
           <button
             type="button"
             onClick={() => {
@@ -135,6 +137,16 @@ export default function BuyerProfile({
           >
             <Edit3 size={13} />
             <span>{isEditing ? 'Cancel Modification' : 'Update Company Credentials'}</span>
+          </button>
+
+          <button
+            type="button"
+            onClick={onLogout}
+            className="rounded-lg py-2.5 px-4 text-xs font-mono tracking-wider uppercase flex items-center justify-center gap-2 cursor-pointer transition-all border bg-neutral-950/60 border-neutral-800 text-neutral-300 hover:text-red-300 hover:border-red-500/30 hover:bg-red-500/10"
+            title="Log out of buyer account"
+          >
+            <LogOut size={13} />
+            <span>Logout</span>
           </button>
         </div>
       </div>

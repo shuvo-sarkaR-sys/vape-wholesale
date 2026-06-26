@@ -85,22 +85,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
       setErrorText('Security key/password must contain at least 8 characters.');
       return;
     }
-    if (!/[A-Z]/.test(form.password)) {
-      setErrorText('Security key/password must contain at least one uppercase letter (A-Z).');
-      return;
-    }
-    if (!/[a-z]/.test(form.password)) {
-      setErrorText('Security key/password must contain at least one lowercase letter (a-z).');
-      return;
-    }
-    if (!/[0-9]/.test(form.password)) {
-      setErrorText('Security key/password must contain at least one numeric digit (0-9).');
-      return;
-    }
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(form.password)) {
-      setErrorText('Security key/password must contain at least one special character (e.g. !, @, #, $, %, etc.).');
-      return;
-    }
+   
 
     setErrorText('');
     setIsSendingEmail(true);
@@ -200,12 +185,13 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
         if (prev >= VERIFICATION_STEPS.length - 1) {
           clearInterval(interval);
           
-          setTimeout(() => {
+          setTimeout(async () => {
             const verifiedAccount: BusinessAccount = {
               businessName: form.businessName,
               email: form.email,
               address: form.address,
               phone: form.phone,
+              licenseNumber: 'Pending Review',
        
               isVerified: true,
               registeredAt: new Date().toLocaleDateString('en-US', {
@@ -215,10 +201,33 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
               }),
               password: form.password
             };
-            onRegisterSuccess(verifiedAccount);
-            setIsVerifying(false);
-            setRegisterStep('form'); // Reset state for subsequent sessions
-            onClose();
+
+            try {
+              const response = await fetch('/api/buyers/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(verifiedAccount)
+              });
+              const data = await response.json().catch(() => ({}));
+
+              if (!response.ok || !data.success) {
+                throw new Error(data.error || data.details || 'Unable to complete registration.');
+              }
+
+              if (data.adminNotificationSent === false) {
+                throw new Error(data.adminNotificationError || 'Account was created, but the admin notification email was not sent.');
+              }
+
+              onRegisterSuccess(data.account || verifiedAccount);
+              setIsVerifying(false);
+              setRegisterStep('form'); // Reset state for subsequent sessions
+              onClose();
+            } catch (err: any) {
+              console.error('Registration sync failed:', err);
+              setErrorText(err.message || 'Registration failed. Please retry.');
+              setIsVerifying(false);
+              setRegisterStep('form');
+            }
           }, 1200);
           return prev;
         }
@@ -386,7 +395,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                     name="password"
                     value={form.password}
                     onChange={handleInputChange}
-                    placeholder="Create a password (8+ chars, upper, lower, numbers, symbols)"
+                    placeholder="Create a password (8+ chars, lower, numbers, symbols)"
                     className="w-full bg-neutral-950 border border-neutral-855 rounded-lg pl-10 pr-4 py-2.5 text-xs text-white focus:outline-none focus:border-[#5aa8b3] focus:ring-1 focus:ring-[#5aa8b3]/20 transition-all placeholder-neutral-600"
                   />
                   <Lock className="absolute left-3.5 top-1/2 -translate-y-1/2 text-neutral-500" size={14} />
@@ -397,10 +406,6 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                   <div className="flex items-center gap-1.5">
                     <span className={form.password.length >= 8 ? "text-emerald-400" : "text-neutral-600"}>●</span>
                     <span className={form.password.length >= 8 ? "text-neutral-200" : "text-neutral-500"}>8+ Characters</span>
-                  </div>
-                  <div className="flex items-center gap-1.5">
-                    <span className={/[A-Z]/.test(form.password) ? "text-emerald-400" : "text-neutral-600"}>●</span>
-                    <span className={/[A-Z]/.test(form.password) ? "text-neutral-200" : "text-neutral-500"}>Uppercase (A-Z)</span>
                   </div>
                   <div className="flex items-center gap-1.5">
                     <span className={/[a-z]/.test(form.password) ? "text-emerald-400" : "text-neutral-600"}>●</span>
@@ -558,7 +563,7 @@ export default function RegisterModal({ isOpen, onClose, onRegisterSuccess, onOp
                   <Lock className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-700 pointer-events-none" size={13} />
                 </div>
               </div>
-
+                        <p className="text-xs text-center">Can't find your OTP? Check your Spam or Junk folder</p>
               {errorText && (
                 <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg text-xs font-mono text-red-200 flex items-center gap-2">
                   <ShieldAlert size={14} className="flex-shrink-0 text-red-400" />
